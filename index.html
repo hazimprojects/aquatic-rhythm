@@ -64,8 +64,35 @@ body.hov #cr{width:48px;height:48px;border-color:rgba(100,230,180,0.18)}
 /* DRIFTWOOD */
 #driftwood-layer{position:absolute;bottom:0;left:0;right:0;height:55%;pointer-events:none}
 
-/* PAGE LAYER */
+/* PAGE LAYER — always above fish, bubbles, and eco */
+/* ── Z-INDEX STACK ── */
 #pl{position:relative;z-index:10}
+#app-main{position:relative;z-index:10}
+
+/* ── TEXT PROTECTION — one unified rule across all pages ──
+   A single soft dark veil on every content section.
+   Light enough that fauna and animation still read through.
+   Strong enough that text is always clear.
+── */
+.hero,.psec,.arasec,.ctasec,.araph,.adefs,.prins,.cmps,
+.rhhero,.qsec,.helph,.scns,.stpg{
+  position:relative;
+}
+.hero::before,.psec::before,.arasec::before,.ctasec::before,
+.araph::before,.adefs::before,.prins::before,.cmps::before,
+.rhhero::before,.qsec::before,.helph::before,.scns::before,.stpg::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:rgba(3,9,8,.42);
+  pointer-events:none;
+  z-index:0;
+}
+.hero>*,.psec>*,.arasec>*,.ctasec>*,.araph>*,.adefs>*,
+.prins>*,.cmps>*,.rhhero>*,.qsec>*,.helph>*,.scns>*,.stpg>*{
+  position:relative;
+  z-index:1;
+}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.5rem,5vw,4.5rem);background:linear-gradient(to bottom,rgba(3,18,30,.88),transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
@@ -262,13 +289,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
 .sco+.sco{margin-top:.8rem}
 
 /* START PAGE */
-.stpg{min-height:100svh;padding-top:68px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative}
+.stpg{min-height:100svh;padding-top:68px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
 .str{position:absolute;border-radius:50%;border:1px solid rgba(139,189,210,.05);top:50%;left:50%;transform:translate(-50%,-50%);animation:strp ease-in-out infinite;pointer-events:none}
 .sr1{width:160px;height:160px;animation-duration:6s}
 .sr2{width:320px;height:320px;animation-duration:6s;animation-delay:1s}
-.sr3{width:520px;height:520px;animation-duration:6s;animation-delay:2s}
-.sr4{width:760px;height:760px;animation-duration:6s;animation-delay:3s}
-.sr5{width:1040px;height:1040px;animation-duration:6s;animation-delay:4s}
+.sr3{width:min(520px,140vw);height:min(520px,140vw);animation-duration:6s;animation-delay:2s}
+.sr4{width:min(760px,200vw);height:min(760px,200vw);animation-duration:6s;animation-delay:3s}
+.sr5{width:min(1040px,280vw);height:min(1040px,280vw);animation-duration:6s;animation-delay:4s}
 @keyframes strp{0%,100%{opacity:.7;transform:translate(-50%,-50%) scale(1)}50%{opacity:.15;transform:translate(-50%,-50%) scale(1.02)}}
 .stin{position:relative;z-index:2;max-width:560px;margin:0 auto;padding:7rem 2rem}
 .starr{display:block;font-family:var(--serif);font-style:italic;font-size:1.02rem;color:rgba(255,255,255,.42);margin-bottom:2.2rem}
@@ -283,8 +310,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
 .spp p{font-size:.8rem;font-weight:300;color:rgba(255,255,255,.42);line-height:1.68}
 .stco{margin-top:4rem;font-family:var(--serif);font-style:italic;font-size:.92rem;color:rgba(255,255,255,.3);line-height:1.75}
 
-/* FOOTER */
-footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:2rem;border-top:1px solid rgba(255,255,255,.06)}
+/* FOOTER */padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:2rem;border-top:1px solid rgba(255,255,255,.06)}
 .fl{font-family:var(--serif);font-size:.95rem;font-weight:300;color:rgba(255,255,255,.35);text-decoration:none}
 .fl em{font-style:italic;color:rgba(139,189,210,.5)}
 .fm{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);text-align:center}
@@ -292,13 +318,13 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
 .fr a{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.28);text-decoration:none;transition:color .3s}
 .fr a:hover{color:rgba(139,189,210,.65)}
 
-/* FISH — position:fixed so coords match viewport */
-#fish-layer{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:5}
+/* FISH — behind all page content */
+#fish-layer{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
 .fish{position:absolute;pointer-events:none;will-change:transform}
 .fish svg{display:block}
 
-/* CURSOR BUBBLES */
-#bubble-layer{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:6}
+/* CURSOR BUBBLES — behind page content */
+#bubble-layer{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
 .cbubble{position:fixed;border-radius:50%;border:1px solid rgba(200,228,240,.55);background:rgba(200,228,240,.08);pointer-events:none;animation:bubrise linear forwards}
 @keyframes bubrise{
   0%  {opacity:0;transform:translateY(0) translateX(0) scale(1)}
@@ -396,7 +422,6 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
     <li><a href="/ara" data-page="ara">The Framework</a></li>
     <li><a href="/helps" data-page="helps">How It Helps</a></li>
     <li><a href="/rhyssa" data-page="rhyssa">Meet Rhyssa</a></li>
-    <li><a href="/start" data-page="start">Begin the Journey</a></li>
   </ul>
   <button class="nbg" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
 </nav>
@@ -418,7 +443,6 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
     <li><a href="/ara" data-page="ara">The Framework</a></li>
     <li><a href="/helps" data-page="helps">How It Helps</a></li>
     <li><a href="/rhyssa" data-page="rhyssa">Meet Rhyssa</a></li>
-    <li><a href="/start" data-page="start">Begin the Journey</a></li>
   </ul>
 </div>
 
@@ -429,8 +453,8 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
     <div class="hi cap">
       <div class="ht">
         <span class="ey">Living Water</span>
-        <h1 class="dxl">Your aquarium<br>moves at its<br><em style="font-style:italic;color:rgba(60,210,225,.7)">own pace.</em></h1>
-        <p class="hk">A living aquarium is not a machine you configure. It is an ecosystem — and like all ecosystems, it has its own rhythm, its own sensitivity, and its own way of finding balance.</p>
+        <h1 class="dxl">Your tank has<br>a rhythm.<br><em style="font-style:italic;color:rgba(60,210,225,.7)">Learn it.</em></h1>
+        <p class="hk">A living aquarium isn't something you configure. It breathes, shifts, and finds its own balance — on its own time. The keepers who thrive are the ones who learn to move with it.</p>
       </div>
       <div class="hoz">
         <div class="orb">
@@ -445,12 +469,12 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
   <div class="div"></div>
   <section class="psec">
     <div class="cap">
-      <span class="ey sr">Why it is harder than it looks</span>
-      <p class="pst sr d1">Most people who struggle with their aquarium are not careless. They are simply <em>moving faster than their system can follow.</em></p>
+      <span class="ey sr">Why it feels harder than it should</span>
+      <p class="pst sr d1">Most struggling keepers aren't careless. They're just <em>moving faster than their tank can follow.</em></p>
       <div class="pcards" style="margin-top:5rem">
-        <div class="pc sr d1"><div class="pn">01</div><h4>Information without context</h4><p>Forums, videos, and guides all say something different. New keepers absorb everything at once — and end up more confused than when they started.</p></div>
-        <div class="pc sr d2"><div class="pn">02</div><h4>Reacting before understanding</h4><p>A change in colour. A plant that won't grow. The instinct is to act immediately — but most changes in a living tank take time to reveal what they mean.</p></div>
-        <div class="pc sr d3"><div class="pn">03</div><h4>Vision ahead of capacity</h4><p>The hobby grows faster than the keeper. Systems quietly collapse — not because of bad choices, but because expectations were never honestly mapped to real life.</p></div>
+        <div class="pc sr d1"><div class="pn">01</div><h4>Too much noise, not enough clarity</h4><p>Every forum says something different. You absorb it all and end up more lost than when you started. Information without a frame just becomes anxiety.</p></div>
+        <div class="pc sr d2"><div class="pn">02</div><h4>Acting before the tank has finished speaking</h4><p>Something looks off. The urge to fix it is immediate. But most changes in a living tank are the system mid-sentence — it needs a moment to finish its thought.</p></div>
+        <div class="pc sr d3"><div class="pn">03</div><h4>Vision bigger than real life allows</h4><p>You want a beautiful tank. You also have a job, a family, a life. When that gap isn't honestly mapped, things fall apart quietly — not from bad choices, but unrealistic ones.</p></div>
       </div>
     </div>
   </section>
@@ -460,21 +484,21 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
       <div class="arah">
         <div class="sr">
           <span class="ey">A different approach</span>
-          <h2 class="dlg" style="color:rgba(255,255,255,.78)">Aquatic Rhythm<br>is a system<br>for living water.</h2>
+          <h2 class="dlg" style="color:rgba(255,255,255,.78)">Aquatic Rhythm<br>is a way of<br>reading your tank.</h2>
         </div>
         <div class="sr d2">
-          <p class="bt">It is not a collection of tips. It is not a troubleshooting guide. It is a way of reading the relationship between a living system, its natural pace, and the person caring for it.</p>
-          <p class="bt">When that relationship is understood — when timing, capacity, and rhythm are aligned — systems stabilise. Not through more intervention, but through better observation.</p>
-          <p class="bt" style="margin-top:1.8rem;color:rgba(255,255,255,.42);font-style:italic;font-family:var(--serif)">The aquarium community gave us encyclopaedias. Aquatic Rhythm gives you a compass.</p>
+          <p class="bt">Not a list of tips. Not another troubleshooting guide. A way of understanding the relationship between a living system, its natural pace, and the person tending it.</p>
+          <p class="bt">When that relationship clicks — when your timing, your energy, and your tank's rhythm are actually aligned — things settle. Not because you did more. Because you stopped doing the wrong things at the wrong moments.</p>
+          <p class="bt" style="margin-top:1.8rem;color:rgba(255,255,255,.42);font-style:italic;font-family:var(--serif)">The hobby gave us encyclopaedias. Aquatic Rhythm gives you a compass.</p>
         </div>
       </div>
     </div>
   </section>
   <div class="div"></div>
   <section class="ctasec pad">
-    <span class="ey ey-t sr">There is a better way to tend living water</span>
-    <h2 class="dmd sr d1" style="color:rgba(255,255,255,.78)">It begins with<br>understanding the rhythm.</h2>
-    <p class="bt sr d2">Aquatic Rhythm is built around a framework called ARA — four principles that change how you read, decide, and act inside a living system.</p>
+    <span class="ey ey-t sr">There is a better way</span>
+    <h2 class="dmd sr d1" style="color:rgba(255,255,255,.78)">It starts with<br>understanding the rhythm.</h2>
+    <p class="bt sr d2">ARA is four principles that change how you read your tank, make decisions, and know when — and when not — to act.</p>
     <a href="/ara" class="btn bf sr d3" style="margin-top:1rem;display:inline-block" data-page="ara">Explore the Framework →</a>
   </section>
   <footer>
@@ -490,33 +514,33 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
     <div class="sr">
       <span class="ey">The Framework</span>
       <h1 class="dxl" style="color:rgba(255,255,255,.78)">What is<br>ARA?</h1>
-      <p class="api">Not a protocol. Not a rulebook.<br>A way of understanding why things happen in a living tank — and how the timing of your decisions shapes what becomes of it.</p>
+      <p class="api">Not a rulebook. Not a checklist.<br>A way of reading why things happen in a living tank — and how the moment you choose to act shapes everything that follows.</p>
     </div>
     <div class="sr d2" style="padding-top:1rem">
-      <p class="bt">Most aquarium problems don't begin with a single mistake. They begin earlier — when something in the system's rhythm gets quietly disrupted and the keeper hasn't yet seen it for what it is.</p>
-      <p class="bt">ARA reframes the question. Instead of asking "what went wrong?" it asks: what has fallen out of rhythm — and what does the system need to find it again?</p>
-      <p class="bt">This shift changes everything. It moves focus away from blame and toward observation. Away from panic and toward understanding.</p>
+      <p class="bt">Most aquarium problems don't begin with one big mistake. They begin quietly — when something in the system's rhythm shifts and the keeper hasn't quite seen it yet.</p>
+      <p class="bt">ARA changes the question. Instead of "what went wrong?" it asks: what fell out of rhythm — and what does this tank need to find it again?</p>
+      <p class="bt">That shift is small. But it changes everything. It moves you away from panic, away from blame, and toward something far more useful — genuine understanding.</p>
     </div>
   </section>
   <div class="div"></div>
   <section class="adefs pad">
     <div class="cap"><span class="ey sr">The core idea</span>
       <div class="adg">
-        <div class="sr d1"><p class="apq">A living system<br>has <strong>its own pace.</strong><br>Alignment means<br>moving with it —<br>not ahead of it.</p></div>
+        <div class="sr d1"><p class="apq">Your tank has<br>its own pace.<br><strong>Alignment means</strong><br>moving with it —<br>not ahead of it.</p></div>
         <div class="sr d2">
-          <p class="bt">An aquarium is not a machine you tune. It is a living rhythm — made of water, biology, light, and behaviour — that responds to patterns more than numbers.</p>
-          <p class="bt">When you act in keeping with that rhythm, things tend to settle. When you act against it — even with the best technique — things tend to resist.</p>
-          <p class="bt">ARA was built around one observation: the keepers who tend genuinely stable aquariums over time are not the most knowledgeable. They are the ones who have learned to slow down, watch carefully, and act in sync with what the system is actually doing.</p>
+          <p class="bt">An aquarium isn't a machine you dial in. It's a living rhythm — water, biology, light, and behaviour all moving together — and it responds to patterns far more than it responds to numbers.</p>
+          <p class="bt">Act with that rhythm and things tend to settle. Act against it — even with perfect technique — and things tend to resist.</p>
+          <p class="bt">ARA grew from one simple observation: the keepers with the most stable tanks aren't always the most knowledgeable. They're the ones who learned to slow down, watch honestly, and act in sync with what their tank is actually doing right now.</p>
         </div>
       </div>
     </div>
   </section>
   <section class="prins pad">
     <div class="cap"><span class="ey sr">Four principles</span>
-      <div class="pb sr"><div class="pnl">01</div><div><span class="ptag">First</span><h3 class="ptit">Timing before technique</h3></div><div><p class="bt">The same technique applied at different moments produces entirely different outcomes in a living system. ARA teaches a different question: not "is this the right action?" but "is this the right moment?"</p><div class="eg"><span class="egtag">In practice</span><p>A large water change after noticing algae collapses an unstable cycle. The same change three weeks later, once the cycle matures, would have helped. The technique was correct. The timing was not.</p></div></div></div>
-      <div class="pb sr"><div class="pnl">02</div><div><span class="ptag">Second</span><h3 class="ptit">Capacity before ambition</h3></div><div><p class="bt">Every keeper has a real, honest capacity — the time they genuinely have, the knowledge they hold, the emotional bandwidth for uncertainty. Ambition often runs ahead of this. The gap between vision and capacity is where systems quietly collapse.</p><div class="eg"><span class="egtag">In practice</span><p>A demanding planted system requires more than free time — it requires consistent attention over months. ARA doesn't dismiss the vision. It maps it honestly against what the keeper can actually give, and finds a form that can survive.</p></div></div></div>
-      <div class="pb sr"><div class="pnl">03</div><div><span class="ptag">Third</span><h3 class="ptit">Rhythm before intensity</h3></div><div><p class="bt">Living systems are built through small, consistent acts over time. Dramatic interventions applied irregularly disrupt more than they stabilise. Consistency matters far more than intensity.</p><div class="eg"><span class="egtag">In practice</span><p>A keeper who tops up water lightly every few days and watches the tank quietly each morning is doing something more meaningful than one who does a major maintenance session every three weeks.</p></div></div></div>
-      <div class="pb sr"><div class="pnl">04</div><div><span class="ptag">Fourth</span><h3 class="ptit">Observation before correction</h3></div><div><p class="bt">Many early-stage changes in a living system are the ecosystem reorganising itself — not failing. Intervening too quickly interrupts a process that was already working toward resolution.</p><div class="eg"><span class="egtag">In practice</span><p>Yellowing leaves in the first weeks of a new planted tank are almost always normal adjustment. A keeper who waits and watches often finds it resolves. One who doses immediately makes future reading harder.</p></div></div></div>
+      <div class="pb sr"><div class="pnl">01</div><div><span class="ptag">First</span><h3 class="ptit">Timing before technique</h3></div><div><p class="bt">The same action taken at different moments produces completely different outcomes in a living system. ARA teaches you to ask not just "is this the right thing to do?" but "is right now the right moment to do it?"</p><div class="eg"><span class="egtag">In practice</span><p>A large water change right after spotting algae can crash an unstable cycle. The same change three weeks later — once the cycle matures — would have helped. Same technique. Wrong timing.</p></div></div></div>
+      <div class="pb sr"><div class="pnl">02</div><div><span class="ptag">Second</span><h3 class="ptit">Capacity before ambition</h3></div><div><p class="bt">Every keeper has a real, honest capacity — the time they actually have, the knowledge they genuinely hold, the energy left for uncertainty after a long day. Ambition quietly runs ahead of this. That gap is where tanks quietly collapse.</p><div class="eg"><span class="egtag">In practice</span><p>A demanding planted tank needs more than free weekends — it needs consistent attention across months. ARA doesn't kill the vision. It asks what version of that vision your real life can actually sustain.</p></div></div></div>
+      <div class="pb sr"><div class="pnl">03</div><div><span class="ptag">Third</span><h3 class="ptit">Rhythm before intensity</h3></div><div><p class="bt">Living systems are built through small, consistent care over time — not dramatic interventions. Doing a little, regularly, with attention, beats doing a lot, occasionally, in panic.</p><div class="eg"><span class="egtag">In practice</span><p>A keeper who tops up water every few days and watches quietly each morning is doing something more meaningful than one who does a major overhaul every three weeks and hopes for the best.</p></div></div></div>
+      <div class="pb sr"><div class="pnl">04</div><div><span class="ptag">Fourth</span><h3 class="ptit">Observation before correction</h3></div><div><p class="bt">Many early changes in a living system aren't problems — they're the ecosystem reorganising itself. Jumping in too quickly interrupts something that was already working its way toward resolution.</p><div class="eg"><span class="egtag">In practice</span><p>Yellowing leaves in a new planted tank's first few weeks are almost always normal adjustment. Wait and watch — it often resolves on its own. Dose immediately, and you'll spend weeks trying to read a tank you've made unreadable.</p></div></div></div>
     </div>
   </section>
   <section class="cmps pad">
@@ -524,12 +548,12 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
       <span class="ey sr">ARA vs typical aquarium advice</span>
       <h2 class="dmd sr d1" style="color:rgba(255,255,255,.65);margin-top:1rem;max-width:540px">Most advice tells you what to do.<br>ARA asks <em style="font-style:italic;color:rgba(139,189,210,.55)">when</em> — and whether.</h2>
       <div class="ctab sr d2">
-        <div class="cc"><div class="ch chd">Typical approach</div><div class="cis"><div class="ci"><div class="cmk mx">✕</div><p>Reads parameters in isolation, as if the right numbers equal a healthy system.</p></div><div class="ci"><div class="cmk mx">✕</div><p>Assumes more information and more action always leads to better outcomes.</p></div><div class="ci"><div class="cmk mx">✕</div><p>Treats visible problems as failures requiring immediate correction.</p></div><div class="ci"><div class="cmk mx">✕</div><p>Rarely considers the keeper's real capacity, schedule, or life circumstances.</p></div><div class="ci"><div class="cmk mx">✕</div><p>Applies the same guidance to a beginner and an expert without distinction.</p></div></div></div>
-        <div class="cc ccb"><div class="ch cht">ARA</div><div class="cis"><div class="ci"><div class="cmk my">✓</div><p>Reads the system's rhythms and patterns over time — not only isolated readings.</p></div><div class="ci"><div class="cmk my">✓</div><p>Recognises that timing and patience often matter more than the specific action taken.</p></div><div class="ci"><div class="cmk my">✓</div><p>Treats visible changes as information worth understanding before deciding to act.</p></div><div class="ci"><div class="cmk my">✓</div><p>Considers the keeper's real life as part of the system — not a variable to eliminate.</p></div><div class="ci"><div class="cmk my">✓</div><p>Adapts to where you actually are — not where the hobby expects you to be.</p></div></div></div>
+        <div class="cc"><div class="ch chd">Typical approach</div><div class="cis"><div class="ci"><div class="cmk mx">✕</div><p>Reads numbers in isolation — as though the right parameters automatically mean a healthy tank.</p></div><div class="ci"><div class="cmk mx">✕</div><p>Assumes more information and more action always leads somewhere better.</p></div><div class="ci"><div class="cmk mx">✕</div><p>Treats anything visible as a problem that needs fixing immediately.</p></div><div class="ci"><div class="cmk mx">✕</div><p>Ignores the keeper's actual life, schedule, and bandwidth entirely.</p></div><div class="ci"><div class="cmk mx">✕</div><p>Gives the same advice to a first-week beginner and a five-year veteran.</p></div></div></div>
+        <div class="cc ccb"><div class="ch cht">ARA</div><div class="cis"><div class="ci"><div class="cmk my">✓</div><p>Reads rhythms and patterns across time — not just isolated readings on a single afternoon.</p></div><div class="ci"><div class="cmk my">✓</div><p>Knows that the right timing often matters more than the action itself.</p></div><div class="ci"><div class="cmk my">✓</div><p>Treats visible changes as information — worth understanding before you disturb them.</p></div><div class="ci"><div class="cmk my">✓</div><p>Holds the keeper's real life as part of the system — not a problem to be eliminated.</p></div><div class="ci"><div class="cmk my">✓</div><p>Meets you where you actually are — not where the hobby thinks you should be.</p></div></div></div>
       </div>
     </div>
   </section>
-  <section class="ctasec pad"><span class="ey ey-t sr">See it in practice</span><h2 class="dmd sr d1" style="color:rgba(255,255,255,.65)">How does ARA change<br>real situations?</h2><p class="bt sr d2">Three different keepers. Three different moments. One framework that reads each of them differently.</p><a href="/helps" class="btn bf sr d3" style="margin-top:1rem;display:inline-block" data-page="helps">How It Helps →</a></section>
+  <section class="ctasec pad"><span class="ey ey-t sr">See it in the real world</span><h2 class="dmd sr d1" style="color:rgba(255,255,255,.65)">How does ARA read<br>real situations?</h2><p class="bt sr d2">Three different keepers. Three different moments. One framework that reads each one differently — and knows what each actually needs.</p><a href="/helps" class="btn bf sr d3" style="margin-top:1rem;display:inline-block" data-page="helps">How It Helps →</a></section>
   <footer><a href="/" class="fl" data-page="home">Aquatic <em>Rhythm</em></a><span class="fm">A system for living water</span><div class="fr"><a href="/helps" data-page="helps">How It Helps →</a></div></footer>
 </div></div>
 
@@ -540,7 +564,7 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
       <div class="sr">
         <span class="ey">Aquatic Rhythm — Primary Interface</span>
         <h1 class="rhtit">Rhyssa is how<br><em>ARA speaks</em><br>to you.</h1>
-        <p class="rhd">ARA is a framework for reading aquarium ecosystems through rhythm, timing, and alignment. Rhyssa is trained in that framework. When you talk to her, you are not just talking to an AI — you are accessing a system of ecological reasoning, translated into conversation.</p>
+        <p class="rhd">Rhyssa is trained specifically in the ARA framework. She's not a general assistant — she's been shaped to think about aquariums the way ARA does. The reasoning is real. The framework is real. And like Aquatic Rhythm itself, she's still growing.</p>
       </div>
       <div class="sr d2">
         <div class="orblg">
@@ -557,72 +581,69 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
       <div class="sr">
         <span class="ey">How ARA shapes her</span>
         <h2 class="dmd" style="color:rgba(255,255,255,.68);margin-top:1.3rem">She doesn't just<br>answer questions.<br><em style="font-style:italic;color:rgba(139,189,210,.52)">She reads<br>your situation.</em></h2>
-        <p class="bt" style="margin-top:2rem">ARA teaches that timing matters more than technique, and that capacity shapes what is sustainable. Rhyssa applies these principles in conversation — not as rules, but as a way of listening.</p>
+        <p class="bt" style="margin-top:2rem">ARA says timing matters more than technique, and that your real capacity shapes what's actually sustainable. Rhyssa carries both of those ideas into every conversation — not as rules she recites, but as a way of genuinely listening.</p>
       </div>
       <div class="qis sr d2">
-        <div class="qi"><h4>She asks before she advises</h4><p>ARA begins with observation. Rhyssa reflects this — she slows the conversation down to understand your situation before offering any direction.</p></div>
-        <div class="qi"><h4>She reads rhythm, not just symptoms</h4><p>A yellow leaf in week one means something different than in month six. Rhyssa reads pattern and context — not only the immediate problem in front of you.</p></div>
-        <div class="qi"><h4>She holds your capacity honestly</h4><p>ARA says capacity shapes sustainability. Rhyssa remembers this — she won't guide you toward something your real life cannot support.</p></div>
-        <div class="qi"><h4>She doesn't create urgency</h4><p>Living systems move slowly. Rhyssa moves with them — she won't make you feel that something is more critical than it actually is.</p></div>
-        <div class="qi"><h4>She is not a search engine</h4><p>She doesn't retrieve facts. She reasons about your specific situation — adapting to where you are right now, with the tank you actually have.</p></div>
+        <div class="qi"><h4>She asks before she advises</h4><p>ARA begins with observation. So does Rhyssa. She slows the conversation down to understand your actual situation before she offers any direction.</p></div>
+        <div class="qi"><h4>She reads context, not just symptoms</h4><p>A yellow leaf in week one means something very different than in month six. Rhyssa reads pattern and timing — not just the thing you're worried about right now.</p></div>
+        <div class="qi"><h4>She respects your real life</h4><p>ARA says capacity shapes sustainability. Rhyssa holds that honestly — she won't guide you toward something your actual life can't support long term.</p></div>
+        <div class="qi"><h4>She doesn't manufacture urgency</h4><p>Living systems move slowly. Rhyssa moves with them. She won't make you feel like everything is critical — because usually, it isn't.</p></div>
+        <div class="qi"><h4>She reasons, she doesn't just retrieve</h4><p>She's not a search engine. She thinks about your specific situation — the tank you actually have, the stage you're actually at, right now.</p></div>
       </div>
     </div>
   </section>
-  <section class="ctasec pad"><span class="ey ey-t sr">You've met her. Now begin.</span><h2 class="dmd sr d1" style="color:rgba(255,255,255,.65)">When you are ready,<br>she will be there.</h2><p class="bt sr d2" style="max-width:400px;margin:0 auto 2.5rem">Rhyssa is free to use. No account needed. Begin at your own pace — with the tank you have, and the questions you're carrying.</p><a href="/start" class="btn bf sr d3" style="display:inline-block" data-page="start">Begin the Journey →</a></section>
-  <footer><a href="/" class="fl" data-page="home">Aquatic <em>Rhythm</em></a><span class="fm">A system for living water</span><div class="fr"><a href="/start" data-page="start">Begin the Journey →</a></div></footer>
+  <section class="psec" style="padding-top:0">
+    <div class="cap pad">
+      <div class="snb sr">
+        <span class="ey" style="margin-bottom:.9rem">A few honest things about Rhyssa</span>
+        <p class="snt">Rhyssa is an AI — she reads what you write and responds based on how she's been trained in ARA. She doesn't see your tank. She doesn't know your water, your fish, or your space. And like any AI, she can sometimes get things wrong.<br><br>What she offers is something different — a trained way of thinking, a gentle frame for slowing down, and a space where your questions are taken seriously. She's not a replacement for an experienced aquarist or a hands-on expert. But for most of the moments where you're unsure, overwhelmed, or just need to think something through? She's a genuinely good place to start.<br><br>She also won't remember you between conversations — each session begins fresh. So bring your context with you, and she'll meet you where you are.</p>
+      </div>
+    </div>
+  </section>
+  <section class="ctasec pad" style="position:relative;overflow:hidden;padding-bottom:7rem">
+    <div class="str sr1"></div><div class="str sr2"></div><div class="str sr3"></div><div class="str sr4"></div><div class="str sr5"></div>
+    <div style="position:relative;z-index:2">
+      <span class="ey ey-t sr">Whenever you're ready</span>
+      <h2 class="dmd sr d1" style="color:rgba(255,255,255,.78)">She's already<br>there.</h2>
+      <p class="bt sr d2" style="max-width:420px;margin:1.2rem auto 0">Free to use. No account needed. Bring whatever you've got — the messy tank, the half-formed question, the thing you're not sure how to say.</p>
+      <p class="bt sr d3" style="max-width:420px;margin:.8rem auto 0;color:rgba(255,255,255,.3);font-style:italic;font-family:var(--serif)">Starting slowly is already the right pace.</p>
+      <div class="sr d4" style="margin-top:2.5rem">
+        <a href="https://chatgpt.com/g/g-699693b8fd4881919538441b15f73c2c-rhyssa-aquarium-companion" class="btn bf" style="font-size:.78rem;padding:1.1rem 3rem" target="_blank" rel="noopener">Talk with Rhyssa</a>
+      </div>
+      <div class="stpaths sr d5" style="margin-top:4rem;text-align:left">
+        <a href="https://chatgpt.com/g/g-699693b8fd4881919538441b15f73c2c-rhyssa-aquarium-companion" class="spp" target="_blank" rel="noopener"><span class="spg">I.</span><h4>Explore</h4><p>I'm new. I want to understand how to begin — without getting ahead of myself.</p></a>
+        <a href="https://chatgpt.com/g/g-699693b8fd4881919538441b15f73c2c-rhyssa-aquarium-companion" class="spp" target="_blank" rel="noopener"><span class="spg">II.</span><h4>Build</h4><p>I have a vision for a tank. I want to know if I'm ready — and how to build something that lasts.</p></a>
+        <a href="https://chatgpt.com/g/g-699693b8fd4881919538441b15f73c2c-rhyssa-aquarium-companion" class="spp" target="_blank" rel="noopener"><span class="spg">III.</span><h4>Understand</h4><p>Something in my tank isn't right. I need to see it more clearly before I do anything.</p></a>
+      </div>
+      <p class="stco sr" style="margin-top:3rem">Rhyssa is in early access, shaped by ARA.<br>She's a work in progress — and so are we.</p>
+    </div>
+  </section>
+  <footer><a href="/" class="fl" data-page="home">Aquatic <em>Rhythm</em></a><span class="fm">A system for living water</span><div class="fr"><a href="/ara" data-page="ara">The Framework →</a></div></footer>
 </div></div>
-
-<!-- HOW IT HELPS -->
+</main>
 <div id="pg-helps" class="page"><div class="pl">
   <section class="helph pad cap">
-    <div class="sr"><span class="ey">Real situations</span><h1 class="dlg" style="color:rgba(255,255,255,.75)">How ARA reads<br>real situations</h1></div>
-    <div class="sr d2" style="padding-top:1rem"><p class="bt">Three different keepers. Three different moments. This is how ARA approaches each one — not with a fixed answer, but with a different question.</p></div>
+    <div class="sr"><span class="ey">Real situations</span><h1 class="dlg" style="color:rgba(255,255,255,.75)">ARA in the<br>real world</h1></div>
+    <div class="sr d2" style="padding-top:1rem"><p class="bt">Three different keepers. Three different moments. This is how ARA reads each one — not with a fixed answer, but with the right question.</p></div>
   </section>
   <section class="scns pad cap">
     <div class="scn sr">
-      <div class="scl"><div class="scnum">01</div><span class="scty">When everything feels confusing</span><h2 class="sctit">You've read a lot, and you're more uncertain than when you started.</h2><div class="scv"><p>"I've gone through so many forums and videos. Everyone says something different. I don't know where to begin. I'm scared I'll kill everything before I even start properly."</p></div><p class="bt">The keeper isn't lacking intelligence. They are carrying too much at once, without a frame to hold any of it. Information without context accumulates as anxiety — and leads to decisions made from fear rather than clarity.</p></div>
-      <div class="scr"><div class="rhr"><p>ARA doesn't begin with information. It begins with the situation. Before anything else is introduced, it asks: what is actually true here, right now? The noise settles when there is a frame — not more data, but a way of reading what is already present.</p></div><p class="sco">The result is not that the keeper knows everything about aquariums. It is that they know their next step. That is enough to begin.</p><p class="sco">ARA's first principle — <em>observation before correction</em> — means nothing is fixed until it is first understood.</p></div>
+      <div class="scl"><div class="scnum">01</div><span class="scty">When everything feels confusing</span><h2 class="sctit">You've done the research. Somehow you feel less certain than before.</h2><div class="scv"><p>"I've been through forums, videos, guides. Everyone says something different. I don't know where to start. I'm scared I'll kill everything before I figure it out."</p></div><p class="bt">This keeper isn't short on effort. They're short on a frame. Information without structure doesn't build knowledge — it builds dread. And dread leads to decisions made from fear, not clarity.</p></div>
+      <div class="scr"><div class="rhr"><p>ARA doesn't begin with more information. It begins with the situation. Before anything else, it asks: what is actually true here, right now? When there's a frame, the noise settles — not because you know more, but because you know what to look at.</p></div><p class="sco">The goal isn't to know everything about aquariums. It's to know your next step. That's always enough to begin.</p><p class="sco">ARA's fourth principle — <em>observation before correction</em> — means nothing gets touched until it's first understood.</p></div>
     </div>
     <div class="scn sr">
-      <div class="scl"><div class="scnum">02</div><span class="scty">When you want to build something</span><h2 class="sctit">You have a vision for a tank. You're not sure if you're ready for it.</h2><div class="scv"><p>"I want to build an iwagumi — clean stone layout, shrimp, maybe nano fish. I've had a community tank for about a year. I don't know if this is realistic for where I am."</p></div><p class="bt">This is where many keepers make their most costly mistakes. Not because the vision is wrong — but because the gap between where they are and where they want to be hasn't been mapped honestly.</p><p class="bt" style="margin-top:1rem">ARA doesn't say no. It asks what version of this vision can genuinely be kept alive given the life the keeper actually has.</p></div>
-      <div class="scr"><div class="rhr"><p>ARA's second principle — <em>capacity before ambition</em> — maps vision against reality. It asks: on an average week, how much time genuinely exists for this system? Not the time you'd like to have. The time that's actually there. The answer shapes everything that follows.</p></div><p class="sco">Sometimes the result is the original vision, confirmed. Sometimes it is a version that can actually survive the life the keeper has.</p><p class="sco">Either way, the system is built on honest ground — and that is what makes it last.</p></div>
+      <div class="scl"><div class="scnum">02</div><span class="scty">When you want to build something</span><h2 class="sctit">You have a vision. You're not sure if you're ready for it.</h2><div class="scv"><p>"I want to do an iwagumi — clean stones, shrimp, maybe nano fish. I've had a community tank about a year. I honestly don't know if I'm ready."</p></div><p class="bt">This is where the most costly mistakes happen. Not because the vision is wrong — but because the distance between where you are and where you want to be hasn't been looked at honestly.</p><p class="bt" style="margin-top:1rem">ARA doesn't say no. It asks what version of this vision your real life can genuinely keep alive.</p></div>
+      <div class="scr"><div class="rhr"><p>ARA's second principle — <em>capacity before ambition</em> — maps vision against reality. Not the time you'd like to have. The time that's actually there, on an ordinary week. That answer shapes everything.</p></div><p class="sco">Sometimes the answer confirms the original vision. Sometimes it finds the version that actually survives.</p><p class="sco">Either way, you're building on honest ground — and that's what makes anything last.</p></div>
     </div>
     <div class="scn sr">
-      <div class="scl"><div class="scnum">03</div><span class="scty">When something feels off</span><h2 class="sctit">The numbers look fine. But the tank doesn't feel right.</h2><div class="scv"><p>"Parameters are where they should be. But something has changed. The fish seem quieter. The plants have slowed. I can't point to anything specific."</p></div><p class="bt">The measurable things look fine. But the system is sending a signal that parameters don't capture. A living system communicates through behaviour, colour, and growth rhythm — and these often tell the real story before the chemistry shifts.</p><p class="bt" style="margin-top:1rem">ARA recognises this as an observation moment, not a correction moment.</p></div>
-      <div class="scr"><div class="rhr"><p>ARA's first principle applies here directly: <em>timing before technique</em>. The instinct is to act. But the aligned response is to look more carefully — at what changed recently, however small. A new plant. A shift in the light schedule. A change in feeding time.</p></div><p class="sco">What the keeper is sensing is real information. It simply hasn't become visible in the numbers yet.</p><p class="sco">In many cases, no intervention is needed. The system is adjusting. ARA helps the keeper stay with what they see — long enough to understand it before they disturb it.</p></div>
+      <div class="scl"><div class="scnum">03</div><span class="scty">When something feels off</span><h2 class="sctit">Everything measures fine. But your tank doesn't feel right.</h2><div class="scv"><p>"Parameters are where they should be. But something has changed. The fish are quieter. Plants have slowed. I can't point to anything specific."</p></div><p class="bt">The measurable things look fine. But this tank is sending a signal that numbers don't capture. Fish behaviour, colour, the rhythm of growth — these tell the real story, often before the chemistry shifts.</p><p class="bt" style="margin-top:1rem">ARA reads this as an observation moment — not a correction moment.</p></div>
+      <div class="scr"><div class="rhr"><p>ARA's first principle applies directly: <em>timing before technique</em>. The instinct is to act. But the aligned response is to look more carefully — at what changed recently, however small. A new plant. A shift in the light schedule. A different feeding time.</p></div><p class="sco">What you're sensing is real information. It just hasn't appeared in the numbers yet.</p><p class="sco">In many cases, nothing needs to be done. The system is adjusting. ARA helps you stay with what you're seeing long enough to understand it — before you disturb it.</p></div>
     </div>
   </section>
-  <section class="ctasec pad"><span class="ey ey-t sr">Now — who brings all this to life?</span><h2 class="dmd sr d1" style="color:rgba(255,255,255,.65)">Meet the companion<br>trained in ARA.</h2><p class="bt sr d2">Rhyssa is how ARA speaks to you — in conversation, with your specific situation, at your own pace.</p><a href="/rhyssa" class="btn bf sr d3" style="margin-top:1rem;display:inline-block" data-page="rhyssa">Meet Rhyssa →</a></section>
+  <section class="ctasec pad"><span class="ey ey-t sr">Now meet who brings this to life</span><h2 class="dmd sr d1" style="color:rgba(255,255,255,.65)">The companion<br>trained in ARA.</h2><p class="bt sr d2">Rhyssa brings ARA into conversation — with your specific situation, your specific tank, at whatever pace feels right.</p><a href="/rhyssa" class="btn bf sr d3" style="margin-top:1rem;display:inline-block" data-page="rhyssa">Meet Rhyssa →</a></section>
   <footer><a href="/" class="fl" data-page="home">Aquatic <em>Rhythm</em></a><span class="fm">A system for living water</span><div class="fr"><a href="/rhyssa" data-page="rhyssa">Meet Rhyssa →</a></div></footer>
 </div></div>
 
-<!-- BEGIN THE JOURNEY PAGE -->
-<div id="pg-start" class="page"><div class="pl">
-  <section class="stpg pad">
-    <div class="str sr1"></div><div class="str sr2"></div><div class="str sr3"></div><div class="str sr4"></div><div class="str sr5"></div>
-    <div class="stin">
-      <span class="starr sr">You have come to the right place.</span>
-      <h1 class="dxl sr d1">Begin the<br><em>Journey.</em></h1>
-      <p class="bt sr d2" style="margin-top:1.6rem">You have read about the rhythm. You have seen the framework. You have met Rhyssa. Now — the next step is simply to begin a conversation.</p>
-      <p class="bt sr d3">She will meet you where you are. With the tank you have, the questions you're carrying, and no expectation that you already know the right words.</p>
-      <p class="bt sr d4" style="margin-top:1rem;color:rgba(255,255,255,.3);font-style:italic;font-family:var(--serif)">Free to use. No account needed. Start slowly — that is already the right pace.</p>
-      <div class="sr d5" style="margin-top:3rem">
-        <a href="https://chatgpt.com/g/g-699693b8fd4881919538441b15f73c2c-rhyssa-aquarium-companion" class="btn bf" style="font-size:.78rem;padding:1.1rem 3rem" target="_blank" rel="noopener">Talk with Rhyssa</a>
-      </div>
-      <div class="stpaths sr" style="margin-top:4rem">
-        <a href="https://chatgpt.com/g/g-699693b8fd4881919538441b15f73c2c-rhyssa-aquarium-companion" class="spp" target="_blank" rel="noopener"><span class="spg">I.</span><h4>Explore</h4><p>I'm new and want to understand how to begin — without moving faster than my system can follow.</p></a>
-        <a href="https://chatgpt.com/g/g-699693b8fd4881919538441b15f73c2c-rhyssa-aquarium-companion" class="spp" target="_blank" rel="noopener"><span class="spg">II.</span><h4>Build</h4><p>I have a vision for a tank. I want to know if I'm ready — and how to design it to last.</p></a>
-        <a href="https://chatgpt.com/g/g-699693b8fd4881919538441b15f73c2c-rhyssa-aquarium-companion" class="spp" target="_blank" rel="noopener"><span class="spg">III.</span><h4>Understand</h4><p>Something in my tank isn't right. I need to see it more clearly before I do anything.</p></a>
-      </div>
-      <p class="stco sr">Rhyssa carries ARA into every conversation.<br>The system adapts to wherever you begin.</p>
-    </div>
-  </section>
-  <footer>
-    <a href="/" class="fl" data-page="home">Aquatic <em>Rhythm</em></a>
-    <span class="fm">A system for living water</span>
-    <div class="fr"><a href="/ara" data-page="ara">The Framework →</a></div>
-  </footer>
-</div></div>
 </main>
 
 <script>
