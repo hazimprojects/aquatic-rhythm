@@ -7,6 +7,23 @@
 <meta name="description" content="Aquatic Rhythm helps people understand, build, and stabilise aquarium ecosystems through ARA — Aquatic Rhythm Alignment.">
 <meta name="google-site-verification" content="YNg85UJRTB6NR2wdMs_txYDIzi4yu4n8UUU7V9Xoobw" />
 <link rel="canonical" href="https://aquaticrhythm.com/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aquaticrhythm.com/">
+<meta property="og:title" content="Aquatic Rhythm — A System for Living Water">
+<meta property="og:description" content="Your tank has a rhythm. ARA is a framework that helps you read it — and keep in step with it. Meet Rhyssa, your aquarium companion.">
+<meta property="og:image" content="https://aquaticrhythm.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Aquatic Rhythm">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://aquaticrhythm.com/">
+<meta name="twitter:title" content="Aquatic Rhythm — A System for Living Water">
+<meta name="twitter:description" content="Your tank has a rhythm. ARA is a framework that helps you read it — and keep in step with it.">
+<meta name="twitter:image" content="https://aquaticrhythm.com/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet">
 <style>
@@ -303,6 +320,28 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
 .spp p{font-size:.8rem;font-weight:300;color:rgba(255,255,255,.42);line-height:1.68}
 .stco{margin-top:4rem;font-family:var(--serif);font-style:italic;font-size:.92rem;color:rgba(255,255,255,.3);line-height:1.75}
 
+/* PRIVACY POLICY PAGE */
+.privh{padding:12rem clamp(1.5rem,5vw,4.5rem) 4rem}
+.privbody{max-width:720px;padding:0 clamp(1.5rem,5vw,4.5rem) 9rem}
+.privsec{margin-bottom:3.5rem}
+.privsec h3{font-family:var(--serif);font-size:1.15rem;font-weight:400;color:rgba(255,255,255,.78);margin-bottom:.9rem;padding-bottom:.7rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.privsec p{font-size:.92rem;font-weight:300;color:rgba(255,255,255,.52);line-height:2;margin-bottom:.8rem}
+.privsec ul{list-style:none;margin:.5rem 0 .8rem 0}
+.privsec ul li{font-size:.92rem;font-weight:300;color:rgba(255,255,255,.48);line-height:1.9;padding-left:1.2rem;position:relative}
+.privsec ul li::before{content:'—';position:absolute;left:0;color:rgba(139,189,210,.4)}
+.privdate{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-top:.8rem;display:block}
+
+/* ABOUT PAGE */
+.abouth{padding:12rem clamp(1.5rem,5vw,4.5rem) 6rem}
+.aboutg{display:grid;grid-template-columns:1fr 1.2fr;gap:8rem;align-items:start;margin-top:4rem}
+.aboutq{font-family:var(--serif);font-size:clamp(1.4rem,2.2vw,2.1rem);font-weight:300;line-height:1.5;color:rgba(255,255,255,.82)}
+.aboutq em{font-style:italic;color:rgba(139,189,210,.75)}
+.aboutdiv{display:flex;flex-direction:column;gap:3rem}
+.aboutblock{padding-top:2.2rem;border-top:1px solid rgba(255,255,255,.07)}
+.aboutblock h4{font-family:var(--serif);font-size:1.05rem;font-weight:400;color:rgba(255,255,255,.75);margin-bottom:.7rem}
+.aboutblock p{font-size:.95rem;font-weight:300;color:rgba(255,255,255,.52);line-height:1.95}
+@media(max-width:960px){.aboutg{grid-template-columns:1fr;gap:3rem}}
+
 /* FOOTER */padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:2rem;border-top:1px solid rgba(255,255,255,.06)}
 .fl{font-family:var(--serif);font-size:.95rem;font-weight:300;color:rgba(255,255,255,.35);text-decoration:none}
 .fl em{font-style:italic;color:rgba(139,189,210,.5)}
@@ -413,6 +452,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
     <li><a href="/ara" data-page="ara">The Framework</a></li>
     <li><a href="/helps" data-page="helps">How It Helps</a></li>
     <li><a href="/rhyssa" data-page="rhyssa">Meet Rhyssa</a></li>
+    <li><a href="/about" data-page="about">About</a></li>
   </ul>
   <button class="nbg" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
 </nav>
@@ -434,6 +474,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
     <li><a href="/ara" data-page="ara">The Framework</a></li>
     <li><a href="/helps" data-page="helps">How It Helps</a></li>
     <li><a href="/rhyssa" data-page="rhyssa">Meet Rhyssa</a></li>
+    <li><a href="/about" data-page="about">About</a></li>
+    <li><a href="/privacy" data-page="privacy" style="color:rgba(255,255,255,.2)">Privacy Policy</a></li>
   </ul>
 </div>
 
@@ -497,6 +539,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
     <span class="fm">A system for living water</span>
     <div class="fr"><a href="/ara" data-page="ara">The Framework →</a></div>
   </footer>
+  <div style="text-align:center;padding:.8rem clamp(1.5rem,5vw,4.5rem) 1.5rem;border-top:1px solid rgba(255,255,255,.03)">
+    <a href="/privacy" data-page="privacy" style="font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.18);text-decoration:none">Privacy Policy</a>
+    <span style="color:rgba(255,255,255,.1);margin:0 .8rem">·</span>
+    <a href="mailto:aquaticrhythm.ai@gmail.com" style="font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.18);text-decoration:none">Contact</a>
+  </div>
 </div></div>
 
 <!-- ARA PAGE -->
@@ -632,6 +679,124 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
     </div>
   </section>
   <section class="ctasec pad"><span class="ey ey-t sr">Now meet who brings this to life</span><h2 class="dmd sr d1" style="color:rgba(255,255,255,.65)">The companion<br>trained in ARA.</h2><p class="bt sr d2">Rhyssa brings ARA into conversation — with your specific situation, your specific tank, at whatever pace feels right.</p><a href="/rhyssa" class="btn bf sr d3" style="margin-top:1rem;display:inline-block" data-page="rhyssa">Meet Rhyssa →</a></section>
+  <footer><a href="/" class="fl" data-page="home">Aquatic <em>Rhythm</em></a><span class="fm">A system for living water</span><div class="fr"><a href="/rhyssa" data-page="rhyssa">Meet Rhyssa →</a></div></footer>
+</div></div>
+<!-- PRIVACY POLICY PAGE -->
+<div id="pg-privacy" class="page"><div class="pl">
+  <section class="privh pad cap">
+    <div class="sr">
+      <span class="ey">Legal</span>
+      <h1 class="dlg" style="color:rgba(255,255,255,.78)">Privacy Policy</h1>
+      <span class="privdate">Last updated: March 2026</span>
+    </div>
+  </section>
+  <div class="privbody cap">
+
+    <div class="privsec sr">
+      <h3>Overview</h3>
+      <p>Aquatic Rhythm is a small, independent project. We are committed to being transparent about how this website works and what happens to any information you share with us. This policy explains what data is collected, by whom, and how it is used.</p>
+      <p>If you have any questions, you can reach us at <a href="mailto:aquaticrhythm.ai@gmail.com" style="color:rgba(139,189,210,.7);text-decoration:none">aquaticrhythm.ai@gmail.com</a></p>
+    </div>
+
+    <div class="privsec sr">
+      <h3>Information we collect directly</h3>
+      <p>Aquatic Rhythm does not require you to create an account. However, we may collect information in the following ways:</p>
+      <ul>
+        <li><strong style="color:rgba(255,255,255,.6)">Email contact</strong> — if you write to us at aquaticrhythm.ai@gmail.com, we receive your email address and the content of your message. We use this only to respond to you.</li>
+        <li><strong style="color:rgba(255,255,255,.6)">Feedback or survey forms</strong> — if we introduce a feedback form in the future, we will update this policy to reflect what is collected and how it is used.</li>
+      </ul>
+      <p>We do not sell, share, or use your personal information for marketing purposes.</p>
+    </div>
+
+    <div class="privsec sr">
+      <h3>Third-party services</h3>
+      <p>This website uses several third-party services that may collect data independently according to their own privacy policies. We have no control over that data.</p>
+      <ul>
+        <li><strong style="color:rgba(255,255,255,.6)">GitHub Pages</strong> — hosts this website. GitHub may collect server logs including your IP address and browser information. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener" style="color:rgba(139,189,210,.6);text-decoration:none">GitHub's Privacy Statement</a>.</li>
+        <li><strong style="color:rgba(255,255,255,.6)">ChatGPT / OpenAI</strong> — Rhyssa is accessed through ChatGPT. Any conversation you have with Rhyssa is subject to <a href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener" style="color:rgba(139,189,210,.6);text-decoration:none">OpenAI's Privacy Policy</a>. We do not receive or store your conversations.</li>
+        <li><strong style="color:rgba(255,255,255,.6)">YouTube</strong> — the optional ambient music player on this site loads a YouTube video. If you activate it, YouTube may collect data in accordance with <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="color:rgba(139,189,210,.6);text-decoration:none">Google's Privacy Policy</a>. The player does not load unless you press the Music button.</li>
+        <li><strong style="color:rgba(255,255,255,.6)">Google Search Console</strong> — used to monitor how this site appears in Google Search. This tool collects aggregated, anonymised data about search performance. No individual user data is visible to us.</li>
+      </ul>
+    </div>
+
+    <div class="privsec sr">
+      <h3>Cookies</h3>
+      <p>Aquatic Rhythm does not use its own cookies. However, third-party services embedded in this site — particularly YouTube when activated — may set cookies on your device. You can manage or disable cookies through your browser settings.</p>
+    </div>
+
+    <div class="privsec sr">
+      <h3>Your rights</h3>
+      <p>If you are located in the European Union, United Kingdom, or other regions with data protection laws, you may have rights regarding your personal data — including the right to access, correct, or delete information we hold about you.</p>
+      <p>As we collect very little personal data directly, the most likely scenario is that you have contacted us by email. In that case, you may request that we delete your correspondence by writing to us at <a href="mailto:aquaticrhythm.ai@gmail.com" style="color:rgba(139,189,210,.7);text-decoration:none">aquaticrhythm.ai@gmail.com</a>.</p>
+    </div>
+
+    <div class="privsec sr">
+      <h3>Children</h3>
+      <p>This website is not directed at children under the age of 13. We do not knowingly collect personal information from children.</p>
+    </div>
+
+    <div class="privsec sr">
+      <h3>Changes to this policy</h3>
+      <p>As Aquatic Rhythm grows, this policy may be updated to reflect new features or services. The date at the top of this page will always show when it was last revised. We encourage you to check back occasionally.</p>
+    </div>
+
+  </div>
+  <footer><a href="/" class="fl" data-page="home">Aquatic <em>Rhythm</em></a><span class="fm">A system for living water</span><div class="fr"><a href="/about" data-page="about">About →</a></div></footer>
+</div></div>
+
+<!-- ABOUT PAGE -->
+<div id="pg-about" class="page"><div class="pl">
+  <section class="abouth pad cap">
+    <div class="sr">
+      <span class="ey">About Aquatic Rhythm</span>
+      <h1 class="dlg" style="color:rgba(255,255,255,.78)">Where this<br>came from.</h1>
+    </div>
+    <div class="aboutg">
+      <div class="sr d1">
+        <p class="aboutq">This didn't begin with a framework.<br>It began with <em>a tank, and a person</em> who didn't always have enough left to tend it.</p>
+      </div>
+      <div class="aboutdiv sr d2">
+
+        <div class="aboutblock">
+          <h4>The honest beginning</h4>
+          <p>Aquatic Rhythm came from real experience — not theory. From years of keeping aquariums with genuine care, and from noticing that care doesn't always stay consistent. There were phases of full attention. Phases of pulling back. Phases of not checking the tank for days, then returning with guilt. Phases of wanting to start over.</p>
+          <p style="margin-top:.9rem">What became clear, slowly, is that this is not a rare failure. It is a rhythm many people live through — and almost no one in the hobby talks about it honestly.</p>
+        </div>
+
+        <div class="aboutblock">
+          <h4>The silence this responds to</h4>
+          <p>The internet has no shortage of aquarium information. What it rarely holds is the full picture of what it actually feels like to be the person keeping the tank — the overwhelm, the guilt when the rhythm breaks, the over-correcting, the quiet hope that things can still be recovered.</p>
+          <p style="margin-top:.9rem">Aquatic Rhythm was created in response to that silence. Not to add more noise or more urgency — but to offer something the hobby tends to move past too quickly: honesty, gentleness, and a clearer way of seeing.</p>
+        </div>
+
+        <div class="aboutblock">
+          <h4>A different way of seeing the tank</h4>
+          <p>An aquarium is not only a technical system. It is a living relationship between water, ecology, time, and human capacity. The person keeping the tank is part of that ecosystem — not a stable external variable, but someone whose energy, mood, and bandwidth shape everything that happens inside the glass.</p>
+          <p style="margin-top:.9rem">This means that problems in a tank are not always caused by carelessness. Sometimes they come from misalignment — between what the system needs and what the keeper honestly has to give at that moment in their life.</p>
+          <p style="margin-top:.9rem">ARA was built around that understanding.</p>
+        </div>
+
+        <div class="aboutblock">
+          <h4>Why Rhyssa exists</h4>
+          <p>Rhyssa is not just a tool. She is a companion for the parts of this hobby that the usual sources tend to skip — the uncertainty, the doubt, the feeling that you have fallen behind, the desire to begin again.</p>
+          <p style="margin-top:.9rem">She is there for what the internet often moves past too quickly. Not a voice of hard authority, but a calm, honest presence — one that listens before it advises, and holds space for where you actually are.</p>
+        </div>
+
+        <div class="aboutblock">
+          <h4>What this project is</h4>
+          <p>Aquatic Rhythm is small and independent. It is not a company. It exists because someone believed that people who care about their tanks deserve more than parameter charts and correction protocols — they deserve to feel understood, and to feel that there is still hope in the hobby, even after a long stretch away from it.</p>
+          <p style="margin-top:.9rem">This project exists so that fewer people give up on something they genuinely love — simply because no one acknowledged the reality of keeping it.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <section class="ctasec pad">
+    <span class="ey ey-t sr">Still here. Still growing.</span>
+    <h2 class="dmd sr d1" style="color:rgba(255,255,255,.65)">The framework is open.<br>Start wherever you are.</h2>
+    <p class="bt sr d2" style="max-width:420px;margin:0 auto 2rem">Whether you're just beginning, rebuilding after a long break, or simply trying to understand what your tank is telling you — there is a place for you here.</p>
+    <a href="/ara" class="btn bf sr d3" style="display:inline-block" data-page="ara">Explore the Framework →</a>
+  </section>
   <footer><a href="/" class="fl" data-page="home">Aquatic <em>Rhythm</em></a><span class="fm">A system for living water</span><div class="fr"><a href="/rhyssa" data-page="rhyssa">Meet Rhyssa →</a></div></footer>
 </div></div>
 
