@@ -66,8 +66,14 @@ body.hov #cr{width:48px;height:48px;border-color:rgba(100,230,180,0.18)}
 
 /* PAGE LAYER — always above fish, bubbles, and eco */
 /* ── Z-INDEX STACK ── */
-#pl{position:relative;z-index:10}
-#app-main{position:relative;z-index:10}
+#eco{position:fixed;inset:0;z-index:0}
+#fish-layer{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+#bubble-layer{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+#app-main{position:relative;z-index:20;isolation:isolate}
+#pl{position:relative;z-index:1}
+.page{position:relative;z-index:1}
+nav{position:fixed;z-index:800}
+#music-btn{z-index:850}
 
 /* ── TEXT PROTECTION — one unified rule across all pages ──
    A single soft dark veil on every content section.
@@ -318,13 +324,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
 .fr a{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.28);text-decoration:none;transition:color .3s}
 .fr a:hover{color:rgba(139,189,210,.65)}
 
-/* FISH — behind all page content */
-#fish-layer{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+/* FISH */
 .fish{position:absolute;pointer-events:none;will-change:transform}
 .fish svg{display:block}
 
-/* CURSOR BUBBLES — behind page content */
-#bubble-layer{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+/* CURSOR BUBBLES */
 .cbubble{position:fixed;border-radius:50%;border:1px solid rgba(200,228,240,.55);background:rgba(200,228,240,.08);pointer-events:none;animation:bubrise linear forwards}
 @keyframes bubrise{
   0%  {opacity:0;transform:translateY(0) translateX(0) scale(1)}
