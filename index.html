@@ -8,10 +8,11 @@
 <meta name="google-site-verification" content="YNg85UJRTB6NR2wdMs_txYDIzi4yu4n8UUU7V9Xoobw" />
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Crect x='0' y='0' width='44' height='44' rx='9' fill='%23041e28'/%3E%3Cg transform='translate(0 0.2)'%3E%3Cpath d='M8 22 C11 16 15 16 18 22 C21 28 25 28 28 22' stroke='%233cd2e1' stroke-opacity='.78' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3Cellipse cx='18' cy='22' rx='4.4' ry='2.6' fill='%233cd2e1' fill-opacity='.46'/%3E%3Cpath d='M13.5 22 L10.8 19.5 L10.8 24.5 Z' fill='%233cd2e1' fill-opacity='.4'/%3E%3Ccircle cx='21.2' cy='21.05' r='1' fill='white' fill-opacity='.58'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Crect x='0' y='0' width='44' height='44' rx='9' fill='%23041e28'/%3E%3Cg transform='translate(0 0.2)'%3E%3Cpath d='M8 22 C11 16 15 16 18 22 C21 28 25 28 28 22' stroke='%233cd2e1' stroke-opacity='.78' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3Cellipse cx='18' cy='22' rx='4.4' ry='2.6' fill='%233cd2e1' fill-opacity='.46'/%3E%3Cpath d='M13.5 22 L10.8 19.5 L10.8 24.5 Z' fill='%233cd2e1' fill-opacity='.4'/%3E%3Ccircle cx='21.2' cy='21.05' r='1' fill='white' fill-opacity='.58'/%3E%3C/g%3E%3C/svg%3E">
+<!-- Untuk Google Search paparkan favicon: upload favicon.png (48x48) ke root repo -->
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon.png">
+<link rel="apple-touch-icon" sizes="192x192" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#041e28">
 <link rel="canonical" href="https://aquaticrhythm.com/">
-
-<!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aquaticrhythm.com/">
 <meta property="og:title" content="Aquatic Rhythm — A System for Living Water">
@@ -20,15 +21,15 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="Aquatic Rhythm">
-
-<!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://aquaticrhythm.com/">
 <meta name="twitter:title" content="Aquatic Rhythm — A System for Living Water">
 <meta name="twitter:description" content="Your tank has a rhythm. ARA is a framework that helps you read it — and keep in step with it.">
 <meta name="twitter:image" content="https://aquaticrhythm.com/og-image.png">
+<!-- OPTIMIZED: async font loading — tidak lagi render-blocking -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet"></noscript>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{font-size:16px}
@@ -52,23 +53,12 @@ body.hov #cd{transform:translate(-50%,-50%) scale(2.2);background:rgba(100,230,1
 body.hov #cr{width:48px;height:48px;border-color:rgba(100,230,180,0.18)}
 
 /* ECOSYSTEM FIXED BG */
-#eco{position:fixed;inset:0;z-index:0;overflow:hidden}
+#eco{position:fixed;inset:0;z-index:0;overflow:hidden;contain:layout style}
 .wb{position:absolute;inset:0;background:linear-gradient(180deg,#052535 0%,#073040 18%,#062a38 38%,#041e28 58%,#030f18 78%,#020810 100%)}
 .cl{position:absolute;top:0;left:0;right:0;height:60%;background:radial-gradient(ellipse at 50% 0%,rgba(60,200,220,.14) 0%,rgba(20,140,180,.08) 38%,transparent 72%);animation:caustic 14s ease-in-out infinite}
-@keyframes caustic{
-  0%  {transform:scaleX(1) translateX(0);    opacity:.55}
-  20% {transform:scaleX(1.18) translateX(4%); opacity:1}
-  45% {transform:scaleX(.88) translateX(-3%); opacity:.38}
-  70% {transform:scaleX(1.12) translateX(2%); opacity:.9}
-  100%{transform:scaleX(1) translateX(0);    opacity:.55}
-}
+@keyframes caustic{0%{transform:scaleX(1) translateX(0);opacity:.55}20%{transform:scaleX(1.18) translateX(4%);opacity:1}45%{transform:scaleX(.88) translateX(-3%);opacity:.38}70%{transform:scaleX(1.12) translateX(2%);opacity:.9}100%{transform:scaleX(1) translateX(0);opacity:.55}}
 .cl2{position:absolute;top:0;left:-10%;right:-10%;height:45%;background:radial-gradient(ellipse at 40% 0%,rgba(40,180,200,.08) 0%,transparent 60%);animation:caustic2 19s ease-in-out infinite 3s}
-@keyframes caustic2{
-  0%  {opacity:.2;transform:translateX(0) scaleX(1)}
-  35% {opacity:.7;transform:translateX(8%) scaleX(1.2)}
-  65% {opacity:.15;transform:translateX(-5%) scaleX(.85)}
-  100%{opacity:.2;transform:translateX(0) scaleX(1)}
-}
+@keyframes caustic2{0%{opacity:.2;transform:translateX(0) scaleX(1)}35%{opacity:.7;transform:translateX(8%) scaleX(1.2)}65%{opacity:.15;transform:translateX(-5%) scaleX(.85)}100%{opacity:.2;transform:translateX(0) scaleX(1)}}
 .sl{position:absolute;top:0;left:-20%;right:-20%;height:1px;background:linear-gradient(to right,transparent,rgba(80,220,235,.65),transparent);animation:surfsh 8s ease-in-out infinite}
 @keyframes surfsh{0%,100%{transform:translateX(-8%) scaleX(.8);opacity:.35}50%{transform:translateX(8%) scaleX(1.2);opacity:.9}}
 .df{position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(to top,rgba(2,8,16,.88),transparent)}
@@ -77,41 +67,34 @@ body.hov #cr{width:48px;height:48px;border-color:rgba(100,230,180,0.18)}
 .plant-layer{position:absolute;bottom:0;left:0;right:0;height:70%;pointer-events:none}
 .plant{position:absolute;bottom:0;transform-origin:bottom center}
 @keyframes psway{0%,100%{transform:rotate(var(--sa))}50%{transform:rotate(var(--sb))}}
-.mote{position:absolute;border-radius:50%;background:rgba(80,220,240,.55);animation:mrise linear infinite;pointer-events:none}
+.mote{position:absolute;border-radius:50%;background:rgba(80,220,240,.55);animation:mrise linear infinite;pointer-events:none;will-change:transform,opacity}
 @keyframes mrise{0%{opacity:0;transform:translateY(0) translateX(0)}5%{opacity:var(--mo)}90%{opacity:calc(var(--mo)*.4)}100%{opacity:0;transform:translateY(var(--mr)) translateX(var(--md))}}
-.spk{position:absolute;border-radius:50%;background:rgba(60,200,180,.35);animation:sdrift ease-in-out infinite alternate;pointer-events:none}
+.spk{position:absolute;border-radius:50%;background:rgba(60,200,180,.35);animation:sdrift ease-in-out infinite alternate;pointer-events:none;will-change:transform,opacity}
 @keyframes sdrift{from{transform:translate(0,0);opacity:.1}to{transform:translate(var(--sx),var(--sy));opacity:.55}}
-
-/* DRIFTWOOD */
 #driftwood-layer{position:absolute;bottom:0;left:0;right:0;height:55%;pointer-events:none}
 
-/* PAGE LAYER — always above fish, bubbles, and eco */
-/* ── Z-INDEX STACK ── */
-#eco{position:fixed;inset:0;z-index:0}
-#fish-layer{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
-#bubble-layer{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+/* Z-INDEX STACK */
+#fish-layer{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1;contain:strict;will-change:contents}
+#bubble-layer{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1;contain:strict}
 #app-main{position:relative;z-index:20;isolation:isolate}
 #pl{position:relative;z-index:1}
 .page{position:relative;z-index:1}
 nav{position:fixed;z-index:800}
 #music-btn{z-index:850}
 
-/* ── TEXT PROTECTION — hanya pada elemen teks, bukan seluruh page ── */
-.ht,.pst,.bt,.hk,.api,.rhd,.apq,.snt,.sco,.stit,.starr,.stco{
-  text-shadow:0 1px 12px rgba(3,9,8,.9), 0 0 32px rgba(3,9,8,.7);
-}
-.dxl,.dlg,.dmd,.rhtit{
-  text-shadow:0 2px 16px rgba(3,9,8,.95), 0 0 48px rgba(3,9,8,.8);
-}
-.pc,.snb,.eg,.scv,.rhr,.qi,.pb{
-  background:rgba(6,14,11,.72);
-}
+/* FISH */
+.fish{position:absolute;pointer-events:none;will-change:transform,left,top;contain:layout style size}
+.fish svg{display:block}
+
+/* TEXT PROTECTION */
+.ht,.pst,.bt,.hk,.api,.rhd,.apq,.snt,.sco,.stit,.starr,.stco{text-shadow:0 1px 12px rgba(3,9,8,.9),0 0 32px rgba(3,9,8,.7)}
+.dxl,.dlg,.dmd,.rhtit{text-shadow:0 2px 16px rgba(3,9,8,.95),0 0 48px rgba(3,9,8,.8)}
+.pc,.snb,.eg,.scv,.rhr,.qi,.pb{background:rgba(6,14,11,.72)}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.5rem,5vw,4.5rem);background:linear-gradient(to bottom,rgba(3,18,30,.88),transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .nl{display:flex;align-items:center;text-decoration:none;transition:opacity .3s}
 .nl:hover{opacity:.75}
-.nl svg text{transition:fill .3s}
 .nlinks{display:flex;gap:2.6rem;list-style:none}
 .nlinks a{font-size:.63rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .3s;position:relative}
 .nlinks a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:rgba(60,210,225,.6);transition:width .35s var(--ease)}
@@ -190,7 +173,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
 @keyframes sd{0%,100%{transform:scaleY(1) translateY(0);opacity:.5}50%{transform:scaleY(.6) translateY(8px);opacity:1}}
 
 /* PROBLEM */
-.psec{padding:9rem clamp(1.5rem,5vw,4.5rem)}
+.psec{padding:9rem clamp(1.5rem,5vw,4.5rem);content-visibility:auto;contain-intrinsic-size:0 500px}
 .pst{font-family:var(--serif);font-size:clamp(1.6rem,2.5vw,2.5rem);font-weight:300;line-height:1.38;color:rgba(255,255,255,.88);max-width:660px}
 .pst em{font-style:italic;color:rgba(139,189,210,.9)}
 .pcards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(139,189,210,.06);margin-top:5rem}
@@ -203,7 +186,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
 .pc p{font-size:.88rem;font-weight:300;color:rgba(255,255,255,.55);line-height:1.85}
 
 /* ARA SECTION */
-.arasec{padding:9rem clamp(1.5rem,5vw,4.5rem)}
+.arasec{padding:9rem clamp(1.5rem,5vw,4.5rem);content-visibility:auto;contain-intrinsic-size:0 500px}
 .arah{display:grid;grid-template-columns:1fr 1.1fr;gap:7rem;margin-bottom:6rem;align-items:end}
 .aragrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(157,191,154,.06)}
 .ac{padding:2.4rem 1.8rem;background:rgba(6,16,13,.55);backdrop-filter:blur(10px);position:relative;overflow:hidden;transition:background .35s}
@@ -215,7 +198,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
 .ac p{font-size:.86rem;font-weight:300;color:rgba(255,255,255,.5);line-height:1.75}
 
 /* SYSTEM */
-.syssec{padding:9rem clamp(1.5rem,5vw,4.5rem)}
+.syssec{padding:9rem clamp(1.5rem,5vw,4.5rem);content-visibility:auto;contain-intrinsic-size:0 600px}
 .sysin{display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:center}
 .stit{font-family:var(--serif);font-weight:300;font-size:clamp(2.4rem,3.8vw,4.2rem);line-height:1.12;color:rgba(255,255,255,.9);margin:1.4rem 0 2rem}
 .stit em{font-style:italic;color:rgba(139,189,210,.75)}
@@ -234,18 +217,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
 .snt em{font-style:normal;color:rgba(139,189,210,.75)}
 
 /* CTA */
-.ctasec{padding:9rem clamp(1.5rem,5vw,4.5rem);text-align:center}
+.ctasec{padding:9rem clamp(1.5rem,5vw,4.5rem);text-align:center;content-visibility:auto;contain-intrinsic-size:0 400px}
 .ctasec .dmd{color:rgba(255,255,255,.68);max-width:500px;margin:1.2rem auto 1.5rem}
 .ctasec .bt{max-width:380px;margin:0 auto 3rem}
 
 /* ARA PAGE */
 .araph{padding:12rem clamp(1.5rem,5vw,4.5rem) 7rem;display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:end}
 .api{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(1rem,1.4vw,1.18rem);color:rgba(255,255,255,.58);line-height:1.85;margin-top:1.8rem}
-.adefs{padding:7rem clamp(1.5rem,5vw,4.5rem)}
+.adefs{padding:7rem clamp(1.5rem,5vw,4.5rem);content-visibility:auto;contain-intrinsic-size:0 500px}
 .adg{display:grid;grid-template-columns:1fr 1.4fr;gap:8rem;align-items:start;margin-top:4rem}
 .apq{font-family:var(--serif);font-size:clamp(1.5rem,2.3vw,2.3rem);font-weight:300;line-height:1.45;color:rgba(255,255,255,.82)}
 .apq strong{font-weight:400;font-style:italic;color:rgba(139,189,210,.88)}
-.prins{padding:5rem clamp(1.5rem,5vw,4.5rem) 9rem}
+.prins{padding:5rem clamp(1.5rem,5vw,4.5rem) 9rem;content-visibility:auto;contain-intrinsic-size:0 900px}
 .pb{display:grid;grid-template-columns:60px 200px 1fr;gap:4.5rem;padding:4.5rem 0;align-items:start;border-bottom:1px solid rgba(255,255,255,.06)}
 .pb:last-child{border-bottom:none}
 .pnl{font-family:var(--serif);font-size:3.5rem;font-weight:300;color:rgba(60,210,225,.35);line-height:1}
@@ -254,7 +237,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
 .eg{margin-top:1.6rem;padding:1.2rem 1.5rem;border-left:1px solid rgba(139,189,210,.22);background:rgba(58,110,140,.07)}
 .egtag{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(139,189,210,.65);display:block;margin-bottom:.45rem}
 .eg p{font-family:var(--serif);font-style:italic;font-size:.92rem;color:rgba(255,255,255,.52);line-height:1.75}
-.cmps{padding:7rem clamp(1.5rem,5vw,4.5rem) 9rem}
+.cmps{padding:7rem clamp(1.5rem,5vw,4.5rem) 9rem;content-visibility:auto;contain-intrinsic-size:0 500px}
 .ctab{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(139,189,210,.06);margin-top:4rem}
 .cc{padding:3rem;background:rgba(6,16,13,.6)}
 .ccb{background:rgba(58,110,140,.08)}
@@ -274,7 +257,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
 .rhtit em{font-style:italic;color:rgba(139,189,210,.78)}
 .rhd{font-size:.97rem;font-weight:300;color:rgba(255,255,255,.55);line-height:2;max-width:420px;margin-bottom:2.8rem}
 .orblg{position:relative;width:360px;height:360px;display:flex;align-items:center;justify-content:center;margin:0 auto}
-.qsec{padding:7rem clamp(1.5rem,5vw,4.5rem) 9rem}
+.qsec{padding:7rem clamp(1.5rem,5vw,4.5rem) 9rem;content-visibility:auto;contain-intrinsic-size:0 600px}
 .qg{display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:start}
 .qis{display:flex;flex-direction:column}
 .qi{padding:1.8rem 0 1.8rem 2rem;border-left:1px solid rgba(139,189,210,.12);transition:border-color .3s,padding-left .35s var(--ease)}
@@ -285,7 +268,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
 
 /* HELPS PAGE */
 .helph{padding:12rem clamp(1.5rem,5vw,4.5rem) 6rem}
-.scns{padding:0 clamp(1.5rem,5vw,4.5rem) 9rem}
+.scns{padding:0 clamp(1.5rem,5vw,4.5rem) 9rem;content-visibility:auto;contain-intrinsic-size:0 1200px}
 .scn{display:grid;grid-template-columns:1fr 1fr;gap:8rem;padding:6rem 0;border-bottom:1px solid rgba(255,255,255,.06);align-items:start}
 .scn:last-child{border-bottom:none}
 .scn:nth-child(even) .scl{order:2}
@@ -323,7 +306,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
 .spp p{font-size:.8rem;font-weight:300;color:rgba(255,255,255,.42);line-height:1.68}
 .stco{margin-top:4rem;font-family:var(--serif);font-style:italic;font-size:.92rem;color:rgba(255,255,255,.3);line-height:1.75}
 
-/* PRIVACY POLICY PAGE */
+/* PRIVACY / TERMS */
 .privh{padding:12rem clamp(1.5rem,5vw,4.5rem) 4rem}
 .privbody{max-width:720px;padding:0 clamp(1.5rem,5vw,4.5rem) 9rem}
 .privsec{margin-bottom:3.5rem}
@@ -343,7 +326,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
 .aboutblock{padding-top:2.2rem;border-top:1px solid rgba(255,255,255,.07)}
 .aboutblock h4{font-family:var(--serif);font-size:1.05rem;font-weight:400;color:rgba(255,255,255,.75);margin-bottom:.7rem}
 .aboutblock p{font-size:.95rem;font-weight:300;color:rgba(255,255,255,.52);line-height:1.95}
-@media(max-width:960px){.aboutg{grid-template-columns:1fr;gap:3rem}}
 
 /* FOOTER */
 footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:2rem;border-top:1px solid rgba(255,255,255,.06)}
@@ -358,44 +340,27 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
 .fr a{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.28);text-decoration:none;transition:color .3s}
 .fr a:hover{color:rgba(139,189,210,.65)}
 
-/* FISH */
-.fish{position:absolute;pointer-events:none;will-change:transform}
-.fish svg{display:block}
-
 /* CURSOR BUBBLES */
 .cbubble{position:fixed;border-radius:50%;border:1px solid rgba(200,228,240,.55);background:rgba(200,228,240,.08);pointer-events:none;animation:bubrise linear forwards}
-@keyframes bubrise{
-  0%  {opacity:0;transform:translateY(0) translateX(0) scale(1)}
-  10% {opacity:.9}
-  80% {opacity:.5}
-  100%{opacity:0;transform:translateY(var(--brise)) translateX(var(--bdrift)) scale(.6)}
-}
+@keyframes bubrise{0%{opacity:0;transform:translateY(0) translateX(0) scale(1)}10%{opacity:.9}80%{opacity:.5}100%{opacity:0;transform:translateY(var(--brise)) translateX(var(--bdrift)) scale(.6)}}
 
 /* MUSIC BUTTON */
-#music-btn{
-  position:fixed;bottom:2rem;right:2rem;z-index:850;
-  display:flex;align-items:center;gap:.5rem;
-  background:rgba(6,16,13,.75);
-  border:1px solid rgba(139,189,210,.18);
-  color:rgba(139,189,210,.65);
-  padding:.55rem 1rem .55rem .8rem;
-  border-radius:100px;
-  font-family:var(--sans);font-size:.6rem;
-  letter-spacing:.14em;text-transform:uppercase;
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  transition:background .3s,border-color .3s,color .3s;
-}
+#music-btn{position:fixed;bottom:2rem;right:2rem;z-index:850;display:flex;align-items:center;gap:.5rem;background:rgba(6,16,13,.75);border:1px solid rgba(139,189,210,.18);color:rgba(139,189,210,.65);padding:.55rem 1rem .55rem .8rem;border-radius:100px;font-family:var(--sans);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:background .3s,border-color .3s,color .3s}
 #music-btn:hover{background:rgba(9,22,18,.9);border-color:rgba(139,189,210,.35);color:rgba(139,189,210,.9)}
 #music-btn.playing{border-color:rgba(157,191,154,.4);color:rgba(157,191,154,.8)}
-#music-btn.playing:hover{border-color:rgba(157,191,154,.6)}
-.mb-icon{font-size:.85rem;line-height:1;display:inline-block;transition:transform .4s var(--ease)}
+.mb-icon{font-size:.85rem;line-height:1;display:inline-block}
 #music-btn.playing .mb-icon{animation:noteFloat 2s ease-in-out infinite}
 @keyframes noteFloat{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-3px) rotate(8deg)}}
 
 /* RESPONSIVE */
 @media(max-width:960px){
   .nlinks{display:none}.nbg{display:flex}.ncta{display:none}
-  .hi,.arah,.sysin,.araph,.adg,.rhg,.qg,.scn{grid-template-columns:1fr;gap:3.5rem}
+  .hi,.arah,.sysin,.araph,.adg,.rhg,.qg,.scn,.aboutg{grid-template-columns:1fr;gap:2.5rem}
+  .aboutg{margin-top:2rem}
+  .abouth{padding:8rem clamp(1.5rem,5vw,4.5rem) 3rem}
+  .aboutq{font-size:clamp(1.3rem,5.5vw,1.9rem);line-height:1.4}
+  .aboutblock p{font-size:.9rem}
+  .aboutdiv{gap:2rem}
   .hoz{display:none}
   .hi{padding:6rem 0 4rem}
   .pcards{grid-template-columns:1fr}
@@ -407,35 +372,32 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
   .orblg{width:220px;height:220px}
   footer{grid-template-columns:1fr;text-align:center}.fr{justify-content:center}
 }
-@media(max-width:560px){
-  .aragrid{grid-template-columns:1fr}.dxl{font-size:2.9rem}
+@media(max-width:560px){.aragrid{grid-template-columns:1fr}.dxl{font-size:2.9rem}}
+@media(hover:hover) and (pointer:fine){body,.btn,.spp,.nbg,#music-btn{cursor:none}}
+@media(hover:none),(pointer:coarse){#cd,#cr{display:none!important}}
+@media(max-width:960px){
+  #bubble-layer,.cl2,.spk{display:none}
+  #driftwood-layer{opacity:.5}
+  .mote{opacity:.35!important}
+  .ray{opacity:.35!important}
+  .cl{animation-duration:20s}
 }
-@media (hover: hover) and (pointer: fine) {
-  body, .btn, .spp, .nbg, #music-btn { cursor: none; }
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  #cd,#cr,#eco,.cl,.cl2,.sl,.ray,.plant,.mote,.spk,.str,.or,.oc,.on,.sline,.sr{animation:none!important;transition:none!important}
 }
-@media (hover: none), (pointer: coarse) {
-  #cd, #cr { display: none !important; }
-}
-@media (max-width: 960px) {
-  #bubble-layer, .cl2, .spk { display: none; }
-  #driftwood-layer { opacity: .5; }
-  .mote { opacity: .35 !important; }
-  .ray  { opacity: .35 !important; }
-}
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after { animation: none !important; transition: none !important; }
-  #cd, #cr, #eco, .cl, .cl2, .sl, .ray, .plant,
-  .mote, .spk, .str, .or, .oc, .on, .sline, .sr {
-    animation: none !important; transition: none !important;
-  }
+
+/* PERFORMANCE: hapus backdrop-filter mahal pada tier rendah */
+.tier-low .pc,.tier-low .ac,.tier-low .sl2,.tier-low .spp,
+.tier-low .ncta,.tier-low .snb,.tier-low .bf{
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important
 }
 </style>
 </head>
 <body>
 <div id="cd" aria-hidden="true"></div><div id="cr" aria-hidden="true"></div>
 
-<!-- LIVING ECOSYSTEM -->
 <div id="eco" aria-hidden="true">
   <div class="wb"></div>
   <div class="cl"></div>
@@ -448,20 +410,16 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
   <div id="particles"></div>
 </div>
 
-<!-- Fish and bubbles as fixed overlays — outside #eco so coords = viewport -->
 <div id="fish-layer" aria-hidden="true"></div>
 <div id="bubble-layer" aria-hidden="true"></div>
 
-<!-- NAV -->
 <nav>
   <a href="/" class="nl" data-page="home" aria-label="Aquatic Rhythm — Home">
     <svg width="175" height="30" viewBox="0 0 175 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- R1: one clean wave cycle, minimal fish -->
       <path d="M2 15 C5 8.5 9 8.5 12 15 C15 21.5 19 21.5 22 15" stroke="rgba(60,210,225,0.72)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
       <ellipse cx="12" cy="15" rx="3.8" ry="2.2" fill="rgba(60,210,225,0.4)"/>
       <path d="M8.2 15 L6 12.5 L6 17.5 Z" fill="rgba(60,210,225,0.36)"/>
       <circle cx="14.8" cy="14.2" r=".85" fill="rgba(255,255,255,0.52)"/>
-      <!-- Wordmark -->
       <text x="32" y="13" font-family="DM Sans,system-ui,sans-serif" font-size="6" font-weight="300" fill="rgba(255,255,255,.42)" letter-spacing="2.5">AQUATIC</text>
       <text x="32" y="27" font-family="Cormorant Garamond,Georgia,serif" font-size="17" font-weight="300" font-style="italic" fill="rgba(255,255,255,.82)">Rhythm</text>
     </svg>
@@ -475,18 +433,15 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
   </ul>
   <button class="nbg" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
 </nav>
-<!-- Music toggle button -->
+
 <button id="music-btn" type="button" aria-label="Toggle music" aria-pressed="false" title="Toggle music">
   <span class="mb-icon">♪</span>
   <span class="mb-label">Music</span>
 </button>
 <div style="position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;bottom:0;right:0">
-  <iframe id="yt-frame" title="Ambient background music player"
-    src="about:blank"
-    allow="autoplay"
-    style="width:200px;height:200px">
-  </iframe>
+  <iframe id="yt-frame" title="Ambient background music player" src="about:blank" allow="autoplay" style="width:200px;height:200px"></iframe>
 </div>
+
 <div class="nmob" id="nmob" aria-hidden="true">
   <ul>
     <li><a href="/" data-page="home">Living Water</a></li>
@@ -499,8 +454,8 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
   </ul>
 </div>
 
-<!-- HOME -->
 <main id="app-main">
+<!-- HOME -->
 <div id="pg-home" class="page active"><div class="pl">
   <section class="hero pad">
     <div class="hi cap">
@@ -535,10 +490,7 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
   <section class="arasec pad">
     <div class="cap">
       <div class="arah">
-        <div class="sr">
-          <span class="ey">A different approach</span>
-          <h2 class="dlg" style="color:rgba(255,255,255,.78)">Aquatic Rhythm<br>is a way of<br>reading your tank.</h2>
-        </div>
+        <div class="sr"><span class="ey">A different approach</span><h2 class="dlg" style="color:rgba(255,255,255,.78)">Aquatic Rhythm<br>is a way of<br>reading your tank.</h2></div>
         <div class="sr d2">
           <p class="bt">Not a list of tips. Not another troubleshooting guide. A way of understanding the relationship between a living system, its natural pace, and the person tending it.</p>
           <p class="bt">When that relationship clicks — when your timing, your energy, and your tank's rhythm are actually aligned — things settle. Not because you did more. Because you stopped doing the wrong things at the wrong moments.</p>
@@ -560,12 +512,9 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
     <div class="fr"><a href="/ara" data-page="ara">The Framework →</a></div>
   </footer>
   <div class="subfooter">
-    <a href="/privacy" data-page="privacy" class="sflink">Privacy Policy</a>
-    <span class="sfdot">·</span>
-    <a href="/terms" data-page="terms" class="sflink">Terms of Use</a>
-    <span class="sfdot">·</span>
-    <a href="/about" data-page="about" class="sflink">About</a>
-    <span class="sfdot">·</span>
+    <a href="/privacy" data-page="privacy" class="sflink">Privacy Policy</a><span class="sfdot">·</span>
+    <a href="/terms" data-page="terms" class="sflink">Terms of Use</a><span class="sfdot">·</span>
+    <a href="/about" data-page="about" class="sflink">About</a><span class="sfdot">·</span>
     <a href="mailto:aquaticrhythm.ai@gmail.com" class="sflink">Contact</a>
   </div>
 </div></div>
@@ -618,12 +567,9 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
   <section class="ctasec pad"><span class="ey ey-t sr">See it in the real world</span><h2 class="dmd sr d1" style="color:rgba(255,255,255,.65)">How does ARA read<br>real situations?</h2><p class="bt sr d2">Three different keepers. Three different moments. One framework that reads each one differently — and knows what each actually needs.</p><a href="/helps" class="btn bf sr d3" style="margin-top:1rem;display:inline-block" data-page="helps">How It Helps →</a></section>
   <footer><a href="/" class="fl" data-page="home">Aquatic <em>Rhythm</em></a><span class="fm">A system for living water</span><div class="fr"><a href="/helps" data-page="helps">How It Helps →</a></div></footer>
   <div class="subfooter">
-    <a href="/privacy" data-page="privacy" class="sflink">Privacy Policy</a>
-    <span class="sfdot">·</span>
-    <a href="/terms" data-page="terms" class="sflink">Terms of Use</a>
-    <span class="sfdot">·</span>
-    <a href="/about" data-page="about" class="sflink">About</a>
-    <span class="sfdot">·</span>
+    <a href="/privacy" data-page="privacy" class="sflink">Privacy Policy</a><span class="sfdot">·</span>
+    <a href="/terms" data-page="terms" class="sflink">Terms of Use</a><span class="sfdot">·</span>
+    <a href="/about" data-page="about" class="sflink">About</a><span class="sfdot">·</span>
     <a href="mailto:aquaticrhythm.ai@gmail.com" class="sflink">Contact</a>
   </div>
 </div></div>
@@ -690,8 +636,16 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
     </div>
   </section>
   <footer><a href="/" class="fl" data-page="home">Aquatic <em>Rhythm</em></a><span class="fm">A system for living water</span><div class="fr"><a href="/ara" data-page="ara">The Framework →</a></div></footer>
+  <div class="subfooter">
+    <a href="/privacy" data-page="privacy" class="sflink">Privacy Policy</a><span class="sfdot">·</span>
+    <a href="/terms" data-page="terms" class="sflink">Terms of Use</a><span class="sfdot">·</span>
+    <a href="/about" data-page="about" class="sflink">About</a><span class="sfdot">·</span>
+    <a href="mailto:aquaticrhythm.ai@gmail.com" class="sflink">Contact</a>
+  </div>
 </div></div>
 </main>
+
+<!-- HELPS PAGE -->
 <div id="pg-helps" class="page"><div class="pl">
   <section class="helph pad cap">
     <div class="sr"><span class="ey">Real situations</span><h1 class="dlg" style="color:rgba(255,255,255,.75)">ARA in the<br>real world</h1></div>
@@ -714,194 +668,61 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
   <section class="ctasec pad"><span class="ey ey-t sr">Now meet who brings this to life</span><h2 class="dmd sr d1" style="color:rgba(255,255,255,.65)">The companion<br>trained in ARA.</h2><p class="bt sr d2">Rhyssa brings ARA into conversation — with your specific situation, your specific tank, at whatever pace feels right.</p><a href="/rhyssa" class="btn bf sr d3" style="margin-top:1rem;display:inline-block" data-page="rhyssa">Meet Rhyssa →</a></section>
   <footer><a href="/" class="fl" data-page="home">Aquatic <em>Rhythm</em></a><span class="fm">A system for living water</span><div class="fr"><a href="/rhyssa" data-page="rhyssa">Meet Rhyssa →</a></div></footer>
   <div class="subfooter">
-    <a href="/privacy" data-page="privacy" class="sflink">Privacy Policy</a>
-    <span class="sfdot">·</span>
-    <a href="/terms" data-page="terms" class="sflink">Terms of Use</a>
-    <span class="sfdot">·</span>
-    <a href="/about" data-page="about" class="sflink">About</a>
-    <span class="sfdot">·</span>
+    <a href="/privacy" data-page="privacy" class="sflink">Privacy Policy</a><span class="sfdot">·</span>
+    <a href="/terms" data-page="terms" class="sflink">Terms of Use</a><span class="sfdot">·</span>
+    <a href="/about" data-page="about" class="sflink">About</a><span class="sfdot">·</span>
     <a href="mailto:aquaticrhythm.ai@gmail.com" class="sflink">Contact</a>
   </div>
 </div></div>
-<!-- TERMS OF USE PAGE -->
+
+<!-- TERMS PAGE -->
 <div id="pg-terms" class="page"><div class="pl">
   <section class="privh pad cap">
-    <div class="sr">
-      <span class="ey">Legal</span>
-      <h1 class="dlg" style="color:rgba(255,255,255,.78)">Terms of Use</h1>
-      <span class="privdate">Last updated: March 2026</span>
-    </div>
+    <div class="sr"><span class="ey">Legal</span><h1 class="dlg" style="color:rgba(255,255,255,.78)">Terms of Use</h1><span class="privdate">Last updated: March 2026</span></div>
   </section>
   <div class="privbody cap">
-
-    <div class="privsec sr">
-      <h3>Overview</h3>
-      <p>By using this website and the Rhyssa AI companion, you agree to these terms. Aquatic Rhythm is a small, independent project provided in good faith. Please read this briefly — it is written plainly, not in legal jargon.</p>
-    </div>
-
-    <div class="privsec sr">
-      <h3>What Aquatic Rhythm offers</h3>
-      <p>Aquatic Rhythm provides a framework called ARA — Aquatic Rhythm Alignment — and access to Rhyssa, an AI companion trained in that framework. Everything here is offered for informational and educational purposes only.</p>
-      <p>Rhyssa is an AI language system. Her responses are generated based on training and context, not professional expertise. She is not a licensed veterinarian, aquatic biologist, or certified aquarium professional.</p>
-    </div>
-
-    <div class="privsec sr">
-      <h3>No professional advice</h3>
-      <p>Nothing on this website or in any conversation with Rhyssa constitutes professional advice of any kind — including but not limited to veterinary, medical, legal, or financial advice.</p>
-      <p>If your fish or aquatic animals are ill or in distress, please consult a qualified veterinarian or aquatic specialist. Rhyssa can offer perspective and a framework for thinking — she cannot diagnose, prescribe, or replace professional judgment.</p>
-    </div>
-
-    <div class="privsec sr">
-      <h3>AI limitations</h3>
-      <p>Rhyssa can be wrong. Like all AI systems, she may produce inaccurate, incomplete, or outdated information. You are responsible for evaluating her responses critically before acting on them. Aquatic Rhythm accepts no liability for decisions made based on Rhyssa's responses.</p>
-      <p>Conversations with Rhyssa take place on an external platform. By using Rhyssa, you also agree to the terms of that platform.</p>
-    </div>
-
-    <div class="privsec sr">
-      <h3>Intellectual property</h3>
-      <p>The ARA framework, the content of this website, and the name Aquatic Rhythm are the intellectual property of this project. You may share and reference them freely for personal, educational, or non-commercial purposes, with attribution. Commercial use requires prior permission.</p>
-    </div>
-
-    <div class="privsec sr">
-      <h3>Limitation of liability</h3>
-      <p>Aquatic Rhythm is provided as-is, without warranties of any kind. We are not liable for any direct, indirect, or incidental damages arising from your use of this website or Rhyssa — including any harm to your aquatic animals or equipment resulting from advice followed.</p>
-    </div>
-
-    <div class="privsec sr">
-      <h3>Changes to these terms</h3>
-      <p>These terms may be updated as Aquatic Rhythm grows. The date at the top of this page reflects the most recent revision. Continued use of this website after changes constitutes acceptance of the updated terms.</p>
-      <p>Questions? Write to us at <a href="mailto:aquaticrhythm.ai@gmail.com" style="color:rgba(139,189,210,.7);text-decoration:none">aquaticrhythm.ai@gmail.com</a></p>
-    </div>
-
+    <div class="privsec sr"><h3>Overview</h3><p>By using this website and the Rhyssa AI companion, you agree to these terms. Aquatic Rhythm is a small, independent project provided in good faith. Please read this briefly — it is written plainly, not in legal jargon.</p></div>
+    <div class="privsec sr"><h3>What Aquatic Rhythm offers</h3><p>Aquatic Rhythm provides a framework called ARA — Aquatic Rhythm Alignment — and access to Rhyssa, an AI companion trained in that framework. Everything here is offered for informational and educational purposes only.</p><p>Rhyssa is an AI language system. Her responses are generated based on training and context, not professional expertise. She is not a licensed veterinarian, aquatic biologist, or certified aquarium professional.</p></div>
+    <div class="privsec sr"><h3>No professional advice</h3><p>Nothing on this website or in any conversation with Rhyssa constitutes professional advice of any kind — including but not limited to veterinary, medical, legal, or financial advice.</p><p>If your fish or aquatic animals are ill or in distress, please consult a qualified veterinarian or aquatic specialist. Rhyssa can offer perspective and a framework for thinking — she cannot diagnose, prescribe, or replace professional judgment.</p></div>
+    <div class="privsec sr"><h3>AI limitations</h3><p>Rhyssa can be wrong. Like all AI systems, she may produce inaccurate, incomplete, or outdated information. You are responsible for evaluating her responses critically before acting on them. Aquatic Rhythm accepts no liability for decisions made based on Rhyssa's responses.</p><p>Conversations with Rhyssa take place on an external platform. By using Rhyssa, you also agree to the terms of that platform.</p></div>
+    <div class="privsec sr"><h3>Intellectual property</h3><p>The ARA framework, the content of this website, and the name Aquatic Rhythm are the intellectual property of this project. You may share and reference them freely for personal, educational, or non-commercial purposes, with attribution. Commercial use requires prior permission.</p></div>
+    <div class="privsec sr"><h3>Limitation of liability</h3><p>Aquatic Rhythm is provided as-is, without warranties of any kind. We are not liable for any direct, indirect, or incidental damages arising from your use of this website or Rhyssa — including any harm to your aquatic animals or equipment resulting from advice followed.</p></div>
+    <div class="privsec sr"><h3>Changes to these terms</h3><p>These terms may be updated as Aquatic Rhythm grows. The date at the top of this page reflects the most recent revision. Continued use of this website after changes constitutes acceptance of the updated terms.</p><p>Questions? Write to us at <a href="mailto:aquaticrhythm.ai@gmail.com" style="color:rgba(139,189,210,.7);text-decoration:none">aquaticrhythm.ai@gmail.com</a></p></div>
   </div>
   <footer><a href="/" class="fl" data-page="home">Aquatic <em>Rhythm</em></a><span class="fm">A system for living water</span><div class="fr"><a href="/privacy" data-page="privacy">Privacy Policy →</a></div></footer>
-  <div class="subfooter">
-    <a href="/privacy" data-page="privacy" class="sflink">Privacy Policy</a>
-    <span class="sfdot">·</span>
-    <a href="/terms" data-page="terms" class="sflink">Terms of Use</a>
-    <span class="sfdot">·</span>
-    <a href="/about" data-page="about" class="sflink">About</a>
-    <span class="sfdot">·</span>
-    <a href="mailto:aquaticrhythm.ai@gmail.com" class="sflink">Contact</a>
-  </div>
+  <div class="subfooter"><a href="/privacy" data-page="privacy" class="sflink">Privacy Policy</a><span class="sfdot">·</span><a href="/terms" data-page="terms" class="sflink">Terms of Use</a><span class="sfdot">·</span><a href="/about" data-page="about" class="sflink">About</a><span class="sfdot">·</span><a href="mailto:aquaticrhythm.ai@gmail.com" class="sflink">Contact</a></div>
 </div></div>
 
-<!-- PRIVACY POLICY PAGE -->
+<!-- PRIVACY PAGE -->
 <div id="pg-privacy" class="page"><div class="pl">
   <section class="privh pad cap">
-    <div class="sr">
-      <span class="ey">Legal</span>
-      <h1 class="dlg" style="color:rgba(255,255,255,.78)">Privacy Policy</h1>
-      <span class="privdate">Last updated: March 2026</span>
-    </div>
+    <div class="sr"><span class="ey">Legal</span><h1 class="dlg" style="color:rgba(255,255,255,.78)">Privacy Policy</h1><span class="privdate">Last updated: March 2026</span></div>
   </section>
   <div class="privbody cap">
-
-    <div class="privsec sr">
-      <h3>Overview</h3>
-      <p>Aquatic Rhythm is a small, independent project. We are committed to being transparent about how this website works and what happens to any information you share with us. This policy explains what data is collected, by whom, and how it is used.</p>
-      <p>If you have any questions, you can reach us at <a href="mailto:aquaticrhythm.ai@gmail.com" style="color:rgba(139,189,210,.7);text-decoration:none">aquaticrhythm.ai@gmail.com</a></p>
-    </div>
-
-    <div class="privsec sr">
-      <h3>Information we collect directly</h3>
-      <p>Aquatic Rhythm does not require you to create an account. However, we may collect information in the following ways:</p>
-      <ul>
-        <li><strong style="color:rgba(255,255,255,.6)">Email contact</strong> — if you write to us at aquaticrhythm.ai@gmail.com, we receive your email address and the content of your message. We use this only to respond to you.</li>
-        <li><strong style="color:rgba(255,255,255,.6)">Feedback or survey forms</strong> — if we introduce a feedback form in the future, we will update this policy to reflect what is collected and how it is used.</li>
-      </ul>
-      <p>We do not sell, share, or use your personal information for marketing purposes.</p>
-    </div>
-
-    <div class="privsec sr">
-      <h3>Third-party services</h3>
-      <p>This website uses several third-party services that may collect data independently according to their own privacy policies. We have no control over that data.</p>
-      <ul>
-        <li><strong style="color:rgba(255,255,255,.6)">GitHub Pages</strong> — hosts this website. GitHub may collect server logs including your IP address and browser information. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener" style="color:rgba(139,189,210,.6);text-decoration:none">GitHub's Privacy Statement</a>.</li>
-        <li><strong style="color:rgba(255,255,255,.6)">ChatGPT / OpenAI</strong> — Rhyssa is accessed through ChatGPT. Any conversation you have with Rhyssa is subject to <a href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener" style="color:rgba(139,189,210,.6);text-decoration:none">OpenAI's Privacy Policy</a>. We do not receive or store your conversations.</li>
-        <li><strong style="color:rgba(255,255,255,.6)">YouTube</strong> — the optional ambient music player on this site loads a YouTube video. If you activate it, YouTube may collect data in accordance with <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="color:rgba(139,189,210,.6);text-decoration:none">Google's Privacy Policy</a>. The player does not load unless you press the Music button.</li>
-        <li><strong style="color:rgba(255,255,255,.6)">Google Search Console</strong> — used to monitor how this site appears in Google Search. This tool collects aggregated, anonymised data about search performance. No individual user data is visible to us.</li>
-      </ul>
-    </div>
-
-    <div class="privsec sr">
-      <h3>Cookies</h3>
-      <p>Aquatic Rhythm does not use its own cookies. However, third-party services embedded in this site — particularly YouTube when activated — may set cookies on your device. You can manage or disable cookies through your browser settings.</p>
-    </div>
-
-    <div class="privsec sr">
-      <h3>Your rights</h3>
-      <p>If you are located in the European Union, United Kingdom, or other regions with data protection laws, you may have rights regarding your personal data — including the right to access, correct, or delete information we hold about you.</p>
-      <p>As we collect very little personal data directly, the most likely scenario is that you have contacted us by email. In that case, you may request that we delete your correspondence by writing to us at <a href="mailto:aquaticrhythm.ai@gmail.com" style="color:rgba(139,189,210,.7);text-decoration:none">aquaticrhythm.ai@gmail.com</a>.</p>
-    </div>
-
-    <div class="privsec sr">
-      <h3>Children</h3>
-      <p>This website is not directed at children under the age of 13. We do not knowingly collect personal information from children.</p>
-    </div>
-
-    <div class="privsec sr">
-      <h3>Changes to this policy</h3>
-      <p>As Aquatic Rhythm grows, this policy may be updated to reflect new features or services. The date at the top of this page will always show when it was last revised. We encourage you to check back occasionally.</p>
-    </div>
-
+    <div class="privsec sr"><h3>Overview</h3><p>Aquatic Rhythm is a small, independent project. We are committed to being transparent about how this website works and what happens to any information you share with us. This policy explains what data is collected, by whom, and how it is used.</p><p>If you have any questions, you can reach us at <a href="mailto:aquaticrhythm.ai@gmail.com" style="color:rgba(139,189,210,.7);text-decoration:none">aquaticrhythm.ai@gmail.com</a></p></div>
+    <div class="privsec sr"><h3>Information we collect directly</h3><p>Aquatic Rhythm does not require you to create an account. However, we may collect information in the following ways:</p><ul><li><strong style="color:rgba(255,255,255,.6)">Email contact</strong> — if you write to us at aquaticrhythm.ai@gmail.com, we receive your email address and the content of your message. We use this only to respond to you.</li><li><strong style="color:rgba(255,255,255,.6)">Feedback or survey forms</strong> — if we introduce a feedback form in the future, we will update this policy to reflect what is collected and how it is used.</li></ul><p>We do not sell, share, or use your personal information for marketing purposes.</p></div>
+    <div class="privsec sr"><h3>Third-party services</h3><p>This website uses several third-party services that may collect data independently according to their own privacy policies. We have no control over that data.</p><ul><li><strong style="color:rgba(255,255,255,.6)">GitHub Pages</strong> — hosts this website. GitHub may collect server logs including your IP address and browser information. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener" style="color:rgba(139,189,210,.6);text-decoration:none">GitHub's Privacy Statement</a>.</li><li><strong style="color:rgba(255,255,255,.6)">ChatGPT / OpenAI</strong> — Rhyssa is accessed through ChatGPT. Any conversation you have with Rhyssa is subject to <a href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener" style="color:rgba(139,189,210,.6);text-decoration:none">OpenAI's Privacy Policy</a>. We do not receive or store your conversations.</li><li><strong style="color:rgba(255,255,255,.6)">YouTube</strong> — the optional ambient music player on this site loads a YouTube video. If you activate it, YouTube may collect data in accordance with <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="color:rgba(139,189,210,.6);text-decoration:none">Google's Privacy Policy</a>. The player does not load unless you press the Music button.</li><li><strong style="color:rgba(255,255,255,.6)">Google Search Console</strong> — used to monitor how this site appears in Google Search. This tool collects aggregated, anonymised data about search performance. No individual user data is visible to us.</li></ul></div>
+    <div class="privsec sr"><h3>Cookies</h3><p>Aquatic Rhythm does not use its own cookies. However, third-party services embedded in this site — particularly YouTube when activated — may set cookies on your device. You can manage or disable cookies through your browser settings.</p></div>
+    <div class="privsec sr"><h3>Your rights</h3><p>If you are located in the European Union, United Kingdom, or other regions with data protection laws, you may have rights regarding your personal data — including the right to access, correct, or delete information we hold about you.</p><p>As we collect very little personal data directly, the most likely scenario is that you have contacted us by email. In that case, you may request that we delete your correspondence by writing to us at <a href="mailto:aquaticrhythm.ai@gmail.com" style="color:rgba(139,189,210,.7);text-decoration:none">aquaticrhythm.ai@gmail.com</a>.</p></div>
+    <div class="privsec sr"><h3>Children</h3><p>This website is not directed at children under the age of 13. We do not knowingly collect personal information from children.</p></div>
+    <div class="privsec sr"><h3>Changes to this policy</h3><p>As Aquatic Rhythm grows, this policy may be updated to reflect new features or services. The date at the top of this page will always show when it was last revised. We encourage you to check back occasionally.</p></div>
   </div>
   <footer><a href="/" class="fl" data-page="home">Aquatic <em>Rhythm</em></a><span class="fm">A system for living water</span><div class="fr"><a href="/about" data-page="about">About →</a></div></footer>
-  <div class="subfooter">
-    <a href="/privacy" data-page="privacy" class="sflink">Privacy Policy</a>
-    <span class="sfdot">·</span>
-    <a href="/terms" data-page="terms" class="sflink">Terms of Use</a>
-    <span class="sfdot">·</span>
-    <a href="/about" data-page="about" class="sflink">About</a>
-    <span class="sfdot">·</span>
-    <a href="mailto:aquaticrhythm.ai@gmail.com" class="sflink">Contact</a>
-  </div>
+  <div class="subfooter"><a href="/privacy" data-page="privacy" class="sflink">Privacy Policy</a><span class="sfdot">·</span><a href="/terms" data-page="terms" class="sflink">Terms of Use</a><span class="sfdot">·</span><a href="/about" data-page="about" class="sflink">About</a><span class="sfdot">·</span><a href="mailto:aquaticrhythm.ai@gmail.com" class="sflink">Contact</a></div>
 </div></div>
 
 <!-- ABOUT PAGE -->
 <div id="pg-about" class="page"><div class="pl">
   <section class="abouth pad cap">
-    <div class="sr">
-      <span class="ey">About Aquatic Rhythm</span>
-      <h1 class="dlg" style="color:rgba(255,255,255,.78)">Where this<br>came from.</h1>
-    </div>
+    <div class="sr"><span class="ey">About Aquatic Rhythm</span><h1 class="dlg" style="color:rgba(255,255,255,.78)">Where this<br>came from.</h1></div>
     <div class="aboutg">
-      <div class="sr d1">
-        <p class="aboutq">This didn't begin with a framework.<br>It began with <em>a tank, and a person</em> who didn't always have enough left to tend it.</p>
-      </div>
-      <div class="aboutdiv sr d2">
-
-        <div class="aboutblock">
-          <h4>The honest beginning</h4>
-          <p>Aquatic Rhythm came from real experience — not theory. From years of keeping aquariums with genuine care, and from noticing that care doesn't always stay consistent. There were phases of full attention. Phases of pulling back. Phases of not checking the tank for days, then returning with guilt. Phases of wanting to start over.</p>
-          <p style="margin-top:.9rem">What became clear, slowly, is that this is not a rare failure. It is a rhythm many people live through — and almost no one in the hobby talks about it honestly.</p>
-        </div>
-
-        <div class="aboutblock">
-          <h4>The silence this responds to</h4>
-          <p>The internet has no shortage of aquarium information. What it rarely holds is the full picture of what it actually feels like to be the person keeping the tank — the overwhelm, the guilt when the rhythm breaks, the over-correcting, the quiet hope that things can still be recovered.</p>
-          <p style="margin-top:.9rem">Aquatic Rhythm was created in response to that silence. Not to add more noise or more urgency — but to offer something the hobby tends to move past too quickly: honesty, gentleness, and a clearer way of seeing.</p>
-        </div>
-
-        <div class="aboutblock">
-          <h4>A different way of seeing the tank</h4>
-          <p>An aquarium is not only a technical system. It is a living relationship between water, ecology, time, and human capacity. The person keeping the tank is part of that ecosystem — not a stable external variable, but someone whose energy, mood, and bandwidth shape everything that happens inside the glass.</p>
-          <p style="margin-top:.9rem">This means that problems in a tank are not always caused by carelessness. Sometimes they come from misalignment — between what the system needs and what the keeper honestly has to give at that moment in their life.</p>
-          <p style="margin-top:.9rem">ARA was built around that understanding.</p>
-        </div>
-
-        <div class="aboutblock">
-          <h4>Why Rhyssa exists</h4>
-          <p>Rhyssa is not just a tool. She is a companion for the parts of this hobby that the usual sources tend to skip — the uncertainty, the doubt, the feeling that you have fallen behind, the desire to begin again.</p>
-          <p style="margin-top:.9rem">She is there for what the internet often moves past too quickly. Not a voice of hard authority, but a calm, honest presence — one that listens before it advises, and holds space for where you actually are.</p>
-        </div>
-
-        <div class="aboutblock">
-          <h4>What this project is</h4>
-          <p>Aquatic Rhythm is small and independent. It is not a company. It exists because someone believed that people who care about their tanks deserve more than parameter charts and correction protocols — they deserve to feel understood, and to feel that there is still hope in the hobby, even after a long stretch away from it.</p>
-          <p style="margin-top:.9rem">This project exists so that fewer people give up on something they genuinely love — simply because no one acknowledged the reality of keeping it.</p>
-        </div>
-
+      <div class="sr d1"><p class="aboutq">This didn't begin with a framework.<br>It began with <em>a tank, and a person</em> who didn't always have enough left to tend it.</p></div>
+      <div class="aboutdiv sr">
+        <div class="aboutblock"><h4>The honest beginning</h4><p>Aquatic Rhythm came from real experience — not theory. From years of keeping aquariums with genuine care, and from noticing that care doesn't always stay consistent. There were phases of full attention. Phases of pulling back. Phases of not checking the tank for days, then returning with guilt. Phases of wanting to start over.</p><p style="margin-top:.9rem">What became clear, slowly, is that this is not a rare failure. It is a rhythm many people live through — and almost no one in the hobby talks about it honestly.</p></div>
+        <div class="aboutblock"><h4>The silence this responds to</h4><p>The internet has no shortage of aquarium information. What it rarely holds is the full picture of what it actually feels like to be the person keeping the tank — the overwhelm, the guilt when the rhythm breaks, the over-correcting, the quiet hope that things can still be recovered.</p><p style="margin-top:.9rem">Aquatic Rhythm was created in response to that silence. Not to add more noise or more urgency — but to offer something the hobby tends to move past too quickly: honesty, gentleness, and a clearer way of seeing.</p></div>
+        <div class="aboutblock"><h4>A different way of seeing the tank</h4><p>An aquarium is not only a technical system. It is a living relationship between water, ecology, time, and human capacity. The person keeping the tank is part of that ecosystem — not a stable external variable, but someone whose energy, mood, and bandwidth shape everything that happens inside the glass.</p><p style="margin-top:.9rem">This means that problems in a tank are not always caused by carelessness. Sometimes they come from misalignment — between what the system needs and what the keeper honestly has to give at that moment in their life.</p><p style="margin-top:.9rem">ARA was built around that understanding.</p></div>
+        <div class="aboutblock"><h4>Why Rhyssa exists</h4><p>Rhyssa is not just a tool. She is a companion for the parts of this hobby that the usual sources tend to skip — the uncertainty, the doubt, the feeling that you have fallen behind, the desire to begin again.</p><p style="margin-top:.9rem">She is there for what the internet often moves past too quickly. Not a voice of hard authority, but a calm, honest presence — one that listens before it advises, and holds space for where you actually are.</p></div>
+        <div class="aboutblock"><h4>What this project is</h4><p>Aquatic Rhythm is small and independent. It is not a company. It exists because someone believed that people who care about their tanks deserve more than parameter charts and correction protocols — they deserve to feel understood, and to feel that there is still hope in the hobby, even after a long stretch away from it.</p><p style="margin-top:.9rem">This project exists so that fewer people give up on something they genuinely love — simply because no one acknowledged the reality of keeping it.</p></div>
       </div>
     </div>
   </section>
@@ -912,749 +733,475 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
     <a href="/ara" class="btn bf sr d3" style="display:inline-block" data-page="ara">Explore the Framework →</a>
   </section>
   <footer><a href="/" class="fl" data-page="home">Aquatic <em>Rhythm</em></a><span class="fm">A system for living water</span><div class="fr"><a href="/rhyssa" data-page="rhyssa">Meet Rhyssa →</a></div></footer>
-  <div class="subfooter">
-    <a href="/privacy" data-page="privacy" class="sflink">Privacy Policy</a>
-    <span class="sfdot">·</span>
-    <a href="/terms" data-page="terms" class="sflink">Terms of Use</a>
-    <span class="sfdot">·</span>
-    <a href="/about" data-page="about" class="sflink">About</a>
-    <span class="sfdot">·</span>
-    <a href="mailto:aquaticrhythm.ai@gmail.com" class="sflink">Contact</a>
-  </div>
+  <div class="subfooter"><a href="/privacy" data-page="privacy" class="sflink">Privacy Policy</a><span class="sfdot">·</span><a href="/terms" data-page="terms" class="sflink">Terms of Use</a><span class="sfdot">·</span><a href="/about" data-page="about" class="sflink">About</a><span class="sfdot">·</span><a href="mailto:aquaticrhythm.ai@gmail.com" class="sflink">Contact</a></div>
 </div></div>
 
-</main>
-
 <script>
-/* ══════════════════════════════════════
-   ECOSYSTEM (plants, rays, particles)
-══════════════════════════════════════ */
+/* ── DEVICE TIER ── */
+var TIER=(function(){
+  var cores=navigator.hardwareConcurrency||2;
+  var mem=navigator.deviceMemory||2;
+  var mob=/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+  if(mob&&(cores<=4||mem<=2))return'low';
+  if(mob)return'mid';
+  return'high';
+})();
+if(TIER==='low')document.documentElement.classList.add('tier-low');
+
+var CFG={
+  low: {plants:6, rays:3, motes:6,  sparks:8,  shrimpMax:1,snailMax:0},
+  mid: {plants:10,rays:5, motes:12, sparks:18, shrimpMax:2,snailMax:1},
+  high:{plants:17,rays:8, motes:25, sparks:38, shrimpMax:3,snailMax:1}
+}[TIER];
+
+/* ── PAUSE ON HIDDEN TAB ── */
+var paused=false;
+document.addEventListener('visibilitychange',function(){paused=document.hidden;});
+
+/* ── ECOSYSTEM ── */
 (function(){
   var rc=document.getElementById('rays');
-  [{l:'5%',w:58,h:'60%',d:12,dl:0},{l:'15%',w:38,h:'48%',d:15,dl:2},{l:'27%',w:66,h:'68%',d:11,dl:.8},{l:'41%',w:44,h:'54%',d:13,dl:3},{l:'56%',w:52,h:'63%',d:10,dl:1.5},{l:'69%',w:36,h:'46%',d:14,dl:4},{l:'81%',w:60,h:'58%',d:11.5,dl:2.2},{l:'91%',w:32,h:'42%',d:16,dl:.5}].forEach(function(r){
+  var allRays=[
+    {l:'5%', w:58,h:'60%',d:12,dl:0},{l:'15%',w:38,h:'48%',d:15,dl:2},
+    {l:'27%',w:66,h:'68%',d:11,dl:.8},{l:'41%',w:44,h:'54%',d:13,dl:3},
+    {l:'56%',w:52,h:'63%',d:10,dl:1.5},{l:'69%',w:36,h:'46%',d:14,dl:4},
+    {l:'81%',w:60,h:'58%',d:11.5,dl:2.2},{l:'91%',w:32,h:'42%',d:16,dl:.5}
+  ];
+  allRays.slice(0,CFG.rays).forEach(function(r){
     var e=document.createElement('div');e.className='ray';
     e.style.cssText='left:'+r.l+';width:'+r.w+'px;height:'+r.h+';animation-duration:'+r.d+'s;animation-delay:'+r.dl+'s';
     rc.appendChild(e);
   });
 
   var pc=document.getElementById('plants');
-  var NS2='http://www.w3.org/2000/svg';
+  var NS='http://www.w3.org/2000/svg';
   var plantTypes=[
     {name:'val',draw:function(svg,w,h,c){
       var cx=w/2;
-      [[0,1,0.92],[-.18,.88,1],[.14,.96,.78],[-.06,.82,.95]].forEach(function(r,i){
-        var bx=cx+r[0]*w*.3,bh=h*r[1],curve=(i%2===0)?1:-1;
-        var path=document.createElementNS(NS2,'path');
-        path.setAttribute('d','M'+bx+' '+h+' C'+(bx+curve*w*.35)+' '+(h*.6)+' '+(bx-curve*w*.2)+' '+(h*.3)+' '+(bx+curve*w*.1)+' '+bh);
-        path.setAttribute('stroke',c);path.setAttribute('stroke-width',(r[2]*2.5).toString());path.setAttribute('fill','none');path.setAttribute('stroke-linecap','round');
-        svg.appendChild(path);
+      [[0,1,.92],[-.18,.88,1],[.14,.96,.78],[-.06,.82,.95]].forEach(function(r,i){
+        var bx=cx+r[0]*w*.3,bh=h*r[1],cv=(i%2===0)?1:-1;
+        var p=document.createElementNS(NS,'path');
+        p.setAttribute('d','M'+bx+' '+h+' C'+(bx+cv*w*.35)+' '+(h*.6)+' '+(bx-cv*w*.2)+' '+(h*.3)+' '+(bx+cv*w*.1)+' '+bh);
+        p.setAttribute('stroke',c);p.setAttribute('stroke-width',(r[2]*2.5).toString());p.setAttribute('fill','none');p.setAttribute('stroke-linecap','round');svg.appendChild(p);
       });
     }},
     {name:'sword',draw:function(svg,w,h,c){
-      var cx=w/2;
-      var stem=document.createElementNS(NS2,'path');
-      stem.setAttribute('d','M'+cx+' '+h+' C'+cx+' '+(h*.7)+' '+cx+' '+(h*.3)+' '+cx+' 0');
-      stem.setAttribute('stroke',c);stem.setAttribute('stroke-width','1.8');stem.setAttribute('fill','none');
-      svg.appendChild(stem);
+      var cx=w/2,s=document.createElementNS(NS,'path');
+      s.setAttribute('d','M'+cx+' '+h+' C'+cx+' '+(h*.7)+' '+cx+' '+(h*.3)+' '+cx+' 0');
+      s.setAttribute('stroke',c);s.setAttribute('stroke-width','1.8');s.setAttribute('fill','none');svg.appendChild(s);
       [[.75,-1,28,12],[.55,1,32,14],[.38,-1,26,11],[.22,1,20,9],[.1,-1,14,7]].forEach(function(lp){
-        var ly=h*lp[0],dir=lp[1],lw=lp[2],lh=lp[3];
-        var lx=cx+dir*lw*.15;
-        var leaf=document.createElementNS(NS2,'path');
-        leaf.setAttribute('d','M'+cx+' '+ly+' C'+(lx+dir*lw*.5)+' '+(ly-lh*.3)+' '+(lx+dir*lw)+' '+(ly-lh*.7)+' '+(lx+dir*lw*.8)+' '+(ly-lh)+' C'+(lx+dir*lw*.5)+' '+(ly-lh*1.1)+' '+(cx+dir*4)+' '+(ly-lh*.5)+' '+cx+' '+ly+'Z');
-        leaf.setAttribute('fill',c);leaf.setAttribute('opacity','0.75');
-        svg.appendChild(leaf);
+        var ly=h*lp[0],dir=lp[1],lw=lp[2],lhh=lp[3],lx=cx+dir*lw*.15;
+        var leaf=document.createElementNS(NS,'path');
+        leaf.setAttribute('d','M'+cx+' '+ly+' C'+(lx+dir*lw*.5)+' '+(ly-lhh*.3)+' '+(lx+dir*lw)+' '+(ly-lhh*.7)+' '+(lx+dir*lw*.8)+' '+(ly-lhh)+' C'+(lx+dir*lw*.5)+' '+(ly-lhh*1.1)+' '+(cx+dir*4)+' '+(ly-lhh*.5)+' '+cx+' '+ly+'Z');
+        leaf.setAttribute('fill',c);leaf.setAttribute('opacity','0.75');svg.appendChild(leaf);
       });
     }},
     {name:'cabomba',draw:function(svg,w,h,c){
-      var cx=w/2;
-      var stem=document.createElementNS(NS2,'path');
-      stem.setAttribute('d','M'+cx+' '+h+' C'+(cx-w*.1)+' '+(h*.7)+' '+(cx+w*.08)+' '+(h*.4)+' '+cx+' 0');
-      stem.setAttribute('stroke',c);stem.setAttribute('stroke-width','1.5');stem.setAttribute('fill','none');
-      svg.appendChild(stem);
+      var cx=w/2,s=document.createElementNS(NS,'path');
+      s.setAttribute('d','M'+cx+' '+h+' C'+(cx-w*.1)+' '+(h*.7)+' '+(cx+w*.08)+' '+(h*.4)+' '+cx+' 0');
+      s.setAttribute('stroke',c);s.setAttribute('stroke-width','1.5');s.setAttribute('fill','none');svg.appendChild(s);
       [.82,.65,.5,.36,.22,.1].forEach(function(pos,i){
         var y=h*pos,branches=3+i%2;
         for(var b=-branches;b<=branches;b++){
           if(b===0)continue;
-          var angle=b*(Math.PI/(branches*1.4));
-          var len=w*.28+Math.abs(b)*2;
+          var angle=b*(Math.PI/(branches*1.4)),len=w*.28+Math.abs(b)*2;
           var ex=cx+Math.sin(angle)*len,ey=y-Math.cos(angle)*len*.4;
-          var br=document.createElementNS(NS2,'path');
+          var br=document.createElementNS(NS,'path');
           br.setAttribute('d','M'+cx+' '+y+' Q'+((cx+ex)/2+b*2)+' '+(y-len*.2)+' '+ex+' '+ey);
-          br.setAttribute('stroke',c);br.setAttribute('stroke-width','0.9');br.setAttribute('fill','none');br.setAttribute('opacity','0.7');
-          svg.appendChild(br);
+          br.setAttribute('stroke',c);br.setAttribute('stroke-width','0.9');br.setAttribute('fill','none');br.setAttribute('opacity','0.7');svg.appendChild(br);
         }
       });
     }},
     {name:'bacopa',draw:function(svg,w,h,c){
-      var cx=w/2;
-      var stem=document.createElementNS(NS2,'path');
-      stem.setAttribute('d','M'+cx+' '+h+' C'+(cx+w*.08)+' '+(h*.7)+' '+(cx-w*.08)+' '+(h*.4)+' '+cx+' 0');
-      stem.setAttribute('stroke',c);stem.setAttribute('stroke-width','1.6');stem.setAttribute('fill','none');
-      svg.appendChild(stem);
+      var cx=w/2,s=document.createElementNS(NS,'path');
+      s.setAttribute('d','M'+cx+' '+h+' C'+(cx+w*.08)+' '+(h*.7)+' '+(cx-w*.08)+' '+(h*.4)+' '+cx+' 0');
+      s.setAttribute('stroke',c);s.setAttribute('stroke-width','1.6');s.setAttribute('fill','none');svg.appendChild(s);
       for(var li=8;li>0;li-=1.5){
         var ly=h*li/10;
         [-1,1].forEach(function(dir){
-          var leaf=document.createElementNS(NS2,'ellipse');
-          leaf.setAttribute('cx',(cx+dir*w*.22).toString());leaf.setAttribute('cy',(ly-4).toString());
-          leaf.setAttribute('rx',(w*.18).toString());leaf.setAttribute('ry','5');
-          leaf.setAttribute('fill',c);leaf.setAttribute('opacity','0.68');
-          svg.appendChild(leaf);
+          var lf=document.createElementNS(NS,'ellipse');
+          lf.setAttribute('cx',(cx+dir*w*.22).toString());lf.setAttribute('cy',(ly-4).toString());
+          lf.setAttribute('rx',(w*.18).toString());lf.setAttribute('ry','5');
+          lf.setAttribute('fill',c);lf.setAttribute('opacity','0.68');svg.appendChild(lf);
         });
       }
     }},
     {name:'moss',draw:function(svg,w,h,c){
-      for(var mi=0;mi<16;mi++){
-        var angle2=-Math.PI/2+(Math.random()-.5)*Math.PI*.9;
-        var len2=h*(.35+Math.random()*.55);
-        var sx=w*.1+Math.random()*w*.8;
-        var ex=sx+Math.cos(angle2)*len2*.5+(Math.random()-.5)*w*.2;
-        var ey=h-Math.sin(-angle2)*len2;
-        var br2=document.createElementNS(NS2,'path');
+      var count=TIER==='low'?8:16;
+      for(var mi=0;mi<count;mi++){
+        var angle2=-Math.PI/2+(Math.random()-.5)*Math.PI*.9,len2=h*(.35+Math.random()*.55);
+        var sx=w*.1+Math.random()*w*.8,ex=sx+Math.cos(angle2)*len2*.5+(Math.random()-.5)*w*.2,ey=h-Math.sin(-angle2)*len2;
+        var br2=document.createElementNS(NS,'path');
         br2.setAttribute('d','M'+sx+' '+h+' Q'+((sx+ex)/2+(Math.random()-.5)*w*.3)+' '+(h-len2*.5)+' '+ex+' '+ey);
-        br2.setAttribute('stroke',c);br2.setAttribute('stroke-width',(.8+Math.random()*.8).toString());br2.setAttribute('fill','none');br2.setAttribute('opacity',(.4+Math.random()*.35).toString());
-        svg.appendChild(br2);
+        br2.setAttribute('stroke',c);br2.setAttribute('stroke-width',(.8+Math.random()*.8).toString());br2.setAttribute('fill','none');br2.setAttribute('opacity',(.4+Math.random()*.35).toString());svg.appendChild(br2);
       }
-    }},
-    {name:'lotus',draw:function(svg,w,h,c){
-      var cx=w/2;
-      var stem=document.createElementNS(NS2,'path');
-      stem.setAttribute('d','M'+cx+' '+h+' C'+(cx+w*.08)+' '+(h*.6)+' '+(cx-w*.06)+' '+(h*.3)+' '+cx+' 10');
-      stem.setAttribute('stroke',c);stem.setAttribute('stroke-width','2.2');stem.setAttribute('fill','none');
-      svg.appendChild(stem);
-      var leaf=document.createElementNS(NS2,'path');
-      leaf.setAttribute('d','M'+cx+' 14 C'+(cx-w*.55)+' 2 '+(cx-w*.5)+' 8 '+cx+' 14 C'+(cx+w*.55)+' 2 '+(cx+w*.5)+' 8 '+cx+' 14Z');
-      leaf.setAttribute('fill',c);leaf.setAttribute('opacity','0.65');
-      svg.appendChild(leaf);
-      [-.45,-.2,0,.2,.45].forEach(function(v){
-        var vein=document.createElementNS(NS2,'line');
-        vein.setAttribute('x1',cx.toString());vein.setAttribute('y1','14');
-        vein.setAttribute('x2',(cx+v*w).toString());vein.setAttribute('y2','4');
-        vein.setAttribute('stroke',c);vein.setAttribute('stroke-width','0.7');vein.setAttribute('opacity','0.5');
-        svg.appendChild(vein);
-      });
     }}
   ];
 
-  var placements=[
-    {l:'1%',  t:'val',    w:32,h:145,sa:'-3deg',  sb:'2.5deg', d:'6.5s',  dl:'0s',   c:'rgba(68,105,62,.62)'},
-    {l:'5%',  t:'moss',   w:45,h:55, sa:'-2deg',  sb:'2deg',   d:'9s',    dl:'.5s',  c:'rgba(55,90,45,.55)'},
-    {l:'10%', t:'sword',  w:52,h:200,sa:'-2deg',  sb:'2.5deg', d:'8s',    dl:'1s',   c:'rgba(72,110,60,.65)'},
-    {l:'17%', t:'bacopa', w:28,h:130,sa:'-4deg',  sb:'4deg',   d:'7s',    dl:'2s',   c:'rgba(62,100,52,.55)'},
-    {l:'23%', t:'val',    w:26,h:165,sa:'-3deg',  sb:'3deg',   d:'9.5s',  dl:'.8s',  c:'rgba(58,95,48,.58)'},
-    {l:'29%', t:'cabomba',w:50,h:180,sa:'-2.5deg',sb:'2deg',   d:'7.5s',  dl:'1.5s', c:'rgba(78,120,65,.6)'},
-    {l:'37%', t:'moss',   w:55,h:60, sa:'-2deg',  sb:'2.5deg', d:'10s',   dl:'3s',   c:'rgba(50,85,40,.5)'},
-    {l:'43%', t:'lotus',  w:58,h:220,sa:'-1.5deg',sb:'2deg',   d:'12s',   dl:'.3s',  c:'rgba(68,108,55,.68)'},
-    {l:'51%', t:'bacopa', w:30,h:115,sa:'-3.5deg',sb:'3.5deg', d:'8s',    dl:'2.2s', c:'rgba(62,100,50,.52)'},
-    {l:'57%', t:'sword',  w:46,h:185,sa:'-2deg',  sb:'2.5deg', d:'7s',    dl:'1.1s', c:'rgba(70,112,58,.62)'},
-    {l:'64%', t:'val',    w:24,h:140,sa:'-3deg',  sb:'3.5deg', d:'9s',    dl:'.6s',  c:'rgba(60,98,50,.56)'},
-    {l:'70%', t:'cabomba',w:44,h:170,sa:'-3deg',  sb:'2.5deg', d:'8.5s',  dl:'1.8s', c:'rgba(75,115,62,.6)'},
-    {l:'77%', t:'moss',   w:48,h:52, sa:'-2deg',  sb:'2deg',   d:'11s',   dl:'2.8s', c:'rgba(52,88,42,.5)'},
-    {l:'82%', t:'sword',  w:50,h:195,sa:'-2deg',  sb:'2deg',   d:'7.5s',  dl:'.4s',  c:'rgba(72,110,60,.64)'},
-    {l:'88%', t:'val',    w:28,h:150,sa:'-3.5deg',sb:'3deg',   d:'8s',    dl:'1.4s', c:'rgba(64,102,54,.58)'},
-    {l:'93%', t:'bacopa', w:26,h:120,sa:'-4deg',  sb:'4deg',   d:'9.5s',  dl:'2.5s', c:'rgba(60,96,48,.5)'},
-    {l:'97%', t:'moss',   w:42,h:48, sa:'-2deg',  sb:'2.5deg', d:'10s',   dl:'0s',   c:'rgba(55,88,44,.48)'}
+  var allPlacements=[
+    {l:'1%', t:'val',    w:32,h:145,sa:'-3deg', sb:'2.5deg',d:'6.5s',dl:'0s',  c:'rgba(68,105,62,.62)'},
+    {l:'5%', t:'moss',   w:45,h:55, sa:'-2deg', sb:'2deg',  d:'9s',  dl:'.5s', c:'rgba(55,90,45,.55)'},
+    {l:'10%',t:'sword',  w:52,h:200,sa:'-2deg', sb:'2.5deg',d:'8s',  dl:'1s',  c:'rgba(72,110,60,.65)'},
+    {l:'17%',t:'bacopa', w:28,h:130,sa:'-4deg', sb:'4deg',  d:'7s',  dl:'2s',  c:'rgba(62,100,52,.55)'},
+    {l:'23%',t:'val',    w:26,h:165,sa:'-3deg', sb:'3deg',  d:'9.5s',dl:'.8s', c:'rgba(58,95,48,.58)'},
+    {l:'29%',t:'cabomba',w:50,h:180,sa:'-2.5deg',sb:'2deg', d:'7.5s',dl:'1.5s',c:'rgba(78,120,65,.6)'},
+    {l:'37%',t:'moss',   w:55,h:60, sa:'-2deg', sb:'2.5deg',d:'10s', dl:'3s',  c:'rgba(50,85,40,.5)'},
+    {l:'43%',t:'sword',  w:46,h:185,sa:'-2deg', sb:'2.5deg',d:'7s',  dl:'1.1s',c:'rgba(70,112,58,.62)'},
+    {l:'51%',t:'bacopa', w:30,h:115,sa:'-3.5deg',sb:'3.5deg',d:'8s', dl:'2.2s',c:'rgba(62,100,50,.52)'},
+    {l:'57%',t:'sword',  w:46,h:185,sa:'-2deg', sb:'2.5deg',d:'7s',  dl:'1.1s',c:'rgba(70,112,58,.62)'},
+    {l:'64%',t:'val',    w:24,h:140,sa:'-3deg', sb:'3.5deg',d:'9s',  dl:'.6s', c:'rgba(60,98,50,.56)'},
+    {l:'70%',t:'cabomba',w:44,h:170,sa:'-3deg', sb:'2.5deg',d:'8.5s',dl:'1.8s',c:'rgba(75,115,62,.6)'},
+    {l:'77%',t:'moss',   w:48,h:52, sa:'-2deg', sb:'2deg',  d:'11s', dl:'2.8s',c:'rgba(52,88,42,.5)'},
+    {l:'82%',t:'sword',  w:50,h:195,sa:'-2deg', sb:'2deg',  d:'7.5s',dl:'.4s', c:'rgba(72,110,60,.64)'},
+    {l:'88%',t:'val',    w:28,h:150,sa:'-3.5deg',sb:'3deg', d:'8s',  dl:'1.4s',c:'rgba(64,102,54,.58)'},
+    {l:'93%',t:'bacopa', w:26,h:120,sa:'-4deg', sb:'4deg',  d:'9.5s',dl:'2.5s',c:'rgba(60,96,48,.5)'},
+    {l:'97%',t:'moss',   w:42,h:48, sa:'-2deg', sb:'2.5deg',d:'10s', dl:'0s',  c:'rgba(55,88,44,.48)'}
   ];
 
-  placements.forEach(function(pd){
-    var type=plantTypes.find(function(t){return t.name===pd.t;})||plantTypes[0];
-    var wrap=document.createElement('div');
-    wrap.className='plant';
-    wrap.style.cssText='left:'+pd.l+';--sa:'+pd.sa+';--sb:'+pd.sb+';animation:psway '+pd.d+' ease-in-out '+pd.dl+' infinite';
-    var svg=document.createElementNS(NS2,'svg');
-    svg.setAttribute('width',pd.w);svg.setAttribute('height',pd.h);
-    svg.setAttribute('viewBox','0 0 '+pd.w+' '+pd.h);svg.setAttribute('fill','none');
-    type.draw(svg,pd.w,pd.h,pd.c);
-    wrap.appendChild(svg);pc.appendChild(wrap);
-  });
+  var chosen=allPlacements.slice(0,CFG.plants),pi=0;
+  function plantBatch(){
+    for(var b=0;b<3&&pi<chosen.length;b++,pi++){
+      var pd=chosen[pi],type=plantTypes.find(function(t){return t.name===pd.t;})||plantTypes[0];
+      var wrap=document.createElement('div');wrap.className='plant';
+      wrap.style.cssText='left:'+pd.l+';--sa:'+pd.sa+';--sb:'+pd.sb+';animation:psway '+pd.d+' ease-in-out '+pd.dl+' infinite';
+      var svg=document.createElementNS(NS,'svg');
+      svg.setAttribute('width',pd.w);svg.setAttribute('height',pd.h);svg.setAttribute('viewBox','0 0 '+pd.w+' '+pd.h);svg.setAttribute('fill','none');
+      type.draw(svg,pd.w,pd.h,pd.c);wrap.appendChild(svg);pc.appendChild(wrap);
+    }
+    if(pi<chosen.length)setTimeout(plantBatch,80);
+  }
+  setTimeout(plantBatch,200);
 
-  var ptc=document.getElementById('particles');
-  for(var i=0;i<25;i++){
-    var m=document.createElement('div');m.className='mote';
-    var sz=3+Math.random()*5,lt=Math.random()*100,bt=40+Math.random()*60;
-    var dur=8+Math.random()*14,dl=Math.random()*20;
-    var rise=-(280+Math.random()*480),drift=(Math.random()-.5)*55,op=.3+Math.random()*.5;
-    m.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+lt+'%;bottom:'+bt+'px;--mo:'+op+';--mr:'+rise+'px;--md:'+drift+'px;animation-duration:'+dur+'s;animation-delay:'+dl+'s';
-    ptc.appendChild(m);
-  }
-  for(var j=0;j<38;j++){
-    var s=document.createElement('div');s.className='spk';
-    var ssz=1+Math.random()*2.2,slt=Math.random()*100,stp=10+Math.random()*75;
-    var sdur=6+Math.random()*12,sdl=Math.random()*10;
-    var sxv=((Math.random()-.5)*16)+'px',syv=((Math.random()-.5)*12)+'px';
-    s.style.cssText='width:'+ssz+'px;height:'+ssz+'px;left:'+slt+'%;top:'+stp+'%;--sx:'+sxv+';--sy:'+syv+';animation-duration:'+sdur+'s;animation-delay:'+sdl+'s';
-    ptc.appendChild(s);
-  }
+  setTimeout(function(){
+    var ptc=document.getElementById('particles');
+    for(var i=0;i<CFG.motes;i++){
+      var m=document.createElement('div');m.className='mote';
+      var sz=3+Math.random()*5,lt=Math.random()*100,bt=40+Math.random()*60;
+      var dur=8+Math.random()*14,dl=Math.random()*20,rise=-(280+Math.random()*480),drift=(Math.random()-.5)*55,op=.3+Math.random()*.5;
+      m.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+lt+'%;bottom:'+bt+'px;--mo:'+op+';--mr:'+rise+'px;--md:'+drift+'px;animation-duration:'+dur+'s;animation-delay:'+dl+'s';
+      ptc.appendChild(m);
+    }
+    for(var j=0;j<CFG.sparks;j++){
+      var s=document.createElement('div');s.className='spk';
+      var ssz=1+Math.random()*2.2,slt=Math.random()*100,stp=10+Math.random()*75;
+      var sdur=6+Math.random()*12,sdl=Math.random()*10,sxv=((Math.random()-.5)*16)+'px',syv=((Math.random()-.5)*12)+'px';
+      s.style.cssText='width:'+ssz+'px;height:'+ssz+'px;left:'+slt+'%;top:'+stp+'%;--sx:'+sxv+';--sy:'+syv+';animation-duration:'+sdur+'s;animation-delay:'+sdl+'s';
+      ptc.appendChild(s);
+    }
+  },800);
 })();
 
-/* CURSOR */
+/* ── DRIFTWOOD — mid/high only, lazy ── */
+if(TIER!=='low'){
+  setTimeout(function(){
+    var dl=document.getElementById('driftwood-layer');
+    var NS='http://www.w3.org/2000/svg';
+    function mkEl(tag,attrs){var e=document.createElementNS(NS,tag);Object.keys(attrs).forEach(function(k){e.setAttribute(k,attrs[k]);});return e;}
+    function path(d,fill,stroke,sw){var e=mkEl('path',{d:d});if(fill&&fill!=='none')e.setAttribute('fill',fill);else e.setAttribute('fill','none');if(stroke){e.setAttribute('stroke',stroke);e.setAttribute('stroke-width',sw||2);}e.setAttribute('stroke-linecap','round');return e;}
+    (function(){
+      var w=300,h=140,svg=mkEl('svg',{width:w,height:h,viewBox:'0 0 '+w+' '+h});
+      svg.appendChild(path('M8,'+h+' C25,'+Math.round(h*.72)+' 70,'+Math.round(h*.48)+' 130,'+Math.round(h*.38)+' C185,'+Math.round(h*.3)+' 248,'+Math.round(h*.33)+' 292,'+Math.round(h*.4),'none','rgba(52,32,12,.7)',9));
+      svg.appendChild(path('M130,'+Math.round(h*.38)+' C148,'+Math.round(h*.2)+' 188,'+Math.round(h*.1)+' 215,'+Math.round(h*.06),'none','rgba(46,28,10,.58)',5.5));
+      svg.appendChild(path('M195,'+Math.round(h*.32)+' C215,'+Math.round(h*.44)+' 252,'+Math.round(h*.5)+' 294,'+Math.round(h*.54),'none','rgba(44,26,8,.52)',4));
+      [[30,h*.68,14,6],[55,h*.6,10,5],[80,h*.54,12,5]].forEach(function(r){svg.appendChild(mkEl('ellipse',{cx:r[0],cy:Math.round(r[1]),rx:r[2],ry:r[3],fill:'rgba(42,62,28,.38)'}));});
+      var wrap=document.createElement('div');wrap.style.cssText='position:absolute;left:2%;bottom:0;opacity:.5';wrap.appendChild(svg);dl.appendChild(wrap);
+    })();
+    (function(){
+      var w=270,h=88,svg=mkEl('svg',{width:w,height:h,viewBox:'0 0 '+w+' '+h});
+      svg.appendChild(path('M0,'+Math.round(h*.62)+' C38,'+Math.round(h*.46)+' 95,'+Math.round(h*.38)+' 158,'+Math.round(h*.42)+' C208,'+Math.round(h*.46)+' 255,'+Math.round(h*.56)+' 268,'+Math.round(h*.66),'none','rgba(48,30,10,.65)',13));
+      svg.appendChild(path('M95,'+Math.round(h*.38)+' C100,'+Math.round(h*.2)+' 112,'+Math.round(h*.1)+' 120,'+Math.round(h*.06),'none','rgba(44,26,8,.52)',6));
+      [[60,h*.5,11,5],[95,h*.42,9,4],[130,h*.44,10,5]].forEach(function(r){svg.appendChild(mkEl('ellipse',{cx:r[0],cy:Math.round(r[1]),rx:r[2],ry:r[3],fill:'rgba(40,60,25,.34)'}));});
+      var wrap=document.createElement('div');wrap.style.cssText='position:absolute;left:58%;bottom:0;opacity:.45';wrap.appendChild(svg);dl.appendChild(wrap);
+    })();
+  },1200);
+}
+
+/* ── CURSOR ── */
 var cd=document.getElementById('cd'),cr=document.getElementById('cr');
 var mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px'});
-(function cl(){rx+=(mx-rx)*.09;ry+=(my-ry)*.09;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(cl)})();
-document.querySelectorAll('a,button,.ac,.qi,.sl2,.spp,.pc').forEach(function(el){
-  el.addEventListener('mouseenter',function(){document.body.classList.add('hov')});
-  el.addEventListener('mouseleave',function(){document.body.classList.remove('hov')});
-});
-
-/* CURSOR BUBBLES */
-(function(){
-  var bl=document.getElementById('bubble-layer');
-  var lastX=-999,lastY=-999,lastT=0;
-  document.addEventListener('mousemove',function(e){
-    var now=Date.now();
-    var dist=Math.hypot(e.clientX-lastX,e.clientY-lastY);
-    if(dist<18||now-lastT<80)return;
-    lastX=e.clientX;lastY=e.clientY;lastT=now;
-    var count=Math.random()<.4?2:1;
-    for(var i=0;i<count;i++){
-      var b=document.createElement('div');
-      b.className='cbubble';
-      var sz=4+Math.random()*8;
-      var ox=(Math.random()-.5)*18,oy=(Math.random()-.5)*10;
-      var rise=-(60+Math.random()*120),drift=(Math.random()-.5)*40;
-      var dur=1.2+Math.random()*1.4;
-      b.style.cssText=[
-        'width:'+sz+'px','height:'+sz+'px',
-        'left:'+(e.clientX+ox-sz/2)+'px',
-        'top:'+(e.clientY+oy-sz/2)+'px',
-        '--brise:'+rise+'px','--bdrift:'+drift+'px',
-        'animation-duration:'+dur+'s',
-        'animation-delay:'+(i*.06)+'s'
-      ].join(';');
-      bl.appendChild(b);
-      setTimeout(function(el){el.parentNode&&el.parentNode.removeChild(el)},(dur+.2)*1000,b);
-    }
+var hasHover=window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+if(hasHover){
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px';},{passive:true});
+  (function cl(){if(!paused){rx+=(mx-rx)*.09;ry+=(my-ry)*.09;cr.style.left=rx+'px';cr.style.top=ry+'px';}requestAnimationFrame(cl);})();
+  document.querySelectorAll('a,button,.ac,.qi,.sl2,.spp,.pc').forEach(function(el){
+    el.addEventListener('mouseenter',function(){document.body.classList.add('hov');});
+    el.addEventListener('mouseleave',function(){document.body.classList.remove('hov');});
   });
-})();
+}
 
-/* ══════════════════════════════════════
-   DRIFTWOOD
-══════════════════════════════════════ */
+/* ── CURSOR BUBBLES — high tier only ── */
+if(hasHover&&TIER==='high'){
+  var bl=document.getElementById('bubble-layer');
+  var lastX=-999,lastY=-999,lastBubT=0;
+  document.addEventListener('mousemove',function(e){
+    if(paused)return;
+    var now=Date.now(),dist=Math.hypot(e.clientX-lastX,e.clientY-lastY);
+    if(dist<20||now-lastBubT<100)return;
+    lastX=e.clientX;lastY=e.clientY;lastBubT=now;
+    var b=document.createElement('div');b.className='cbubble';
+    var sz=4+Math.random()*8,ox=(Math.random()-.5)*18,oy=(Math.random()-.5)*10;
+    var rise=-(60+Math.random()*120),drift=(Math.random()-.5)*40,dur=1.2+Math.random()*1.4;
+    b.style.cssText=['width:'+sz+'px','height:'+sz+'px','left:'+(e.clientX+ox-sz/2)+'px','top:'+(e.clientY+oy-sz/2)+'px','--brise:'+rise+'px','--bdrift:'+drift+'px','animation-duration:'+dur+'s'].join(';');
+    bl.appendChild(b);
+    setTimeout(function(){b.parentNode&&b.parentNode.removeChild(b);},(dur+.15)*1000);
+  },{passive:true});
+}
+
+/* ── FAUNA — SINGLE RAF LOOP ── */
 (function(){
-  var dl=document.getElementById('driftwood-layer');
+  var fl=document.getElementById('fish-layer');
   var NS='http://www.w3.org/2000/svg';
-  function mkEl(tag,attrs){var e=document.createElementNS(NS,tag);Object.keys(attrs).forEach(function(k){e.setAttribute(k,attrs[k]);});return e;}
-  function path(d,fill,stroke,sw){var e=mkEl('path',{d:d});if(fill&&fill!=='none')e.setAttribute('fill',fill);else e.setAttribute('fill','none');if(stroke){e.setAttribute('stroke',stroke);e.setAttribute('stroke-width',sw||2);}e.setAttribute('stroke-linecap','round');return e;}
+  function W(){return window.innerWidth;}
+  function H(){return window.innerHeight;}
+  function mk(tag,attrs){var e=document.createElementNS(NS,tag);Object.keys(attrs).forEach(function(k){e.setAttribute(k,attrs[k]);});return e;}
 
-  (function(){
-    var w=300,h=140,svg=mkEl('svg',{width:w,height:h,viewBox:'0 0 '+w+' '+h});
-    svg.appendChild(path('M8,'+h+' C25,'+Math.round(h*.72)+' 70,'+Math.round(h*.48)+' 130,'+Math.round(h*.38)+' C185,'+Math.round(h*.3)+' 248,'+Math.round(h*.33)+' 292,'+Math.round(h*.4),'none','rgba(52,32,12,.7)',9));
-    svg.appendChild(path('M130,'+Math.round(h*.38)+' C148,'+Math.round(h*.2)+' 188,'+Math.round(h*.1)+' 215,'+Math.round(h*.06),'none','rgba(46,28,10,.58)',5.5));
-    svg.appendChild(path('M195,'+Math.round(h*.32)+' C215,'+Math.round(h*.44)+' 252,'+Math.round(h*.5)+' 294,'+Math.round(h*.54),'none','rgba(44,26,8,.52)',4));
-    svg.appendChild(path('M8,'+h+' C-2,'+Math.round(h*.84)+' -4,'+Math.round(h*.68)+' 6,'+Math.round(h*.58),'none','rgba(44,26,8,.55)',5));
-    svg.appendChild(path('M28,'+h+' C16,'+Math.round(h*.88)+' 12,'+Math.round(h*.74)+' 22,'+Math.round(h*.64),'none','rgba(44,26,8,.48)',4));
-    ['M45,'+Math.round(h*.64)+' C62,'+Math.round(h*.6)+' 92,'+Math.round(h*.55)+' 118,'+Math.round(h*.52),'M78,'+Math.round(h*.57)+' C98,'+Math.round(h*.52)+' 118,'+Math.round(h*.48)+' 138,'+Math.round(h*.46)].forEach(function(d){svg.appendChild(path(d,'none','rgba(28,16,4,.28)',1.4));});
-    [[30,h*.68,14,6],[55,h*.6,10,5],[80,h*.54,12,5]].forEach(function(r){svg.appendChild(mkEl('ellipse',{cx:r[0],cy:Math.round(r[1]),rx:r[2],ry:r[3],fill:'rgba(42,62,28,.38)'}));});
-    var wrap=document.createElement('div');wrap.style.cssText='position:absolute;left:2%;bottom:0;opacity:.5';wrap.appendChild(svg);dl.appendChild(wrap);
-  })();
-
-  (function(){
-    var w=270,h=88,svg=mkEl('svg',{width:w,height:h,viewBox:'0 0 '+w+' '+h});
-    svg.appendChild(path('M0,'+Math.round(h*.62)+' C38,'+Math.round(h*.46)+' 95,'+Math.round(h*.38)+' 158,'+Math.round(h*.42)+' C208,'+Math.round(h*.46)+' 255,'+Math.round(h*.56)+' 268,'+Math.round(h*.66),'none','rgba(48,30,10,.65)',13));
-    svg.appendChild(path('M4,'+Math.round(h*.56)+' C42,'+Math.round(h*.4)+' 98,'+Math.round(h*.32)+' 158,'+Math.round(h*.37)+' C208,'+Math.round(h*.41)+' 252,'+Math.round(h*.5)+' 266,'+Math.round(h*.6),'none','rgba(72,48,20,.32)',4));
-    svg.appendChild(path('M95,'+Math.round(h*.38)+' C100,'+Math.round(h*.2)+' 112,'+Math.round(h*.1)+' 120,'+Math.round(h*.06),'none','rgba(44,26,8,.52)',6));
-    svg.appendChild(path('M38,'+Math.round(h*.5)+' C78,'+Math.round(h*.44)+' 118,'+Math.round(h*.42)+' 158,'+Math.round(h*.46),'none','rgba(28,16,4,.22)',2));
-    [[60,h*.5,11,5],[95,h*.42,9,4],[130,h*.44,10,5]].forEach(function(r){svg.appendChild(mkEl('ellipse',{cx:r[0],cy:Math.round(r[1]),rx:r[2],ry:r[3],fill:'rgba(40,60,25,.34)'}));});
-    var wrap=document.createElement('div');wrap.style.cssText='position:absolute;left:58%;bottom:0;opacity:.45';wrap.appendChild(svg);dl.appendChild(wrap);
-  })();
-
-  (function(){
-    var w=150,h=65,svg=mkEl('svg',{width:w,height:h,viewBox:'0 0 '+w+' '+h});
-    svg.appendChild(path('M5,'+h+' C18,'+Math.round(h*.55)+' 45,'+Math.round(h*.35)+' 75,'+Math.round(h*.3)+' C105,'+Math.round(h*.35)+' 132,'+Math.round(h*.55)+' 143,'+h,'rgba(35,22,7,.52)','rgba(25,14,3,.38)',2));
-    [[22,h*.48,13,7],[48,h*.33,11,6],[74,h*.3,12,6],[100,h*.36,11,6]].forEach(function(r){svg.appendChild(mkEl('ellipse',{cx:r[0],cy:Math.round(r[1]),rx:r[2],ry:r[3],fill:'rgba(42,65,28,.36)'}));});
-    var wrap=document.createElement('div');wrap.style.cssText='position:absolute;left:32%;bottom:0;opacity:.4';wrap.appendChild(svg);dl.appendChild(wrap);
-  })();
-})();
-
-/* ══════════════════════════════════════
-   FAUNA SYSTEM
-   FIX: fish-layer is now position:fixed
-   so W/H = window.innerWidth/innerHeight
-   and coords map directly to viewport.
-══════════════════════════════════════ */
-(function(){
-  var fl = document.getElementById('fish-layer');
-  var NS = 'http://www.w3.org/2000/svg';
-
-  /* Always read live viewport dimensions */
-  function W(){ return window.innerWidth; }
-  function H(){ return window.innerHeight; }
-
-  function mk(tag,attrs){
-    var e=document.createElementNS(NS,tag);
-    Object.keys(attrs).forEach(function(k){e.setAttribute(k,attrs[k]);});
-    return e;
-  }
-
-  /* ── SVG BUILDERS ── */
   function buildAltum(s){
     s.appendChild(mk('path',{d:'M2,38 C8,28 16,12 24,2 C32,12 42,28 48,38 C42,48 32,64 24,74 C16,64 8,48 2,38Z',fill:'rgba(182,200,188,.8)'}));
     s.appendChild(mk('path',{d:'M16,7 C14,18 14,40 15,58 C16,64 18,70 20,72 C18,70 16,64 16,58 C15,40 16,18 18,7Z',fill:'rgba(35,45,38,.58)'}));
     s.appendChild(mk('path',{d:'M24,3 C22,12 22,36 23,56 C24,66 24,72 24,74 C24,72 24,66 25,56 C26,36 26,12 24,3Z',fill:'rgba(35,45,38,.44)'}));
     s.appendChild(mk('path',{d:'M32,7 C30,18 30,40 31,58 C32,64 30,70 28,72 C30,70 32,64 32,58 C31,40 32,18 34,7Z',fill:'rgba(35,45,38,.38)'}));
-    s.appendChild(mk('path',{d:'M20,10 C24,8 28,8 32,10 C36,16 36,24 32,30 C28,26 20,26 16,30 C14,24 16,16 20,10Z',fill:'rgba(228,240,232,.14)'}));
     s.appendChild(mk('path',{d:'M2,38 C-5,30 -9,22 -4,16 C0,22 4,30 8,34Z',fill:'rgba(162,184,170,.62)'}));
     s.appendChild(mk('path',{d:'M2,38 C-5,46 -9,54 -4,60 C0,54 4,46 8,42Z',fill:'rgba(162,184,170,.58)'}));
-    s.appendChild(mk('path',{d:'M24,2 C20,-4 13,-3 10,4 C14,1 18,3 20,7Z',fill:'rgba(158,180,165,.52)'}));
-    s.appendChild(mk('path',{d:'M24,74 C20,80 13,79 10,72 C14,75 18,73 20,69Z',fill:'rgba(158,180,165,.46)'}));
     s.appendChild(mk('circle',{cx:'40',cy:'34',r:'3.2',fill:'rgba(255,255,255,.9)'}));
     s.appendChild(mk('circle',{cx:'40.4',cy:'34',r:'1.6',fill:'rgba(6,10,6,.92)'}));
   }
-
   function buildCongo(s){
     s.appendChild(mk('path',{d:'M0,5 Q5,8 0,11 L8,8Z',fill:'rgba(70,55,110,.8)'}));
     s.appendChild(mk('path',{d:'M8,8 C8,3 17,0 27,1 C35,2 40,4 41,8 C40,12 35,14 27,15 C17,16 8,13 8,8Z',fill:'rgba(75,58,118,.82)'}));
     s.appendChild(mk('path',{d:'M9,6 C17,4 27,4 37,7 C39,8 40,9 40,9 C38,8 27,6 17,7 C13,7 10,7 9,8Z',fill:'rgba(110,90,200,.72)'}));
-    s.appendChild(mk('path',{d:'M10,3 C18,1 26,1 35,3 C37,4 39,5 39,6 C35,4 26,3 18,3Z',fill:'rgba(150,100,220,.45)'}));
-    s.appendChild(mk('path',{d:'M10,11 C18,12 28,13 36,11 L36,14 C28,15 18,14 10,13Z',fill:'rgba(60,180,200,.3)'}));
-    s.appendChild(mk('path',{d:'M17,1 Q22,-3 28,1',stroke:'rgba(130,100,200,.48)',fill:'none','stroke-width':'1'}));
     s.appendChild(mk('circle',{cx:'36',cy:'7',r:'2',fill:'rgba(255,255,255,.9)'}));
     s.appendChild(mk('circle',{cx:'36.2',cy:'7',r:'1',fill:'rgba(5,4,8,.92)'}));
   }
-
   function buildCardinal(s){
     s.appendChild(mk('path',{d:'M0,3 Q4,6 0,9 L6,6Z',fill:'rgba(125,55,42,.85)'}));
     s.appendChild(mk('path',{d:'M6,6 C6,2 13,0 22,1 C29,2 34,4 35,6 C34,8 29,10 22,11 C13,12 6,10 6,6Z',fill:'rgba(132,58,44,.85)'}));
     s.appendChild(mk('path',{d:'M7,2 C13,0 22,0 30,3 C32,4 34,5 34,5 C32,4 22,2 13,2Z',fill:'rgba(25,120,215,.85)'}));
     s.appendChild(mk('path',{d:'M7,8 C13,9 22,10 30,9 L30,11 C22,12 13,11 7,10Z',fill:'rgba(210,42,30,.7)'}));
-    s.appendChild(mk('path',{d:'M15,0 Q19,-2 24,1',stroke:'rgba(80,140,200,.4)',fill:'none','stroke-width':'.8'}));
     s.appendChild(mk('circle',{cx:'30',cy:'5',r:'1.7',fill:'rgba(255,255,255,.9)'}));
     s.appendChild(mk('circle',{cx:'30.2',cy:'5',r:'.85',fill:'rgba(4,4,4,.92)'}));
   }
-
   function buildGeo(s){
     s.appendChild(mk('path',{d:'M2,12 Q9,18 2,24 L13,18Z',fill:'rgba(38,140,130,.82)'}));
     s.appendChild(mk('path',{d:'M13,18 C13,5 24,1 36,1 C50,1 58,8 58,18 C58,28 50,35 36,35 C24,35 13,31 13,18Z',fill:'rgba(42,155,140,.82)'}));
-    [[22,8,3],[30,6,2.5],[38,9,3],[26,14,2],[34,13,3.5],[42,11,2.5],[28,22,2],[36,20,3]].forEach(function(sp){
-      s.appendChild(mk('circle',{cx:sp[0],cy:sp[1],r:sp[2],fill:'rgba(80,220,200,.45)'}));
-    });
-    s.appendChild(mk('path',{d:'M15,6 Q28,-2 44,5',stroke:'rgba(100,230,210,.42)','stroke-width':'1.8',fill:'none'}));
-    s.appendChild(mk('path',{d:'M15,30 Q28,38 44,31',stroke:'rgba(100,230,210,.35)','stroke-width':'1.5',fill:'none'}));
+    [[22,8,3],[30,6,2.5],[38,9,3],[26,14,2],[34,13,3.5]].forEach(function(sp){s.appendChild(mk('circle',{cx:sp[0],cy:sp[1],r:sp[2],fill:'rgba(80,220,200,.45)'}));});
     s.appendChild(mk('circle',{cx:'48',cy:'10',r:'3.8',fill:'rgba(255,255,255,.88)'}));
     s.appendChild(mk('circle',{cx:'48.5',cy:'10',r:'1.9',fill:'rgba(5,15,10,.92)'}));
   }
-
   function buildOscar(s){
     s.appendChild(mk('path',{d:'M2,14 Q9,22 2,30 L13,22Z',fill:'rgba(175,78,18,.85)'}));
     s.appendChild(mk('path',{d:'M13,22 C13,7 24,2 34,2 C48,2 60,10 60,22 C60,34 48,42 34,42 C24,42 13,37 13,22Z',fill:'rgba(185,85,20,.85)'}));
     s.appendChild(mk('path',{d:'M20,4 C18,12 20,22 18,34',stroke:'rgba(18,6,1,.42)','stroke-width':'5',fill:'none'}));
     s.appendChild(mk('path',{d:'M32,3 C30,13 32,23 30,37',stroke:'rgba(18,6,1,.38)','stroke-width':'4',fill:'none'}));
-    s.appendChild(mk('path',{d:'M44,6 C42,14 42,23 40,35',stroke:'rgba(18,6,1,.32)','stroke-width':'3.5',fill:'none'}));
-    s.appendChild(mk('circle',{cx:'17',cy:'22',r:'5',fill:'rgba(255,135,18,.5)'}));
-    s.appendChild(mk('circle',{cx:'17',cy:'22',r:'3',fill:'rgba(8,4,0,.6)'}));
-    s.appendChild(mk('path',{d:'M22,3 Q36,-4 50,5',stroke:'rgba(215,95,28,.42)','stroke-width':'2',fill:'none'}));
     s.appendChild(mk('circle',{cx:'50',cy:'13',r:'4',fill:'rgba(255,255,255,.88)'}));
     s.appendChild(mk('circle',{cx:'50.5',cy:'13',r:'2',fill:'rgba(8,4,0,.92)'}));
   }
-
   function buildShrimp(s){
     s.appendChild(mk('path',{d:'M22,8 C26,5 32,5 36,8 C38,10 38,14 36,16 C33,18 28,18 24,16 C21,14 20,10 22,8Z',fill:'rgba(210,68,55,.78)'}));
     s.appendChild(mk('path',{d:'M24,12 C22,10 19,9 16,10 C14,11 13,13 14,15 C16,16 20,16 23,15 C24,14 25,13 24,12Z',fill:'rgba(205,65,52,.8)'}));
-    s.appendChild(mk('path',{d:'M16,11 C14,9 11,9 9,10 C7,11 6,13 7,15 C9,16 13,16 15,15 C17,14 17,12 16,11Z',fill:'rgba(200,62,50,.8)'}));
     s.appendChild(mk('path',{d:'M9,11 C7,9 5,9 3,11 C2,12 2,14 3,15 C5,16 8,16 10,15 C11,14 11,12 9,11Z',fill:'rgba(195,60,48,.78)'}));
-    s.appendChild(mk('path',{d:'M4,11 C3,10 1,10 0,12 C-1,13 0,15 2,15 C4,16 6,15 6,14 C7,13 6,12 4,11Z',fill:'rgba(188,58,46,.75)'}));
-    s.appendChild(mk('path',{d:'M1,12 C-3,10 -5,8 -3,6 C-1,8 0,10 2,11Z',fill:'rgba(185,55,44,.68)'}));
-    s.appendChild(mk('path',{d:'M1,12 C-2,12 -4,13 -4,16 C-2,15 0,14 2,13Z',fill:'rgba(185,55,44,.62)'}));
-    s.appendChild(mk('path',{d:'M1,12 C-3,12 -5,14 -4,17 C-2,16 0,15 2,14Z',fill:'rgba(180,52,42,.58)'}));
-    s.appendChild(mk('path',{d:'M34,8 L42,4',stroke:'rgba(195,58,46,.7)','stroke-width':'1.2',fill:'none','stroke-linecap':'round'}));
-    s.appendChild(mk('path',{d:'M35,8 C38,5 42,3 46,2',stroke:'rgba(180,50,40,.5)','stroke-width':'.8',fill:'none'}));
-    s.appendChild(mk('path',{d:'M35,9 C39,7 43,6 46,7',stroke:'rgba(180,50,40,.42)','stroke-width':'.7',fill:'none'}));
-    [[26,18],[29,18],[32,18],[35,18]].forEach(function(leg){
-      s.appendChild(mk('path',{d:'M'+leg[0]+','+leg[1]+' L'+(leg[0]-1)+','+(leg[1]+5),stroke:'rgba(190,60,48,.45)','stroke-width':'.9',fill:'none'}));
-    });
-    [[20,17],[16,17],[12,17],[8,17]].forEach(function(sw){
-      s.appendChild(mk('path',{d:'M'+sw[0]+','+sw[1]+' L'+(sw[0]-1)+','+(sw[1]+4),stroke:'rgba(185,55,44,.35)','stroke-width':'.7',fill:'none'}));
-    });
     s.appendChild(mk('path',{d:'M8,10 C12,8 18,8 24,9 C28,10 32,10 35,10',stroke:'rgba(240,90,70,.4)','stroke-width':'1.5',fill:'none'}));
     s.appendChild(mk('circle',{cx:'36',cy:'8',r:'2',fill:'rgba(255,255,255,.88)'}));
     s.appendChild(mk('circle',{cx:'36.3',cy:'8',r:'1',fill:'rgba(20,5,5,.92)'}));
   }
-
   function buildSnail(s){
     s.appendChild(mk('path',{d:'M14,10 C14,4 18,1 22,3 C26,5 28,10 26,15 C24,20 18,22 14,20 C10,18 8,13 10,9 C12,5 16,4 18,7 C20,10 18,14 15,14Z',fill:'rgba(100,60,30,.72)',stroke:'rgba(70,40,18,.45)','stroke-width':'1'}));
-    s.appendChild(mk('path',{d:'M18,4 C21,5 23,8 22,12',stroke:'rgba(150,100,55,.35)','stroke-width':'.9',fill:'none'}));
     s.appendChild(mk('path',{d:'M8,18 C10,20 16,22 22,21 C28,20 32,18 30,16 C26,15 14,16 8,16Z',fill:'rgba(120,100,60,.58)'}));
-    s.appendChild(mk('path',{d:'M22,16 C24,13 26,11 28,10',stroke:'rgba(110,88,48,.5)','stroke-width':'.9',fill:'none'}));
-    s.appendChild(mk('path',{d:'M20,16 C22,12 24,10 26,9',stroke:'rgba(110,88,48,.42)','stroke-width':'.8',fill:'none'}));
     s.appendChild(mk('circle',{cx:'28',cy:'10',r:'1',fill:'rgba(30,20,5,.75)'}));
   }
 
-  /* ── SCHOOL BUILDER ── */
+  var entities=[];
+
   function makeSchool(cfg){
-    var vW=W(), vH=H();
-    var goRight=Math.random()>.5;
+    var vW=W(),vH=H(),goRight=Math.random()>.5;
     var baseY=vH*(cfg.yMin+Math.random()*(cfg.yMax-cfg.yMin));
     var speed=cfg.speedMin+Math.random()*(cfg.speedMax-cfg.speedMin);
-    var schoolX=goRight ? -(cfg.spreadX+120) : vW+(cfg.spreadX+120);
+    var schoolX=goRight?-(cfg.spreadX+120):vW+(cfg.spreadX+120);
     var members=[];
-
     for(var i=0;i<cfg.count;i++){
-      var ox=(Math.random()-.5)*cfg.spreadX*2;
-      var oy=(Math.random()-.5)*cfg.spreadY*2;
+      var ox=(Math.random()-.5)*cfg.spreadX*2,oy=(Math.random()-.5)*cfg.spreadY*2;
       var sc=cfg.scaleMin+Math.random()*(cfg.scaleMax-cfg.scaleMin);
       var svg=document.createElementNS(NS,'svg');
-      svg.setAttribute('width',cfg.w);svg.setAttribute('height',cfg.h);
-      svg.setAttribute('viewBox','0 0 '+cfg.w+' '+cfg.h);
+      svg.setAttribute('width',cfg.w);svg.setAttribute('height',cfg.h);svg.setAttribute('viewBox','0 0 '+cfg.w+' '+cfg.h);
       cfg.build(svg);
-      var wrap=document.createElement('div');
-      wrap.className='fish';
-      wrap.style.cssText=[
-        'left:'+Math.round(schoolX+ox)+'px',
-        'top:'+Math.round(baseY+oy)+'px',
-        'transform:scaleX('+(goRight?1:-1)+') scale('+sc+')',
-        'transform-origin:center center',
-        'opacity:0',
-        'transition:opacity 1s'
-      ].join(';');
-      wrap.appendChild(svg);
-      fl.appendChild(wrap);
-      (function(w,d){
-        setTimeout(function(){
-          w.style.opacity=(cfg.opMin+Math.random()*(cfg.opMax-cfg.opMin)).toFixed(2);
-        },250+d*55);
-      })(wrap,i);
-      members.push({
-        el:wrap, ox:ox, oy:oy,
-        wob:cfg.wob*(0.7+Math.random()*.6),
-        wobF:cfg.wobF*(0.8+Math.random()*.4),
-        t:Math.random()*Math.PI*2
-      });
+      var wrap=document.createElement('div');wrap.className='fish';
+      wrap.style.cssText='left:'+Math.round(schoolX+ox)+'px;top:'+Math.round(baseY+oy)+'px;transform:scaleX('+(goRight?1:-1)+') scale('+sc+');transform-origin:center center;opacity:0;transition:opacity 1s';
+      wrap.appendChild(svg);fl.appendChild(wrap);
+      (function(w,d){setTimeout(function(){w.style.opacity=(cfg.opMin+Math.random()*(cfg.opMax-cfg.opMin)).toFixed(2);},250+d*55);})(wrap,i);
+      members.push({el:wrap,ox:ox,oy:oy,wob:cfg.wob*(0.7+Math.random()*.6),wobF:cfg.wobF*(0.8+Math.random()*.4),t:Math.random()*Math.PI*2});
     }
-    return {
-      members:members, x:schoolX, baseY:baseY,
-      goRight:goRight, speed:speed,
-      spreadX:cfg.spreadX, solo:false,
-      respawnFn:function(){ return makeSchool(cfg); }
-    };
+    return{type:'school',members:members,x:schoolX,baseY:baseY,goRight:goRight,speed:speed,spreadX:cfg.spreadX,cfg:cfg};
   }
 
-  /* ── SOLO BUILDER ── */
   function makeSolo(cfg){
-    var vW=W(), vH=H();
-    var goRight=Math.random()>.5;
+    var vW=W(),vH=H(),goRight=Math.random()>.5;
     var baseY=vH*(cfg.yMin+Math.random()*(cfg.yMax-cfg.yMin));
     var speed=cfg.speedMin+Math.random()*(cfg.speedMax-cfg.speedMin);
     var sc=cfg.scaleMin+Math.random()*(cfg.scaleMax-cfg.scaleMin);
-    var startX=goRight ? -(cfg.w*sc+80) : vW+(cfg.w*sc+80);
+    var startX=goRight?-(cfg.w*sc+80):vW+(cfg.w*sc+80);
     var svg=document.createElementNS(NS,'svg');
-    svg.setAttribute('width',cfg.w);svg.setAttribute('height',cfg.h);
-    svg.setAttribute('viewBox','0 0 '+cfg.w+' '+cfg.h);
+    svg.setAttribute('width',cfg.w);svg.setAttribute('height',cfg.h);svg.setAttribute('viewBox','0 0 '+cfg.w+' '+cfg.h);
     cfg.build(svg);
-    var wrap=document.createElement('div');
-    wrap.className='fish';
-    wrap.style.cssText=[
-      'left:'+Math.round(startX)+'px',
-      'top:'+Math.round(baseY)+'px',
-      'transform:scaleX('+(goRight?1:-1)+') scale('+sc+')',
-      'transform-origin:center center',
-      'opacity:0',
-      'transition:opacity 1.2s'
-    ].join(';');
-    wrap.appendChild(svg);
-    fl.appendChild(wrap);
-    setTimeout(function(){
-      wrap.style.opacity=(cfg.opMin+Math.random()*(cfg.opMax-cfg.opMin)).toFixed(2);
-    },150);
-    return {
-      el:wrap, x:startX, baseY:baseY,
-      goRight:goRight, speed:speed,
-      bodyW:cfg.w*sc,
-      wob:cfg.wob*(0.8+Math.random()*.4),
-      wobF:cfg.wobF*(0.8+Math.random()*.4),
-      t:Math.random()*Math.PI*2,
-      solo:true,
-      respawnFn:function(){ return makeSolo(cfg); }
-    };
+    var wrap=document.createElement('div');wrap.className='fish';
+    wrap.style.cssText='left:'+Math.round(startX)+'px;top:'+Math.round(baseY)+'px;transform:scaleX('+(goRight?1:-1)+') scale('+sc+');transform-origin:center center;opacity:0;transition:opacity 1.2s';
+    wrap.appendChild(svg);fl.appendChild(wrap);
+    setTimeout(function(){wrap.style.opacity=(cfg.opMin+Math.random()*(cfg.opMax-cfg.opMin)).toFixed(2);},150);
+    return{type:'solo',el:wrap,x:startX,baseY:baseY,goRight:goRight,speed:speed,bodyW:cfg.w*sc,wob:cfg.wob*(0.8+Math.random()*.4),wobF:cfg.wobF*(0.8+Math.random()*.4),t:Math.random()*Math.PI*2,cfg:cfg};
   }
 
-  /* ── SHRIMP ── */
   function makeShrimp(){
-    var vW=W(), vH=H();
-    var x=vW*0.05+Math.random()*vW*0.88;
-    var baseY=vH*(0.72+Math.random()*.14);
-    var sc=0.55+Math.random()*.3;
-    var goRight=Math.random()>.5;
-    var svg=document.createElementNS(NS,'svg');
-    svg.setAttribute('width','48');svg.setAttribute('height','26');
-    svg.setAttribute('viewBox','-6 0 54 26');
+    var vW=W(),vH=H(),x=vW*.05+Math.random()*vW*.88,baseY=vH*(0.72+Math.random()*.14);
+    var sc=0.55+Math.random()*.3,goRight=Math.random()>.5;
+    var svg=document.createElementNS(NS,'svg');svg.setAttribute('width','48');svg.setAttribute('height','26');svg.setAttribute('viewBox','-6 0 54 26');
     buildShrimp(svg);
-    var wrap=document.createElement('div');
-    wrap.className='fish';
-    wrap.style.cssText=[
-      'left:'+Math.round(x)+'px',
-      'top:'+Math.round(baseY)+'px',
-      'transform:scaleX('+(goRight?1:-1)+') scale('+sc+')',
-      'transform-origin:center center',
-      'opacity:0',
-      'transition:opacity 1s'
-    ].join(';');
-    wrap.appendChild(svg);
-    fl.appendChild(wrap);
+    var wrap=document.createElement('div');wrap.className='fish';
+    wrap.style.cssText='left:'+Math.round(x)+'px;top:'+Math.round(baseY)+'px;transform:scaleX('+(goRight?1:-1)+') scale('+sc+');transform-origin:center center;opacity:0;transition:opacity 1s,left 1.5s ease-in-out,top 1.5s ease-in-out';
+    wrap.appendChild(svg);fl.appendChild(wrap);
     setTimeout(function(){wrap.style.opacity=(0.5+Math.random()*.28).toFixed(2);},200);
-
-    var sx=x, dir=goRight?1:-1, stepTimer=null;
-    function step(){
-      stepTimer=setTimeout(function(){
-        if(!wrap.parentNode)return;
-        var move=(Math.random()<.75)?(dir*(4+Math.random()*12)):(dir*(-2-Math.random()*4));
-        sx+=move;
-        var vW2=W();
-        if(sx<20){sx=20;dir=1;}
-        if(sx>vW2-20){sx=vW2-20;dir=-1;}
-        var ny=baseY+(Math.random()-.5)*8;
-        wrap.style.left=Math.round(sx)+'px';
-        wrap.style.top=Math.round(ny)+'px';
-        wrap.style.transform='scaleX('+(dir>0?1:-1)+') scale('+sc+')';
-        step();
-      },1800+Math.random()*3500);
-    }
-    step();
-
-    setTimeout(function(){
-      wrap.style.opacity='0';
-      setTimeout(function(){
-        if(stepTimer)clearTimeout(stepTimer);
-        wrap.parentNode&&wrap.parentNode.removeChild(wrap);
-        setTimeout(makeShrimp, 5000+Math.random()*8000);
-      },1200);
-    },35000+Math.random()*25000);
+    return{type:'shrimp',el:wrap,x:x,baseY:baseY,dir:goRight?1:-1,sc:sc,nextStep:Date.now()+2000+Math.random()*3000,lifetime:Date.now()+35000+Math.random()*25000};
   }
 
-  /* ── SNAIL ── */
   function makeSnail(){
-    var vW=W(), vH=H();
-    var x=(Math.random()<.5)?vW*.05+Math.random()*vW*.25:vW*.55+Math.random()*vW*.3;
-    var baseY=vH*(0.74+Math.random()*.1);
-    var sc=0.7+Math.random()*.4;
-    var goRight=Math.random()>.5;
-    var svg=document.createElementNS(NS,'svg');
-    svg.setAttribute('width','34');svg.setAttribute('height','24');
-    svg.setAttribute('viewBox','0 0 34 24');
+    var vW=W(),vH=H(),x=(Math.random()<.5)?vW*.05+Math.random()*vW*.25:vW*.55+Math.random()*vW*.3;
+    var baseY=vH*(0.74+Math.random()*.1),sc=0.7+Math.random()*.4,goRight=Math.random()>.5;
+    var svg=document.createElementNS(NS,'svg');svg.setAttribute('width','34');svg.setAttribute('height','24');svg.setAttribute('viewBox','0 0 34 24');
     buildSnail(svg);
-    var wrap=document.createElement('div');
-    wrap.className='fish';
-    wrap.style.cssText=[
-      'left:'+Math.round(x)+'px',
-      'top:'+Math.round(baseY)+'px',
-      'transform:scaleX('+(goRight?1:-1)+') scale('+sc+')',
-      'transform-origin:center center',
-      'opacity:0',
-      'transition:left 4s ease-in-out, top 4s ease-in-out, opacity 1.5s'
-    ].join(';');
-    wrap.appendChild(svg);
-    fl.appendChild(wrap);
+    var wrap=document.createElement('div');wrap.className='fish';
+    wrap.style.cssText='left:'+Math.round(x)+'px;top:'+Math.round(baseY)+'px;transform:scaleX('+(goRight?1:-1)+') scale('+sc+');transform-origin:center center;opacity:0;transition:left 4s ease-in-out,top 4s ease-in-out,opacity 1.5s';
+    wrap.appendChild(svg);fl.appendChild(wrap);
     setTimeout(function(){wrap.style.opacity=(0.45+Math.random()*.25).toFixed(2);},400);
-
-    var sx=x, dir=goRight?1:-1;
-    function crawl(){
-      setTimeout(function(){
-        if(!wrap.parentNode)return;
-        sx+=dir*(1.5+Math.random()*3);
-        var vW2=W();
-        if(sx<10){sx=10;dir=1;}
-        if(sx>vW2-10){sx=vW2-10;dir=-1;}
-        var ny=baseY+(Math.random()-.5)*6;
-        wrap.style.left=Math.round(sx)+'px';
-        wrap.style.top=Math.round(ny)+'px';
-        crawl();
-      },3500+Math.random()*5000);
-    }
-    crawl();
-
-    setTimeout(function(){
-      wrap.style.opacity='0';
-      setTimeout(function(){
-        wrap.parentNode&&wrap.parentNode.removeChild(wrap);
-        setTimeout(makeSnail, 20000+Math.random()*30000);
-      },2000);
-    },60000+Math.random()*30000);
+    return{type:'snail',el:wrap,x:x,baseY:baseY,dir:goRight?1:-1,sc:sc,nextStep:Date.now()+4000+Math.random()*5000,lifetime:Date.now()+60000+Math.random()*30000};
   }
 
-  /* ── CONFIGS ── */
-  var altumCfg={
-    w:54,h:82,build:buildAltum,
-    count:5,spreadX:200,spreadY:140,
-    speedMin:5,speedMax:9,
-    yMin:.06,yMax:.44,
-    scaleMin:.55,scaleMax:.78,
-    opMin:.44,opMax:.7,
-    wob:1.0,wobF:0.22
-  };
-  var congoCfg={
-    w:42,h:16,build:buildCongo,
-    count:16,spreadX:105,spreadY:55,
-    speedMin:24,speedMax:36,
-    yMin:.12,yMax:.6,
-    scaleMin:.58,scaleMax:.8,
-    opMin:.52,opMax:.78,
-    wob:1.6,wobF:0.48
-  };
-  var cardinalCfg={
-    w:36,h:12,build:buildCardinal,
-    count:22,spreadX:115,spreadY:58,
-    speedMin:30,speedMax:45,
-    yMin:.15,yMax:.65,
-    scaleMin:.55,scaleMax:.75,
-    opMin:.55,opMax:.82,
-    wob:1.4,wobF:0.55
-  };
-  var geoCfg={
-    w:60,h:36,build:buildGeo,
-    yMin:.1,yMax:.55,
-    speedMin:12,speedMax:20,
-    scaleMin:.7,scaleMax:.95,
-    opMin:.58,opMax:.8,
-    wob:1.2,wobF:0.32
-  };
-  var oscarCfg={
-    w:62,h:44,build:buildOscar,
-    yMin:.08,yMax:.5,
-    speedMin:10,speedMax:18,
-    scaleMin:.68,scaleMax:.9,
-    opMin:.55,opMax:.78,
-    wob:1.0,wobF:0.28
-  };
+  var altumCfg={w:54,h:82,build:buildAltum,count:TIER==='low'?3:5,spreadX:200,spreadY:140,speedMin:5,speedMax:9,yMin:.06,yMax:.44,scaleMin:.55,scaleMax:.78,opMin:.44,opMax:.7,wob:1.0,wobF:0.22};
+  var congoCfg={w:42,h:16,build:buildCongo,count:TIER==='low'?8:TIER==='mid'?12:16,spreadX:105,spreadY:55,speedMin:24,speedMax:36,yMin:.12,yMax:.6,scaleMin:.58,scaleMax:.8,opMin:.52,opMax:.78,wob:1.6,wobF:0.48};
+  var cardinalCfg={w:36,h:12,build:buildCardinal,count:TIER==='low'?10:TIER==='mid'?16:22,spreadX:115,spreadY:58,speedMin:30,speedMax:45,yMin:.15,yMax:.65,scaleMin:.55,scaleMax:.75,opMin:.55,opMax:.82,wob:1.4,wobF:0.55};
+  var geoCfg={w:60,h:36,build:buildGeo,yMin:.1,yMax:.55,speedMin:12,speedMax:20,scaleMin:.7,scaleMax:.95,opMin:.58,opMax:.8,wob:1.2,wobF:0.32};
+  var oscarCfg={w:62,h:44,build:buildOscar,yMin:.08,yMax:.5,speedMin:10,speedMax:18,scaleMin:.68,scaleMax:.9,opMin:.55,opMax:.78,wob:1.0,wobF:0.28};
 
-  /* ── ANIMATION LOOP ── */
-  var entities=[];
+  /* SINGLE RAF TICK */
   var lastTs=null;
-
   function tick(ts){
-    if(!lastTs)lastTs=ts;
+    requestAnimationFrame(tick);
+    if(paused)return;
+    if(!lastTs){lastTs=ts;return;}
     var dt=Math.min((ts-lastTs)/1000,.05);
     lastTs=ts;
-
-    var vW=W(), vH=H();
+    var vW=W(),vH=H(),now=Date.now();
 
     entities=entities.filter(function(e){
-      if(e.solo){
-        e.t+=dt;
-        e.x+=(e.goRight?1:-1)*e.speed*dt;
-        var y=e.baseY+Math.sin(e.t*e.wobF)*e.wob;
-        /* Clamp to visible area */
-        y=Math.max(vH*.02,Math.min(vH*.80,y));
-        e.el.style.left=Math.round(e.x)+'px';
-        e.el.style.top=Math.round(y)+'px';
-        var gone=e.goRight ? e.x>(vW+e.bodyW+80) : e.x<(-e.bodyW-80);
-        if(gone){
-          var el2=e.el, rfn=e.respawnFn;
-          el2.style.opacity='0';
-          setTimeout(function(){
-            el2.parentNode&&el2.parentNode.removeChild(el2);
-            setTimeout(function(){entities.push(rfn());},500);
-          },8000+Math.random()*10000);
-          return false;
-        }
-        return true;
-      } else {
+      if(e.type==='school'){
         e.x+=(e.goRight?1:-1)*e.speed*dt;
         e.members.forEach(function(m){
           m.t+=dt;
-          var y=e.baseY+m.oy+Math.sin(m.t*m.wobF)*m.wob;
-          y=Math.max(vH*.02,Math.min(vH*.80,y));
-          m.el.style.left=Math.round(e.x+m.ox)+'px';
-          m.el.style.top=Math.round(y)+'px';
+          var y=Math.max(vH*.02,Math.min(vH*.80,e.baseY+m.oy+Math.sin(m.t*m.wobF)*m.wob));
+          m.el.style.left=Math.round(e.x+m.ox)+'px';m.el.style.top=Math.round(y)+'px';
         });
         var edge=e.spreadX+140;
-        var gone2=e.goRight ? e.x>(vW+edge) : e.x<(-edge);
-        if(gone2){
-          var rfn2=e.respawnFn;
-          e.members.forEach(function(m){
-            m.el.style.opacity='0';
-            setTimeout(function(){m.el.parentNode&&m.el.parentNode.removeChild(m.el);},1000);
-          });
-          setTimeout(function(){
-            setTimeout(function(){entities.push(rfn2());},500);
-          },10000+Math.random()*12000);
+        if(e.goRight?e.x>(vW+edge):e.x<(-edge)){
+          e.members.forEach(function(m){m.el.style.opacity='0';setTimeout(function(){m.el.parentNode&&m.el.parentNode.removeChild(m.el);},1000);});
+          setTimeout(function(){entities.push(makeSchool(e.cfg));},10000+Math.random()*12000);
           return false;
         }
         return true;
       }
+      if(e.type==='solo'){
+        e.t+=dt;e.x+=(e.goRight?1:-1)*e.speed*dt;
+        var y=Math.max(vH*.02,Math.min(vH*.80,e.baseY+Math.sin(e.t*e.wobF)*e.wob));
+        e.el.style.left=Math.round(e.x)+'px';e.el.style.top=Math.round(y)+'px';
+        if(e.goRight?e.x>(vW+e.bodyW+80):e.x<(-e.bodyW-80)){
+          var el2=e.el,cfg2=e.cfg;el2.style.opacity='0';
+          setTimeout(function(){el2.parentNode&&el2.parentNode.removeChild(el2);setTimeout(function(){entities.push(makeSolo(cfg2));},8000+Math.random()*10000);},1000);
+          return false;
+        }
+        return true;
+      }
+      if(e.type==='shrimp'){
+        if(now>=e.nextStep){
+          var move=(Math.random()<.75)?(e.dir*(4+Math.random()*12)):(e.dir*(-2-Math.random()*4));
+          e.x+=move;
+          if(e.x<20){e.x=20;e.dir=1;}if(e.x>vW-20){e.x=vW-20;e.dir=-1;}
+          var ny=e.baseY+(Math.random()-.5)*8;
+          e.el.style.left=Math.round(e.x)+'px';e.el.style.top=Math.round(ny)+'px';
+          e.el.style.transform='scaleX('+(e.dir>0?1:-1)+') scale('+e.sc+')';
+          e.nextStep=now+1800+Math.random()*3500;
+        }
+        if(now>=e.lifetime){
+          e.el.style.opacity='0';
+          setTimeout(function(){e.el.parentNode&&e.el.parentNode.removeChild(e.el);setTimeout(makeShrimp,5000+Math.random()*8000);},1200);
+          return false;
+        }
+        return true;
+      }
+      if(e.type==='snail'){
+        if(now>=e.nextStep){
+          e.x+=e.dir*(1.5+Math.random()*3);
+          if(e.x<10){e.x=10;e.dir=1;}if(e.x>vW-10){e.x=vW-10;e.dir=-1;}
+          var sny=e.baseY+(Math.random()-.5)*6;
+          e.el.style.left=Math.round(e.x)+'px';e.el.style.top=Math.round(sny)+'px';
+          e.nextStep=now+3500+Math.random()*5000;
+        }
+        if(now>=e.lifetime){
+          e.el.style.opacity='0';
+          setTimeout(function(){e.el.parentNode&&e.el.parentNode.removeChild(e.el);setTimeout(makeSnail,20000+Math.random()*30000);},2000);
+          return false;
+        }
+        return true;
+      }
+      return true;
     });
-
-    requestAnimationFrame(tick);
   }
 
-  /* ── STAGGERED LAUNCH ── */
-  setTimeout(function(){entities.push(makeSchool(altumCfg));},   1000);
-  setTimeout(function(){entities.push(makeSolo(geoCfg));},        6000);
-  setTimeout(function(){entities.push(makeSchool(cardinalCfg));}, 12000);
-  setTimeout(function(){entities.push(makeSchool(congoCfg));},    20000);
-  setTimeout(function(){entities.push(makeSolo(oscarCfg));},      28000);
-
-  setTimeout(function(){makeShrimp();}, 2500);
-  setTimeout(function(){makeShrimp();}, 8000);
-  setTimeout(function(){makeShrimp();}, 15000);
-  setTimeout(function(){makeSnail();},  6000);
+  setTimeout(function(){entities.push(makeSchool(altumCfg));},1000);
+  setTimeout(function(){entities.push(makeSolo(geoCfg));},6000);
+  if(TIER!=='low'){
+    setTimeout(function(){entities.push(makeSchool(cardinalCfg));},12000);
+    setTimeout(function(){entities.push(makeSchool(congoCfg));},20000);
+  }
+  setTimeout(function(){entities.push(makeSolo(oscarCfg));},28000);
+  for(var si=0;si<CFG.shrimpMax;si++){(function(i){setTimeout(function(){entities.push(makeShrimp());},2500+i*6000);})(si);}
+  if(CFG.snailMax>0)setTimeout(function(){entities.push(makeSnail());},6000);
 
   requestAnimationFrame(tick);
-
 })();
 
-/* ══════════════════════════════════════
-   MUSIC
-══════════════════════════════════════ */
+/* ── MUSIC ── */
 (function(){
-  var btn=document.getElementById('music-btn');
-  var frame=document.getElementById('yt-frame');
-  var playing=false,loaded=false;
-  var VID='G52dUQLxPzg';
+  var btn=document.getElementById('music-btn'),frame=document.getElementById('yt-frame'),playing=false,VID='G52dUQLxPzg';
   btn.addEventListener('click',function(){
-    playing=!playing;
-    btn.classList.toggle('playing',playing);
-    btn.setAttribute('aria-pressed',playing?'true':'false');
-    if(playing){
-      loaded=true;
-      frame.src='https://www.youtube.com/embed/'+VID+'?autoplay=1&loop=1&playlist='+VID+'&controls=0&rel=0&modestbranding=1';
-    } else {
-      frame.src='https://www.youtube.com/embed/'+VID+'?autoplay=0&loop=1&playlist='+VID+'&controls=0&rel=0&modestbranding=1';
-    }
+    playing=!playing;btn.classList.toggle('playing',playing);btn.setAttribute('aria-pressed',playing?'true':'false');
+    frame.src='https://www.youtube.com/embed/'+VID+'?autoplay='+(playing?1:0)+'&loop=1&playlist='+VID+'&controls=0&rel=0&modestbranding=1';
   });
 })();
 
-/* MOBILE NAV */
+/* ── MOBILE NAV ── */
 var bg=document.getElementById('burger'),nm=document.getElementById('nmob');
-bg.addEventListener('click',function(){
-  var o=bg.classList.toggle('open');
-  nm.classList.toggle('open',o);
-  bg.setAttribute('aria-expanded',o);
-  nm.setAttribute('aria-hidden',!o);
-});
-function cm(){bg.classList.remove('open');nm.classList.remove('open');bg.setAttribute('aria-expanded','false');nm.setAttribute('aria-hidden','true')}
+bg.addEventListener('click',function(){var o=bg.classList.toggle('open');nm.classList.toggle('open',o);bg.setAttribute('aria-expanded',o);nm.setAttribute('aria-hidden',!o);});
+function cm(){bg.classList.remove('open');nm.classList.remove('open');bg.setAttribute('aria-expanded','false');nm.setAttribute('aria-hidden','true');}
 window.addEventListener('resize',function(){if(window.innerWidth>960)cm();},{passive:true});
 
-/* PAGE NAV */
+/* ── PAGE NAV ── */
 function go(id){
-  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
-  var t=document.getElementById('pg-'+id);
-  if(!t)return;
-  t.classList.add('active');
-  window.scrollTo({top:0,behavior:'auto'});
-  cm();
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  var t=document.getElementById('pg-'+id);if(!t)return;
+  t.classList.add('active');window.scrollTo({top:0,behavior:'auto'});cm();
   setTimeout(function(){obs(t);},80);
 }
 document.addEventListener('click',function(e){
-  var link=e.target.closest('[data-page]');
-  if(!link)return;
-  e.preventDefault();
-  go(link.getAttribute('data-page'));
+  var link=e.target.closest('[data-page]');if(!link)return;
+  e.preventDefault();go(link.getAttribute('data-page'));
 });
 
-/* SCROLL REVEAL */
+/* ── SCROLL REVEAL ── */
 var currentObserver=null;
 function obs(page){
   page.querySelectorAll('.sr').forEach(function(el){el.classList.remove('in');});
   if(currentObserver)currentObserver.disconnect();
   currentObserver=new IntersectionObserver(function(entries,ob){
-    entries.forEach(function(e){
-      if(e.isIntersecting){e.target.classList.add('in');ob.unobserve(e.target);}
-    });
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');ob.unobserve(e.target);}});
   },{threshold:.07,rootMargin:'0px 0px -24px 0px'});
   page.querySelectorAll('.sr').forEach(function(el){currentObserver.observe(el);});
 }
-document.addEventListener('DOMContentLoaded',function(){
-  obs(document.querySelector('.page.active'));
-});
+document.addEventListener('DOMContentLoaded',function(){obs(document.querySelector('.page.active'));});
 </script>
 </body>
 </html>
