@@ -153,9 +153,25 @@ main{position:relative;z-index:1;padding-top:68px;max-width:780px;margin:0 auto;
   .page-footer{grid-template-columns:1fr;text-align:center}.fr{justify-content:center}
   .art-cta{flex-direction:column;align-items:flex-start}
 }
+
+/* MUSIC BUTTON */
+#music-btn{position:fixed;bottom:2rem;right:2rem;z-index:850;display:flex;align-items:center;gap:.5rem;background:rgba(6,16,13,.75);border:1px solid rgba(139,189,210,.18);color:rgba(139,189,210,.65);padding:.55rem 1rem .55rem .8rem;border-radius:100px;font-family:var(--sans);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:background .3s,border-color .3s,color .3s;cursor:pointer}
+#music-btn:hover{background:rgba(9,22,18,.9);border-color:rgba(139,189,210,.35);color:rgba(139,189,210,.9)}
+#music-btn.playing{border-color:rgba(157,191,154,.4);color:rgba(157,191,154,.8)}
+.mb-icon{font-size:.85rem;line-height:1;display:inline-block}
+#music-btn.playing .mb-icon{animation:noteFloat 2s ease-in-out infinite}
+@keyframes noteFloat{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-3px) rotate(8deg)}}
 </style>
 </head>
 <body>
+
+<button id="music-btn" type="button" aria-label="Toggle music" aria-pressed="false" title="Toggle music">
+  <span class="mb-icon">♪</span>
+  <span class="mb-label">Music</span>
+</button>
+<div style="position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;bottom:0;right:0">
+  <iframe id="yt-frame" title="Ambient background music player" src="about:blank" allow="autoplay" style="width:200px;height:200px"></iframe>
+</div>
 <div class="bg-wash"></div>
 <div class="bg-glow"></div>
 
@@ -284,6 +300,15 @@ main{position:relative;z-index:1;padding-top:68px;max-width:780px;margin:0 auto;
 </main>
 
 <script>
+
+/* ── MUSIC ── */
+(function(){
+  var btn=document.getElementById('music-btn'),frame=document.getElementById('yt-frame'),playing=false,VID='G52dUQLxPzg';
+  btn.addEventListener('click',function(){
+    playing=!playing;btn.classList.toggle('playing',playing);btn.setAttribute('aria-pressed',playing?'true':'false');
+    frame.src='https://www.youtube.com/embed/'+VID+'?autoplay='+(playing?1:0)+'&loop=1&playlist='+VID+'&controls=0&rel=0&modestbranding=1';
+  });
+})();
 var bg=document.getElementById('burger'),nm=document.getElementById('nmob');
 bg.addEventListener('click',function(){
   var o=bg.classList.toggle('open');
