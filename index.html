@@ -193,6 +193,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
 .nlinks a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:rgba(61,214,232,.75);transition:width .35s var(--ease)}
 .nlinks a:hover{color:rgba(255,255,255,.82)}
 .nlinks a:hover::after{width:100%}
+/* NOTES DROPDOWN */
+.has-drop{position:relative}
+.has-drop>a{display:flex;align-items:center;gap:.3rem}
+.drop-arrow{font-size:.5rem;opacity:.5;transition:transform .3s var(--ease)}
+.has-drop:hover .drop-arrow{transform:rotate(180deg)}
+.dropdown{position:absolute;top:calc(100% + 1rem);right:0;min-width:220px;background:rgba(4,20,32,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(139,189,210,.1);padding:.6rem 0;opacity:0;pointer-events:none;transform:translateY(-6px);transition:opacity .28s var(--ease),transform .28s var(--ease)}
+.has-drop:hover .dropdown{opacity:1;pointer-events:all;transform:translateY(0)}
+.dropdown a{display:block;padding:.7rem 1.2rem;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.42);text-decoration:none;transition:color .2s,padding-left .25s var(--ease);white-space:nowrap}
+.dropdown a:hover{color:rgba(61,214,232,.82);padding-left:1.5rem}
+.dropdown-all{border-top:1px solid rgba(139,189,210,.08);margin-top:.4rem;padding-top:.4rem}
+.dropdown-all a{color:rgba(61,214,232,.45)!important}
+.dropdown-all a:hover{color:rgba(61,214,232,.88)!important}
 .ncta{font-size:.62rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:rgba(61,214,232,.92);border:1px solid rgba(61,214,232,.35);padding:.52rem 1.25rem;border-radius:100px;text-decoration:none;transition:background .3s,border-color .3s,color .3s;backdrop-filter:blur(8px)}
 .ncta:hover{background:rgba(61,214,232,.15);border-color:rgba(61,214,232,.6);color:#ffffff}
 .nbg{display:none;flex-direction:column;justify-content:center;gap:5px;width:34px;height:34px;background:none;border:none;padding:5px}
@@ -547,6 +559,16 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
     <li><a href="/ara" data-page="ara">The Framework</a></li>
     <li><a href="/rhyssa" data-page="rhyssa">Meet Rhyssa</a></li>
     <li><a href="/about" data-page="about">About</a></li>
+    <li class="has-drop">
+      <a href="/notes/">Notes <span class="drop-arrow">▾</span></a>
+      <div class="dropdown">
+        <!-- Tambah artikel baru di sini -->
+        <!-- <a href="/notes/nama-artikel.html">Tajuk Artikel</a> -->
+        <div class="dropdown-all">
+          <a href="/notes/">All Notes →</a>
+        </div>
+      </div>
+    </li>
   </ul>
   <button class="nbg" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
 </nav>
@@ -565,6 +587,7 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:grid;grid-template-column
     <li><a href="/ara" data-page="ara">The Framework</a></li>
     <li><a href="/rhyssa" data-page="rhyssa">Meet Rhyssa</a></li>
     <li><a href="/about" data-page="about">About</a></li>
+    <li><a href="/notes/">Notes</a></li>
     <li><a href="/privacy" data-page="privacy" style="color:rgba(255,255,255,.2)">Privacy Policy</a></li>
     <li><a href="/terms" data-page="terms" style="color:rgba(255,255,255,.2)">Terms of Use</a></li>
   </ul>
