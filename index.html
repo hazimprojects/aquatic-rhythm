@@ -1500,13 +1500,28 @@ window.addEventListener('popstate',function(e){
   go(id,false);
 });
 
-/* Handle direct URL on load */
+/* Handle direct URL on load — including 404 redirect */
 (function(){
+  /* Semak redirect dari 404.html */
+  var redirect=sessionStorage.getItem('spa_redirect');
+  if(redirect){
+    sessionStorage.removeItem('spa_redirect');
+    history.replaceState(null,'',redirect);
+  }
   var id=pageMap[location.pathname]||'home';
   var active=document.querySelector('.page.active');
   if(active)active.classList.remove('active');
   var t=document.getElementById('pg-'+id);
-  if(t){t.classList.add('active');history.replaceState({page:id},'',location.pathname);}
+  if(t){
+    t.classList.add('active');
+    try{history.replaceState({page:id},'',location.pathname);}catch(e){}
+    var path=id==='home'?'/':'/'+id;
+    var can=document.querySelector('link[rel="canonical"]');
+    if(can)can.setAttribute('href','https://aquaticrhythm.com'+path);
+    if(typeof gtag!=='undefined'){
+      gtag('event','page_view',{page_path:path,page_title:id});
+    }
+  }
 })();
 
 /* ── SCROLL REVEAL ── */
