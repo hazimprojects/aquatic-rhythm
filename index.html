@@ -1479,6 +1479,10 @@ function go(id,push){
   var path=id==='home'?'/':'/'+id;
   if(push!==false)history.pushState({page:id},'',path);
 
+  /* Update canonical */
+  var can=document.querySelector('link[rel="canonical"]');
+  if(can)can.setAttribute('href','https://aquaticrhythm.com'+path);
+
   /* GA4 track page */
   if(typeof gtag!=='undefined'){
     gtag('event','page_view',{page_path:path,page_title:id});
