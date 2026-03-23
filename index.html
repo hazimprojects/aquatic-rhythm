@@ -1459,16 +1459,51 @@ function cm(){bg.classList.remove('open');nm.classList.remove('open');bg.setAttr
 window.addEventListener('resize',function(){if(window.innerWidth>960)cm();},{passive:true});
 
 /* ── PAGE NAV ── */
-function go(id){
+var pageMap={
+  '':        'home',
+  '/':       'home',
+  '/ara':    'ara',
+  '/rhyssa': 'rhyssa',
+  '/about':  'about',
+  '/privacy':'privacy',
+  '/terms':  'terms'
+};
+
+function go(id,push){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   var t=document.getElementById('pg-'+id);if(!t)return;
   t.classList.add('active');window.scrollTo({top:0,behavior:'auto'});cm();
   setTimeout(function(){obs(t);},80);
+
+  /* Update URL */
+  var path=id==='home'?'/':'/'+id;
+  if(push!==false)history.pushState({page:id},'',path);
+
+  /* GA4 track page */
+  if(typeof gtag!=='undefined'){
+    gtag('event','page_view',{page_path:path,page_title:id});
+  }
 }
+
 document.addEventListener('click',function(e){
   var link=e.target.closest('[data-page]');if(!link)return;
   e.preventDefault();go(link.getAttribute('data-page'));
 });
+
+/* Handle back/forward button */
+window.addEventListener('popstate',function(e){
+  var id=(e.state&&e.state.page)?e.state.page:pageMap[location.pathname]||'home';
+  go(id,false);
+});
+
+/* Handle direct URL on load */
+(function(){
+  var id=pageMap[location.pathname]||'home';
+  var active=document.querySelector('.page.active');
+  if(active)active.classList.remove('active');
+  var t=document.getElementById('pg-'+id);
+  if(t){t.classList.add('active');history.replaceState({page:id},'',location.pathname);}
+})();
 
 /* ── SCROLL REVEAL ── */
 var currentObserver=null;
