@@ -481,6 +481,12 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:flex;align-items:center;j
 .tier-low .ncta,.tier-low .snb,.tier-low .bf{
   backdrop-filter:none!important;-webkit-backdrop-filter:none!important
 }
+
+/* REDUCE MOTION BUTTON */
+#motion-btn{position:fixed;bottom:2rem;right:2rem;z-index:850;display:flex;align-items:center;gap:.5rem;background:rgba(6,16,13,.75);border:1px solid rgba(139,189,210,.18);color:rgba(139,189,210,.55);padding:.55rem 1rem;border-radius:100px;font-family:var(--sans);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:background .3s,border-color .3s,color .3s;cursor:pointer}
+#motion-btn:hover{background:rgba(9,22,18,.9);border-color:rgba(139,189,210,.35);color:rgba(139,189,210,.9)}
+#motion-btn.still{border-color:rgba(157,191,154,.4);color:rgba(157,191,154,.7)}
+#motion-btn .mb-icon{font-size:.8rem;line-height:1}
 /* ARA PILLARS — responsive */
 
 
@@ -543,6 +549,11 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:flex;align-items:center;j
 </nav>
 
 
+
+<button id="motion-btn" type="button" aria-label="Reduce motion" aria-pressed="false" title="Reduce motion">
+  <span class="mb-icon">◎</span>
+  <span class="mb-label">Reduce motion</span>
+</button>
 
 <div class="nmob" id="nmob" aria-hidden="true">
   <ul>
@@ -1507,6 +1518,31 @@ if(hasHover){
 
 
 
+
+/* ── REDUCE MOTION ── */
+(function(){
+  var btn=document.getElementById('motion-btn');
+  var fish=document.getElementById('fish-layer');
+  var plants=document.getElementById('plants');
+  var driftwood=document.getElementById('driftwood-layer');
+  var still=localStorage.getItem('ar_still')==='1';
+
+  function apply(s){
+    still=s;
+    btn.classList.toggle('still',s);
+    btn.setAttribute('aria-pressed',s?'true':'false');
+    btn.querySelector('.mb-label').textContent=s?'Motion on':'Reduce motion';
+    btn.querySelector('.mb-icon').textContent=s?'○':'◎';
+    /* Sembunyikan fauna dan flora sahaja — air, caustic, zarah kekal */
+    if(fish)fish.style.opacity=s?'0':'';
+    if(plants)plants.style.opacity=s?'0':'';
+    if(driftwood)driftwood.style.opacity=s?'0':'';
+    localStorage.setItem('ar_still',s?'1':'0');
+  }
+
+  btn.addEventListener('click',function(){apply(!still);});
+  if(still)apply(true);
+})();
 /* ── MOBILE NAV ── */
 var bg=document.getElementById('burger'),nm=document.getElementById('nmob');
 bg.addEventListener('click',function(){var o=bg.classList.toggle('open');nm.classList.toggle('open',o);bg.setAttribute('aria-expanded',o);nm.setAttribute('aria-hidden',!o);});
@@ -1594,4 +1630,4 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 </body>
-                                                                                                                                                                                                        </html>
+  </html>
