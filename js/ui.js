@@ -255,49 +255,5 @@
     if (floraOff) applyFlora(true);
   })();
 
-  /* ── FLOATING RHYSSA BUTTON ── */
-  (function () {
-    var btn = document.getElementById('rhyssa-float');
-    if (!btn) return;
-
-    var visible = false;
-    var ticking = false;
-
-    function getScrollY() {
-      return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    }
-
-    function update() {
-      var activePage = document.querySelector('.page.active');
-      var isAra = activePage && activePage.id === 'pg-ara';
-      var scrolled = getScrollY() > 280;
-      var shouldShow = isAra && scrolled;
-
-      if (shouldShow !== visible) {
-        visible = shouldShow;
-        if (visible) {
-          btn.classList.add('visible');
-          btn.removeAttribute('aria-hidden');
-        } else {
-          btn.classList.remove('visible');
-          btn.setAttribute('aria-hidden', 'true');
-        }
-      }
-      ticking = false;
-    }
-
-    window.addEventListener('scroll', function () {
-      if (!ticking) { requestAnimationFrame(update); ticking = true; }
-    }, { passive: true });
-
-    /* Update on page navigation via event */
-    document.addEventListener('click', function (e) {
-      var link = e.target.closest('[data-page]');
-      if (link) { setTimeout(update, 200); }
-    });
-
-    /* Initial check */
-    setTimeout(update, 100);
-  })();
 
 })();
