@@ -467,7 +467,7 @@ function startLearning() {
     setTimeout(function(){ first.classList.add('visible'); }, 30);
   }
   updateDots();
-  if (canvases[1]) setTimeout(function(){ canvases[1](); }, 80);
+  if (canvases[1]) setTimeout(function(){ canvases[1](); }, 150);
 }
 
 /* Progress dots */
@@ -1116,10 +1116,9 @@ canvases[5] = function() {
   draw();
 };
 
-/* Init first visual */
-setTimeout(function(){ if(canvases[1]) canvases[1](); }, 100);
+/* Resize handler only — canvases init via startLearning() */
 window.addEventListener('resize', function(){
-  if(canvases[currentMod]) canvases[currentMod]();
+  if(canvases[currentMod]) setTimeout(function(){ canvases[currentMod](); }, 50);
 });
 
 /* NAV BURGER */
