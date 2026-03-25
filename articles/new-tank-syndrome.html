@@ -56,7 +56,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;ali
 @media(max-width:960px){.art-nlinks{display:none}.art-burger{display:flex}}
 
 /* MODULE SYSTEM */
-.module-wrap{max-width:680px;margin:0 auto;padding:7rem clamp(1.5rem,5vw,3rem) 6rem}
+.module-wrap{max-width:680px;margin:0 auto;padding:7rem clamp(1.5rem,5vw,3rem) 6rem;display:none}
+.module-wrap.active{display:block}
 
 /* PROGRESS DOTS */
 .progress-dots{position:fixed;right:clamp(1rem,3vw,2.5rem);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:.55rem;z-index:50}
@@ -161,7 +162,9 @@ canvas.vis-canvas{display:block;width:100%;border-radius:3px}
   min-height:100vh;display:flex;align-items:center;justify-content:center;
   padding:8rem clamp(1.5rem,5vw,3rem) 5rem;
   position:relative;
+  transition:opacity .4s ease;
 }
+.art-intro.hidden{display:none}
 .art-intro::after{
   content:'';position:absolute;bottom:0;left:0;right:0;height:120px;
   background:linear-gradient(to bottom,transparent,var(--abyss));
@@ -261,11 +264,10 @@ canvas.vis-canvas{display:block;width:100%;border-radius:3px}
       <span class="meta-dot">·</span>
       <span>~10 min</span>
     </div>
-    <button class="art-begin-btn" onclick="document.getElementById('learning').scrollIntoView({behavior:'smooth'})">Begin reading <span>↓</span></button>
+    <button class="art-begin-btn" onclick="startLearning()">Begin reading <span>→</span></button>
   </div>
 </div>
 
-<div id="learning">
 
 <div class="module-wrap">
 
@@ -421,7 +423,6 @@ canvas.vis-canvas{display:block;width:100%;border-radius:3px}
   </section>
 
 </div>
-</div><!-- /learning -->
 </main>
 
 <script>
@@ -437,6 +438,10 @@ function goMod(n) {
   if (prev) { prev.classList.remove('visible'); setTimeout(function(){ prev.classList.remove('active'); }, 300); }
 
   currentMod = n;
+
+  /* Scroll module-wrap to top, not window */
+  var wrap = document.querySelector('.module-wrap');
+  if (wrap) wrap.scrollTop = 0;
   window.scrollTo({ top: 0, behavior: 'auto' });
 
   var next = document.getElementById('mod-' + n);
@@ -446,6 +451,23 @@ function goMod(n) {
 
   updateDots();
   if (canvases[n]) { setTimeout(function(){ canvases[n](); }, 80); }
+}
+
+function startLearning() {
+  /* Hide intro, show modules */
+  var intro = document.querySelector('.art-intro');
+  var wrap = document.querySelector('.module-wrap');
+  if (intro) intro.classList.add('hidden');
+  if (wrap) wrap.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'auto' });
+  /* Init first module */
+  var first = document.getElementById('mod-1');
+  if (first) {
+    first.classList.add('active');
+    setTimeout(function(){ first.classList.add('visible'); }, 30);
+  }
+  updateDots();
+  if (canvases[1]) setTimeout(function(){ canvases[1](); }, 80);
 }
 
 /* Progress dots */
@@ -470,11 +492,8 @@ function updateDots() {
 }
 buildDots();
 
-/* Init first module */
+/* Init — show intro first */
 (function(){
-  var first = document.getElementById('mod-1');
-  first.classList.add('active');
-  setTimeout(function(){ first.classList.add('visible'); }, 60);
   updateDots();
 })();
 
