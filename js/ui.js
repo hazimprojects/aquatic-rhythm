@@ -61,7 +61,8 @@
     '/rhyssa':  'rhyssa',
     '/about':   'about',
     '/privacy': 'privacy',
-    '/terms':   'terms'
+    '/terms':   'terms',
+    '/reading': 'reading'
   };
 
   var titleMap = {
@@ -70,7 +71,8 @@
     'rhyssa':  'Rhyssa — An Aquarium Companion Shaped by ARA',
     'about':   'About — Where Aquatic Rhythm Came From',
     'privacy': 'Privacy Policy — Aquatic Rhythm',
-    'terms':   'Terms of Use — Aquatic Rhythm'
+    'terms':   'Terms of Use — Aquatic Rhythm',
+    'reading': 'Reading — Aquatic Rhythm'
   };
 
   var descMap = {
@@ -79,7 +81,8 @@
     'rhyssa':  'Rhyssa is an AI aquarium companion shaped by ARA. She helps you understand what your tank is doing — and what it actually needs.',
     'about':   'Aquatic Rhythm began with one experience that many aquarium keepers share. This is where that experience led.',
     'privacy': 'Privacy Policy for Aquatic Rhythm. What we collect, how it is handled, and what it means for you.',
-    'terms':   'Terms of Use for Aquatic Rhythm and Rhyssa. Written plainly, without unnecessary complexity.'
+    'terms':   'Terms of Use for Aquatic Rhythm and Rhyssa. Written plainly, without unnecessary complexity.',
+    'reading': 'Articles and observations from Aquatic Rhythm — on living aquarium systems, ecological care, and the keepers who tend them.'
   };
 
   function updateMeta(id) {
