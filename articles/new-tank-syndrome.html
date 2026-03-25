@@ -155,6 +155,53 @@ canvas.vis-canvas{display:block;width:100%;border-radius:3px}
 .vis-btn-good{border-color:rgba(61,214,232,.2);color:rgba(61,214,232,.55)}
 .vis-btn-good:hover{background:rgba(58,110,140,.2)!important;color:rgba(61,214,232,.85)!important;border-color:rgba(61,214,232,.4)!important}
 
+
+/* ARTICLE INTRO */
+.art-intro{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:8rem clamp(1.5rem,5vw,3rem) 5rem;
+  position:relative;
+}
+.art-intro::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:120px;
+  background:linear-gradient(to bottom,transparent,var(--abyss));
+  pointer-events:none;
+}
+.art-intro-inner{max-width:640px;margin:0 auto}
+.art-eyebrow{
+  display:block;font-size:.6rem;font-weight:500;letter-spacing:.26em;
+  text-transform:uppercase;color:rgba(157,191,154,.75);margin-bottom:1.6rem;
+}
+.art-main-title{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(2.2rem,5.5vw,3.8rem);
+  color:rgba(255,255,255,.92);line-height:1.08;
+  margin-bottom:2.2rem;
+}
+.art-main-title em{font-style:italic;color:rgba(61,214,232,.75)}
+.art-intro-text{
+  font-size:1rem;font-weight:300;color:rgba(255,255,255,.62);
+  line-height:1.95;margin-bottom:1rem;
+}
+.art-intro-text:last-of-type{margin-bottom:0}
+.art-intro-meta{
+  display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;
+  margin-top:2rem;margin-bottom:2rem;
+  font-size:.6rem;font-weight:400;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(255,255,255,.25);
+}
+.meta-dot{color:rgba(255,255,255,.12)}
+.art-begin-btn{
+  font-size:.65rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;
+  background:rgba(30,165,185,.82);color:#fff;
+  border:1px solid rgba(61,214,232,.45);padding:.8rem 2rem;
+  border-radius:2px;cursor:pointer;
+  transition:background .25s,transform .2s;
+  display:inline-flex;align-items:center;gap:.5rem;
+}
+.art-begin-btn:hover{background:rgba(40,184,208,.95);transform:translateY(-1px)}
+.art-begin-btn span{opacity:.65;font-size:.9rem}
+
 </style>
 </head>
 <body>
@@ -198,6 +245,28 @@ canvas.vis-canvas{display:block;width:100%;border-radius:3px}
 <nav class="progress-dots" aria-label="Module progress" id="progress-dots"></nav>
 
 <main>
+
+<!-- ARTICLE INTRO -->
+<div class="art-intro">
+  <div class="art-intro-inner">
+    <span class="art-eyebrow">Reading · New Tank Syndrome</span>
+    <h1 class="art-main-title">You set up a new tank.<br><em>Then the water turned cloudy.</em></h1>
+    <p class="art-intro-text">The fish looked stressed. You tested the water, changed it, added something — and it kept happening. You wondered what you did wrong.</p>
+    <p class="art-intro-text">You did not do anything wrong.</p>
+    <p class="art-intro-text">What you were watching is one of the most misunderstood phases in the aquarium hobby — and almost every keeper goes through it. This guide explains what is actually happening, why the instinct to act often makes it worse, and what you can do instead.</p>
+    <div class="art-intro-meta">
+      <span>5 modules</span>
+      <span class="meta-dot">·</span>
+      <span>Beginner &amp; Intermediate</span>
+      <span class="meta-dot">·</span>
+      <span>~10 min</span>
+    </div>
+    <button class="art-begin-btn" onclick="document.getElementById('learning').scrollIntoView({behavior:'smooth'})">Begin reading <span>↓</span></button>
+  </div>
+</div>
+
+<div id="learning">
+
 <div class="module-wrap">
 
   <!-- ═══ MODULE 1 — Not a mistake ═══ -->
@@ -352,6 +421,7 @@ canvas.vis-canvas{display:block;width:100%;border-radius:3px}
   </section>
 
 </div>
+</div><!-- /learning -->
 </main>
 
 <script>
