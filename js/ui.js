@@ -73,6 +73,20 @@
     'terms':   'Terms of Use — Aquatic Rhythm'
   };
 
+  var descMap = {
+    'home':    'Your aquarium is a living system. Aquatic Rhythm helps you read it — through ARA, a framework for ecological care, and Rhyssa, a companion shaped by it.',
+    'ara':     'Aquatic Rhythm Alignment is a framework for reading living aquarium systems — through phase, rhythm, human capacity, and ecological timing.',
+    'rhyssa':  'Rhyssa is an AI aquarium companion shaped by ARA. She helps you understand what your tank is doing — and what it actually needs.',
+    'about':   'Aquatic Rhythm began with one experience that many aquarium keepers share. This is where that experience led.',
+    'privacy': 'Privacy Policy for Aquatic Rhythm. What we collect, how it is handled, and what it means for you.',
+    'terms':   'Terms of Use for Aquatic Rhythm and Rhyssa. Written plainly, without unnecessary complexity.'
+  };
+
+  function updateMeta(id) {
+    var desc = document.getElementById('meta-desc');
+    if (desc && descMap[id]) desc.setAttribute('content', descMap[id]);
+  }
+
   function go(id, push) {
     document.querySelectorAll('.page').forEach(function (p) { p.classList.remove('active'); });
     var t = document.getElementById('pg-' + id);
@@ -82,8 +96,9 @@
     closeMenu();
     setTimeout(function () { observeScrollReveal(t); }, 80);
 
-    /* Update page title */
+    /* Update page title and description */
     if (titleMap[id]) document.title = titleMap[id];
+    updateMeta(id);
 
     var path = id === 'home' ? '/' : '/' + id;
     if (push !== false) history.pushState({ page: id }, '', path);
@@ -125,6 +140,7 @@
     if (t) {
       t.classList.add('active');
       if (titleMap[id]) document.title = titleMap[id];
+      updateMeta(id);
       try { history.replaceState({ page: id }, '', location.pathname); } catch (e) {}
       var path = id === 'home' ? '/' : '/' + id;
       var can = document.querySelector('link[rel="canonical"]');
