@@ -202,25 +202,36 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
 .os{background:transparent;color:rgba(255,255,255,.38);border:1px solid rgba(255,255,255,.12)}
 .os:hover{color:rgba(255,255,255,.68);background:rgba(255,255,255,.05)}
 
-/* MOBILE — stack vertically */
+/* MOBILE */
 @media(max-width:580px){
   #middle{
     grid-template-columns:1fr;
-    grid-template-rows:auto 1fr auto;
+    grid-template-rows:1fr auto auto;
   }
-  #pleft{
-    order:2;
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:.3rem;
-  }
-  #tcol{order:1;min-height:130px;max-height:200px}
-  #pright{order:3;min-height:100px;max-height:140px}
-  .t-status,.ah{display:none}
-  #param-bar{display:none} /* params shown in grid on mobile */
+  /* Hide desktop left panel — use slim param bar instead */
+  #pleft{display:none}
+  /* Tank fills available space */
+  #tcol{order:1;min-height:0}
+  /* Slim param bar visible */
+  #param-bar{order:2;display:flex;flex-wrap:wrap;gap:.3rem .5rem;padding:.25rem 0}
+  .pi{min-width:auto;flex:1}
+  .pi-div{display:none}
+  /* Log compact */
+  #pright{order:3;max-height:130px;min-height:0}
+  .insight-box{padding:.35rem .5rem}
+  .ib-txt{font-size:.68rem;line-height:1.45}
+  .le{padding:.22rem .45rem;font-size:.6rem}
+  /* Actions */
+  .an{font-size:.46rem}
+  .ah{display:none}
+  .ai{font-size:1.05rem}
+  .ab{padding:.42rem .2rem}
+  /* Topbar */
+  .t-status{display:none}
 }
 @media(min-width:581px){
   .t-label{display:block}
+  #param-bar{display:flex}
 }
 </style>
 </head>
