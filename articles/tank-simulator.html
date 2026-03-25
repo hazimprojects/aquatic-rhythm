@@ -97,7 +97,7 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
 .lw{color:rgba(200,160,40,.75)}.ldg{color:rgba(220,100,80,.8)}.lgd{color:rgba(80,200,120,.72)}
 
 /* BOTTOM ACTIONS */
-#bbar{display:grid;grid-template-columns:repeat(4,1fr);gap:.38rem;padding:.38rem 0 .48rem;border-top:1px solid rgba(139,189,210,.09);flex-shrink:0}
+#bbar{display:grid;grid-template-columns:repeat(5,1fr);gap:.38rem;padding:.38rem 0 .48rem;border-top:1px solid rgba(139,189,210,.09);flex-shrink:0}
 .ab{display:flex;flex-direction:column;align-items:center;gap:.18rem;padding:.52rem .28rem;background:rgba(6,16,13,.6);border:1px solid rgba(139,189,210,.1);border-radius:2px;cursor:pointer;transition:background .2s,border-color .2s,transform .15s;font-family:'DM Sans',system-ui,sans-serif}
 .ab:hover:not(:disabled){background:rgba(9,22,18,.88);border-color:rgba(61,214,232,.25);transform:translateY(-1px)}
 .ab:active:not(:disabled){transform:translateY(0)}
@@ -247,6 +247,68 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
 /* DAY PROGRESS BAR */
 #day-prog-wrap{height:2px;background:rgba(255,255,255,.07);flex-shrink:0;overflow:hidden}
 #day-prog-fill{height:100%;width:0%;transition:width .25s ease}
+
+/* BACTERIA INDICATOR */
+.pi-bac{display:flex;align-items:center;gap:.22rem;flex-shrink:0}
+.bac-dot{font-size:.55rem;color:rgba(255,255,255,.12);transition:color .8s,text-shadow .8s;line-height:1}
+.bac-dot.active{color:rgba(220,140,60,.85);text-shadow:0 0 6px rgba(220,140,60,.5)}
+.bac-dot.full{color:rgba(80,200,100,.85);text-shadow:0 0 6px rgba(80,200,100,.5)}
+
+/* ── GUIDED HINTS ── */
+#guide-hint{
+  position:fixed;bottom:5.5rem;left:50%;transform:translateX(-50%);
+  z-index:50;pointer-events:none;
+  transition:opacity .5s,transform .5s;
+  opacity:0;
+}
+#guide-hint.show{opacity:1;transform:translateX(-50%) translateY(-4px)}
+.gh-inner{
+  background:rgba(6,22,18,.92);
+  border:1px solid rgba(61,214,232,.25);
+  border-radius:3px;
+  padding:.45rem .9rem;
+  display:flex;align-items:center;gap:.5rem;
+  backdrop-filter:blur(8px);
+  white-space:nowrap;
+}
+.gh-icon{font-size:.9rem}
+.gh-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.75rem;color:rgba(255,255,255,.72)}
+
+/* Button pulse — Aquatic Rhythm guide */
+.ab.ar-pulse{
+  animation:ar-pulse 1.8s ease-in-out infinite;
+  border-color:rgba(61,214,232,.5);
+}
+.ab.ar-warn{
+  animation:ar-warn 1.8s ease-in-out infinite;
+  border-color:rgba(200,160,40,.5);
+}
+.ab.ar-stop{
+  animation:ar-stop 1.2s ease-in-out infinite;
+  border-color:rgba(220,80,60,.5);
+}
+@keyframes ar-pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(61,214,232,.15)}
+  50%{box-shadow:0 0 0 5px rgba(61,214,232,.12),0 0 12px rgba(61,214,232,.1)}
+}
+@keyframes ar-warn{
+  0%,100%{box-shadow:0 0 0 0 rgba(200,160,40,.1)}
+  50%{box-shadow:0 0 0 5px rgba(200,160,40,.15),0 0 12px rgba(200,160,40,.1)}
+}
+@keyframes ar-stop{
+  0%,100%{box-shadow:0 0 0 0 rgba(220,80,60,.1);opacity:.25}
+  50%{box-shadow:0 0 0 4px rgba(220,80,60,.15);opacity:.18}
+}
+
+/* Wait button */
+#act-wait{
+  background:rgba(6,16,13,.6);
+  border:1px solid rgba(139,189,210,.12);
+}
+#act-wait.ar-pulse{
+  border-color:rgba(61,214,232,.4) !important;
+}
+
 </style>
 </head>
 <body>
@@ -423,6 +485,14 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
         <div class="pi-fish"><span class="pi-fish-lbl">Fish</span><span class="pi-fish-val" id="v-fish">0</span></div>
         <div class="pi-div"></div>
         <div class="pi-fish"><span class="pi-fish-lbl">Plants</span><span class="pi-fish-val" id="v-plant" style="color:rgba(100,180,80,.6)">0</span></div>
+        <div class="pi-div"></div>
+        <div class="pi-bac" id="bac-indicator">
+          <span class="pi-fish-lbl" style="font-size:.38rem;letter-spacing:.08em">BAC</span>
+          <span class="bac-dot" id="bac-a">●</span>
+          <span class="bac-pct" id="bac-a-pct" style="font-size:.42rem;color:rgba(220,140,60,.5);min-width:18px">0%</span>
+          <span class="bac-dot" id="bac-b" style="margin-left:.1rem">●</span>
+          <span class="bac-pct" id="bac-b-pct" style="font-size:.42rem;color:rgba(80,200,100,.5);min-width:18px">0%</span>
+        </div>
       </div>
     </div>
 
@@ -432,7 +502,10 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
     </div>
   </div>
 
-  <div id="bbar" id="bbar">
+  <!-- Guide hint -->
+  <div id="guide-hint"><div class="gh-inner"><span class="gh-icon" id="gh-icon">💧</span><span class="gh-text" id="gh-text">Small water change now</span></div></div>
+
+  <div id="bbar">
     <button class="ab" id="act-source" onclick="doAct('source')">
       <span class="ai" id="act-source-icon">🧪</span>
       <span class="an" id="act-source-name">Add ammonia</span>
@@ -446,6 +519,9 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
     </button>
     <button class="ab" id="act-plant" onclick="doAct('plant')">
       <span class="ai">🌿</span><span class="an">Add plants</span><span class="ah">Buffers nitrate</span>
+    </button>
+    <button class="ab" id="act-wait" onclick="doAct('wait')">
+      <span class="ai">⏳</span><span class="an">Wait</span><span class="ah">Do nothing</span>
     </button>
   </div>
 </div>
@@ -475,7 +551,7 @@ var S = {
   fishless:true
 };
 
-var TICK_MS=7000,SUB_MS=200,subSteps=35,subCount=0,running=false,subTimer=null;
+var TICK_MS=5000,SUB_MS=200,subSteps=25,subCount=0,running=false,subTimer=null;
 
 /* Time phases */
 var phases=[
@@ -521,6 +597,9 @@ function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
 
 function tick(){
   if(S.dead||S.won)return;
+  /* Don't advance day until cycle has started */
+  var hasStarted=S.fishless?(S.ammSource>0):(S.fish>0);
+  if(!hasStarted)return;
   S.day++;S.wc++;
   var sz=sizeMap[CFG.size];
 
@@ -528,22 +607,21 @@ function tick(){
   var ammoniaIn=0;
   if(S.fishless){
     /* Fishless: ammonia from added source only */
-    ammoniaIn=S.ammSource*.06*sz.load;
+    ammoniaIn=S.ammSource*.07*sz.load*(1-S.plants*.04);
   } else {
     /* Fish-in: continuous from fish */
     ammoniaIn=S.fish*.08*sz.load;
   }
-  ammoniaIn*=(1-S.plants*.04);
   S.nh3=clamp(S.nh3+ammoniaIn,0,8);
 
-  /* Bacteria grow */
-  if(S.nh3>.05)S.bacA=clamp(S.bacA+.02*(1-S.bacA)*S.nh3*sz.buf,0,1);
-  if(S.no2>.05)S.bacB=clamp(S.bacB+.015*(1-S.bacB)*S.no2*sz.buf,0,1);
+  /* Bacteria grow — faster, realistic cycle ~20-28 days */
+  if(S.nh3>.05)S.bacA=clamp(S.bacA+.18*(1-S.bacA)*S.nh3*sz.buf,0,1);
+  if(S.no2>.05)S.bacB=clamp(S.bacB+.18*(1-S.bacB)*S.no2*sz.buf,0,1);
 
   /* Conversion */
-  var c1=S.bacA*S.nh3*.38;S.nh3=clamp(S.nh3-c1,0,8);S.no2=clamp(S.no2+c1*.9,0,8);
-  var c2=S.bacB*S.no2*.3;S.no2=clamp(S.no2-c2,0,8);S.no3=clamp(S.no3+c2*.85,0,80);
-  if(S.plants>0)S.no3=clamp(S.no3-S.plants*.14,0,80);
+  var c1=S.bacA*S.nh3*.6;S.nh3=clamp(S.nh3-c1,0,8);S.no2=clamp(S.no2+c1*.9,0,8);
+  var c2=S.bacB*S.no2*.55;S.no2=clamp(S.no2-c2,0,8);S.no3=clamp(S.no3+c2*.85,0,80);
+  if(S.plants>0)S.no3=clamp(S.no3-S.plants*.02,0,80);
 
   /* Cycle complete */
   if(!S.cycleOk&&S.bacA>.75&&S.bacB>.65&&S.nh3<.25&&S.no2<.25){
@@ -561,8 +639,8 @@ function tick(){
   S.stress=clamp(sf,0,100);
 
   /* Win */
-  if(!S.won&&S.cycleOk&&S.day>18){
-    var fishOk=S.fishless||(S.fish>0&&S.stress<20);
+  if(!S.won&&S.cycleOk&&S.day>22&&S.no3>.1){
+    var fishOk=S.fishless||(S.fish>0&&S.stress<25);
     if(fishOk){S.won=true;running=false;showEnd('won');}
   }
   /* Crash — only if fish present and ammonia lethal */
@@ -570,7 +648,7 @@ function tick(){
     S.dead=true;S.fish=0;running=false;showEnd('crashed');
   }
 
-  genLog();render();
+  genLog();render();updateGuide();
 }
 
 function doAct(a){
@@ -593,18 +671,33 @@ function doAct(a){
     addLog('Fed. Waste added to ammonia load.',S.nh3>1.5?'warn':'');
   }
   if(a==='water'){
-    var sz=sizeMap[CFG.size];
     S.nh3*=.75;S.no2*=.75;S.no3*=.72;
-    if(!S.cycleOk){S.bacA=clamp(S.bacA-.1,0,1);S.bacB=clamp(S.bacB-.08,0,1);}
+    var wcPenalty=!S.cycleOk?0.12:0.03;
+    S.bacA=clamp(S.bacA-wcPenalty,0,1);
+    S.bacB=clamp(S.bacB-wcPenalty*.8,0,1);
     S.wc=0;S.totalWc++;
-    addLog('25% water change done.'+(!S.cycleOk?' Bacteria slightly disrupted.':''),'');
+    var rapid=S.totalWc>3&&S.day<15;
+    var msg='25% water change done.';
+    var type='';
+    if(!S.cycleOk&&rapid){
+      msg='Water changed again — '+S.totalWc+' times already. Frequent changes are resetting bacterial progress. The cycle needs stability, not intervention.';
+      type='danger';
+    } else if(!S.cycleOk){
+      msg='25% water change done. Bacteria slightly disrupted — the cycle will take a little longer.';
+      type='warn';
+    }
+    addLog(msg,type);
   }
   if(a==='plant'){
     if(S.plants>=4){addLog('Tank is well planted.','');return;}
     S.plants++;
     addLog('Plants added. Will absorb nitrate over time.','good');
   }
+  if(a==='wait'){
+    addLog('Waiting. The system is working on its own timeline.','');
+  }
   render();
+  updateGuide();
 }
 
 /* Insights */
@@ -638,6 +731,92 @@ function genLog(){
   if(S.no3>40&&S.day%5===0)addLog('Nitrate accumulating. Consider a small water change.','warn');
   if(S.cycleOk&&S.day%6===0)addLog('Parameters stable. Cycle running well.','good');
   if(S.bacA>.4&&S.bacA<.6&&S.day%4===0)addLog('Bacterial colonies expanding. Getting closer.','');
+}
+
+/* ── GUIDE SYSTEM ── */
+var guideHintTimer = null;
+
+function updateGuide(){
+  if(S.dead||S.won)return;
+  var hint = document.getElementById('guide-hint');
+  var ghIcon = document.getElementById('gh-icon');
+  var ghText = document.getElementById('gh-text');
+
+  /* Clear all button pulses first */
+  ['act-source','act-feed','act-water','act-plant','act-wait'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.classList.remove('ar-pulse','ar-warn','ar-stop');
+  });
+
+  var hintShow = false;
+  var icon = '';
+  var text = '';
+  var pulseBtn = null;
+  var pulseClass = 'ar-pulse';
+
+  var hasStarted = S.fishless?(S.ammSource>0):(S.fish>0);
+
+  if(!hasStarted){
+    /* Pulse source button */
+    pulseBtn='act-source'; pulseClass='ar-pulse';
+    icon='🧪'; text=S.fishless?'Add an ammonia source to begin':'Add a fish to begin the cycle';
+    hintShow=true;
+
+  } else if(S.nh3<.3&&S.bacA<.15&&S.day<8){
+    /* Early days — just wait */
+    pulseBtn='act-wait'; pulseClass='ar-pulse';
+    icon='⏳'; text='Bacteria are seeding — patience now';
+    hintShow=true;
+
+  } else if(S.nh3>3&&S.fish>0){
+    /* Ammonia dangerously high with fish — urgent water change */
+    pulseBtn='act-water'; pulseClass='ar-stop';
+    icon='🚨'; text='Ammonia critical — water change now';
+    hintShow=true;
+
+  } else if(S.nh3>1.5&&S.no2<.5&&!S.cycleOk){
+    /* Ammonia high but cycle still early — small water change ok */
+    pulseBtn='act-water'; pulseClass='ar-warn';
+    icon='💧'; text='Ammonia elevated — small water change helps';
+    hintShow=true;
+
+  } else if(S.nh3>.3&&S.no2>.3&&S.bacA>.3&&!S.cycleOk){
+    /* Mid cycle — both rising, bacteria working — wait */
+    pulseBtn='act-wait'; pulseClass='ar-pulse';
+    icon='⏳'; text='Bacteria are working — leave it alone';
+    hintShow=true;
+
+  } else if(S.no3>40&&S.cycleOk){
+    /* Cycle done but nitrate high */
+    pulseBtn='act-water'; pulseClass='ar-warn';
+    icon='💧'; text='Nitrate accumulating — time for a water change';
+    hintShow=true;
+
+  } else if(S.cycleOk&&S.no3<30){
+    /* Stable — no guide needed */
+    hintShow=false;
+
+  } else if(S.totalWc>3&&S.day<20&&!S.cycleOk){
+    /* Too many water changes */
+    pulseBtn='act-wait'; pulseClass='ar-warn';
+    icon='⛔'; text='Too many changes — stop and let bacteria establish';
+    hintShow=true;
+  }
+
+  if(pulseBtn){
+    var el=document.getElementById(pulseBtn);
+    if(el)el.classList.add(pulseClass);
+  }
+
+  if(hint){
+    if(hintShow){
+      ghIcon.textContent=icon;
+      ghText.textContent=text;
+      hint.classList.add('show');
+    } else {
+      hint.classList.remove('show');
+    }
+  }
 }
 
 function render(){
@@ -721,6 +900,20 @@ function render(){
 
   document.getElementById('ib-txt').textContent=getInsight(S);
 
+  /* Bacteria indicator */
+  var bacA=document.getElementById('bac-a'),bacB=document.getElementById('bac-b');
+  var bacApct=document.getElementById('bac-a-pct'),bacBpct=document.getElementById('bac-b-pct');
+  if(bacA){bacA.className='bac-dot'+(S.bacA>.7?' full':S.bacA>.2?' active':'');}
+  if(bacB){bacB.className='bac-dot'+(S.bacB>.65?' full':S.bacB>.2?' active':'');}
+  if(bacApct){
+    bacApct.textContent=(S.bacA*100).toFixed(0)+'%';
+    bacApct.style.color=S.bacA>.7?'rgba(80,200,100,.85)':S.bacA>.2?'rgba(220,140,60,.75)':'rgba(255,255,255,.2)';
+  }
+  if(bacBpct){
+    bacBpct.textContent=(S.bacB*100).toFixed(0)+'%';
+    bacBpct.style.color=S.bacB>.65?'rgba(80,200,100,.85)':S.bacB>.2?'rgba(220,140,60,.75)':'rgba(255,255,255,.2)';
+  }
+
   var ended=S.dead||S.won;
   document.getElementById('act-source').disabled=(S.fishless?S.ammSource>=5:S.fish>=5)||ended;
   document.getElementById('act-feed').disabled=(S.fish===0&&S.ammSource===0)||ended;
@@ -757,9 +950,15 @@ function startLoop(){
   if(subTimer)clearInterval(subTimer);
   subTimer=setInterval(function(){
     if(!running)return;
-    subCount++;
-    renderTime((subCount%subSteps)/subSteps);
-    if(subCount%subSteps===0)tick();
+    var hasStarted=S.fishless?(S.ammSource>0):(S.fish>0);
+    if(hasStarted){
+      subCount++;
+      renderTime((subCount%subSteps)/subSteps);
+      if(subCount%subSteps===0)tick();
+    } else {
+      /* Reset progress bar — day not started */
+      renderTime(0);
+    }
   },SUB_MS);
 }
 
@@ -827,7 +1026,7 @@ document.getElementById('btn-begin').addEventListener('click',function(){
   S.fishless=CFG.method==='fishless';
   if(CFG.plants==='yes')S.plants=2;
   running=true;initStars();startLoop();
-  render();
+  render();updateGuide();
 });
 
 document.getElementById('btn-pp').addEventListener('click',function(){
