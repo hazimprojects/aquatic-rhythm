@@ -205,6 +205,32 @@ canvas.vis-canvas{display:block;width:100%;border-radius:3px}
 .art-begin-btn:hover{background:rgba(40,184,208,.95);transform:translateY(-1px)}
 .art-begin-btn span{opacity:.65;font-size:.9rem}
 
+
+/* BACK BAR */
+.art-back-bar{
+  position:sticky;top:64px;z-index:80;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.5rem clamp(1.5rem,5vw,3rem);
+  background:rgba(3,11,9,.85);
+  border-bottom:1px solid rgba(139,189,210,.08);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+.art-back-link{
+  display:flex;align-items:center;gap:.45rem;
+  text-decoration:none;
+  font-size:.6rem;font-weight:400;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(61,214,232,.6);
+  transition:color .25s;
+}
+.art-back-link:hover{color:rgba(61,214,232,.9)}
+.art-back-arrow{font-size:.75rem}
+.art-back-meta{
+  font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.2);
+}
+@media(max-width:600px){.art-back-meta{display:none}}
+
 </style>
 </head>
 <body>
@@ -248,6 +274,15 @@ canvas.vis-canvas{display:block;width:100%;border-radius:3px}
 <nav class="progress-dots" aria-label="Module progress" id="progress-dots"></nav>
 
 <main>
+
+<!-- BACK BAR — always visible -->
+<div class="art-back-bar">
+  <a href="/reading" class="art-back-link">
+    <span class="art-back-arrow">←</span>
+    <span>Reading</span>
+  </a>
+  <span class="art-back-meta">New Tank Syndrome · 5 modules</span>
+</div>
 
 <!-- ARTICLE INTRO -->
 <div class="art-intro">
