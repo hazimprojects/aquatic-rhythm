@@ -243,6 +243,10 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
   .ai{font-size:1.05rem}
   .an{font-size:.46rem}
 }
+
+/* DAY PROGRESS BAR */
+#day-prog-wrap{height:2px;background:rgba(255,255,255,.07);flex-shrink:0;overflow:hidden}
+#day-prog-fill{height:100%;width:0%;transition:width .25s ease}
 </style>
 </head>
 <body>
@@ -371,6 +375,7 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
       <button class="btn-sm btn-pp" id="btn-pp">⏸ Pause</button>
     </div>
   </div>
+  <div id="day-prog-wrap"><div id="day-prog-fill"></div></div>
 
   <div id="middle">
     <div id="pleft">
@@ -509,6 +514,8 @@ function renderTime(t){
   document.getElementById('t-label').textContent=p.label;
   var fill=document.getElementById('t-fill');
   if(fill){fill.style.width=(t*100)+'%';fill.style.background=p.lightO>.5?'rgba(255,200,80,.6)':'rgba(80,100,200,.52)';}
+  var dpf=document.getElementById('day-prog-fill');
+  if(dpf){dpf.style.width=(t*100)+'%';dpf.style.background=p.lightO>.5?'rgba(255,200,80,.45)':'rgba(61,214,232,.4)';}
 }
 function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
 
