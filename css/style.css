@@ -386,7 +386,7 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:flex;align-items:center;j
   opacity:0;
   pointer-events:none;
   transform:translateY(8px);
-  transition:opacity .5s var(--ease),transform .5s var(--ease);
+  transition:opacity .5s ease,transform .5s ease;
 }
 #rhyssa-float.visible{
   opacity:1;
