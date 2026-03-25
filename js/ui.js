@@ -136,10 +136,11 @@
     page.querySelectorAll('.sr').forEach(function (el) { currentObserver.observe(el); });
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
+  /* defer means DOM is already ready — init immediately */
+  (function () {
     var active = document.querySelector('.page.active');
     if (active) observeScrollReveal(active);
-  });
+  })();
 
   /* ── READING PROGRESS BAR ── */
   (function () {
