@@ -72,20 +72,54 @@ body{
 /* ── NAV ── */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
-  height:64px;display:flex;align-items:center;justify-content:space-between;
+  height:68px;display:flex;align-items:center;justify-content:space-between;
   padding:0 clamp(1.5rem,5vw,4.5rem);
-  background:linear-gradient(to bottom,rgba(3,18,30,.92),transparent);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  background:linear-gradient(to bottom,rgba(3,18,30,.88),transparent);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
 }
-.nav-logo{display:flex;align-items:center;text-decoration:none;opacity:.85;transition:opacity .3s}
-.nav-logo:hover{opacity:1}
-.nav-back{
-  font-size:.62rem;font-weight:400;letter-spacing:.16em;text-transform:uppercase;
-  color:rgba(255,255,255,.4);text-decoration:none;
-  border:1px solid rgba(255,255,255,.12);border-radius:100px;
-  padding:.45rem 1.1rem;transition:color .3s,border-color .3s;
+.nav-logo{display:flex;align-items:center;text-decoration:none;transition:opacity .3s}
+.nav-logo:hover{opacity:.75}
+.art-nlinks{display:flex;gap:2.6rem;list-style:none}
+.art-nlinks a{
+  font-size:.63rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.55);text-decoration:none;transition:color .3s;position:relative;
 }
-.nav-back:hover{color:rgba(61,214,232,.85);border-color:rgba(61,214,232,.3)}
+.art-nlinks a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:rgba(61,214,232,.75);transition:width .35s ease}
+.art-nlinks a:hover{color:rgba(255,255,255,.82)}
+.art-nlinks a:hover::after{width:100%}
+.art-nlinks a[href="/reading"]{color:rgba(61,214,232,.7)}
+.art-burger{
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  width:34px;height:34px;background:none;border:none;padding:5px;cursor:pointer;
+}
+.art-burger span{display:block;height:1px;background:rgba(255,255,255,.4);transition:transform .36s ease,width .3s ease;transform-origin:center}
+.art-burger span:nth-child(1){width:18px}
+.art-burger span:nth-child(2){width:12px}
+.art-burger.open span:nth-child(1){transform:translateY(6px) rotate(45deg);width:18px}
+.art-burger.open span:nth-child(2){transform:translateY(-6px) rotate(-45deg);width:18px}
+.art-nmob{
+  position:fixed;top:68px;left:0;right:0;z-index:99;
+  background:rgba(6,16,13,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(139,189,210,.08);
+  padding:0 clamp(1.5rem,5vw,4.5rem);
+  max-height:0;overflow:hidden;pointer-events:none;
+  transition:max-height .48s ease,padding-top .35s,padding-bottom .35s;
+}
+.art-nmob.open{max-height:320px;padding-top:1.6rem;padding-bottom:2rem;pointer-events:all}
+.art-nmob ul{list-style:none}
+.art-nmob li{border-bottom:1px solid rgba(255,255,255,.05)}
+.art-nmob li:last-child{border-bottom:none}
+.art-nmob a{
+  display:block;padding:.95rem 0;
+  font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.3);text-decoration:none;transition:color .25s,padding-left .3s ease;
+}
+.art-nmob a:hover{color:rgba(139,189,210,.85);padding-left:.5rem}
+.art-nmob a[href="/reading"]{color:rgba(61,214,232,.5)}
+@media(max-width:960px){
+  .art-nlinks{display:none}
+  .art-burger{display:flex}
+}
 
 /* ── ARTICLE LAYOUT ── */
 .article-wrap{
@@ -252,13 +286,145 @@ body::after{
   .art-title{font-size:1.9rem}
   .art-cta{padding:2rem 1.5rem}
 }
+
+/* ── WATER CLARITY HERO ── */
+.water-clarity-wrap{
+  position:relative;width:100%;height:180px;
+  margin:2.4rem 0 2.8rem;border-radius:4px;overflow:hidden;
+  background:#041e28;
+}
+.wc-layer{
+  position:absolute;inset:0;
+  transition:opacity .1s ease-out;
+}
+.wc-murky{
+  background:radial-gradient(ellipse at 50% 50%,rgba(140,110,40,.45) 0%,rgba(80,60,20,.35) 40%,rgba(30,25,10,.55) 100%);
+}
+.wc-clear{
+  background:radial-gradient(ellipse at 50% 30%,rgba(60,200,220,.18) 0%,rgba(20,140,180,.1) 45%,transparent 75%);
+  opacity:0;
+}
+.wc-particles{position:absolute;inset:0;pointer-events:none}
+.wc-fish{
+  position:absolute;bottom:28%;
+  animation:wcfish 8s ease-in-out infinite;
+  opacity:0;transition:opacity 1.5s;
+}
+@keyframes wcfish{
+  0%{transform:translateX(-60px)}
+  100%{transform:translateX(calc(100vw + 60px))}
+}
+.wc-label{
+  position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);
+  font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(255,255,255,.3);white-space:nowrap;
+  transition:color .5s;font-family:var(--sans);
+}
+.wc-progress{
+  position:absolute;bottom:0;left:0;height:2px;
+  background:linear-gradient(to right,rgba(61,214,232,.6),rgba(61,214,232,.2));
+  width:0%;transition:width .1s ease-out;
+}
+
+/* ── NITROGEN CYCLE ── */
+.nitrogen-cycle{
+  margin:2.8rem 0;padding:2.4rem 2rem;
+  background:rgba(6,16,13,.7);border:1px solid rgba(139,189,210,.1);
+  border-radius:2px;
+}
+.nc-label{
+  font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(139,189,210,.5);display:block;margin-bottom:1.6rem;
+  font-family:var(--sans);
+}
+.nc-track{
+  display:flex;align-items:center;gap:0;
+  position:relative;margin-bottom:1.8rem;
+}
+.nc-stage{
+  flex:1;text-align:center;position:relative;
+  padding:.8rem .4rem 1.2rem;
+}
+.nc-bubble{
+  width:52px;height:52px;border-radius:50%;
+  margin:0 auto .7rem;display:flex;align-items:center;justify-content:center;
+  border:1.5px solid;position:relative;
+  transition:background .8s ease,border-color .8s ease,box-shadow .8s ease;
+  animation:ncpulse 3s ease-in-out infinite;
+}
+.nc-stage:nth-child(1) .nc-bubble{
+  border-color:rgba(220,100,60,.5);
+  background:rgba(220,100,60,.08);
+  animation-delay:0s;
+}
+.nc-stage:nth-child(3) .nc-bubble{
+  border-color:rgba(200,160,40,.4);
+  background:rgba(200,160,40,.06);
+  animation-delay:.6s;
+}
+.nc-stage:nth-child(5) .nc-bubble{
+  border-color:rgba(80,180,100,.4);
+  background:rgba(80,180,100,.06);
+  animation-delay:1.2s;
+}
+.nc-stage.active:nth-child(1) .nc-bubble{
+  background:rgba(220,100,60,.22);
+  border-color:rgba(220,100,60,.85);
+  box-shadow:0 0 16px rgba(220,100,60,.4);
+}
+.nc-stage.active:nth-child(3) .nc-bubble{
+  background:rgba(200,160,40,.2);
+  border-color:rgba(200,160,40,.85);
+  box-shadow:0 0 16px rgba(200,160,40,.35);
+}
+.nc-stage.active:nth-child(5) .nc-bubble{
+  background:rgba(80,180,100,.18);
+  border-color:rgba(80,180,100,.85);
+  box-shadow:0 0 16px rgba(80,180,100,.35);
+}
+@keyframes ncpulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.06)}
+}
+.nc-symbol{
+  font-family:var(--sans);font-size:.7rem;font-weight:400;
+  color:rgba(255,255,255,.5);letter-spacing:.04em;
+}
+.nc-stage.active .nc-symbol{color:rgba(255,255,255,.9)}
+.nc-name{
+  font-family:var(--serif);font-size:.85rem;font-weight:400;
+  color:rgba(255,255,255,.45);line-height:1.3;margin-top:.2rem;
+}
+.nc-stage.active .nc-name{color:rgba(255,255,255,.82)}
+.nc-arrow{
+  flex:0 0 auto;display:flex;align-items:center;
+  padding-bottom:1.8rem;
+}
+.nc-arrow svg{opacity:.25;transition:opacity .8s}
+.nc-arrow.lit svg{opacity:.8}
+.nc-desc{
+  font-family:var(--serif);font-style:italic;
+  font-size:.88rem;color:rgba(255,255,255,.42);
+  line-height:1.75;text-align:center;min-height:2.8rem;
+  transition:color .5s;
+}
+.nc-timer{
+  display:flex;justify-content:center;gap:.5rem;margin-top:1.2rem;
+}
+.nc-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,.15);
+  transition:background .4s;cursor:pointer;
+}
+.nc-dot.active{background:rgba(61,214,232,.7)}
+
 </style>
 </head>
 <body>
 
 <nav>
   <a href="/" class="nav-logo" aria-label="Aquatic Rhythm — Home">
-    <svg width="140" height="26" viewBox="0 0 175 30" fill="none" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true">
+    <svg width="175" height="30" viewBox="0 0 175 30" fill="none" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true">
       <circle cx="13" cy="15" r="11.5" stroke="rgba(61,214,232,0.22)" stroke-width="1.0" fill="none"/>
       <line x1="16.8" y1="24.5" x2="16.8" y2="9" stroke="rgba(100,200,82,0.82)" stroke-width="1.6" stroke-linecap="round"/>
       <line x1="19.8" y1="23.0" x2="19.8" y2="17" stroke="rgba(100,200,82,0.65)" stroke-width="1.3" stroke-linecap="round"/>
@@ -270,8 +436,28 @@ body::after{
       <text x="32" y="27" font-family="Cormorant Garamond,Georgia,serif" font-size="17" font-weight="300" font-style="italic" fill="rgba(255,255,255,.82)">Rhythm</text>
     </svg>
   </a>
-  <a href="/" class="nav-back">← Back</a>
+  <ul class="art-nlinks">
+    <li><a href="/">Home</a></li>
+    <li><a href="/ara">Explore ARA</a></li>
+    <li><a href="/rhyssa">Meet Rhyssa</a></li>
+    <li><a href="/reading">Reading</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+  <button class="art-burger" id="art-burger" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile nav -->
+<div class="art-nmob" id="art-nmob" aria-hidden="true">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/ara">Explore ARA</a></li>
+    <li><a href="/rhyssa">Meet Rhyssa</a></li>
+    <li><a href="/reading">Reading</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+</div>
 
 <main>
 <article class="article-wrap">
@@ -290,6 +476,21 @@ body::after{
     </div>
   </header>
 
+
+  <!-- WATER CLARITY VISUAL -->
+  <div class="water-clarity-wrap" id="wc-wrap" aria-hidden="true">
+    <div class="wc-layer wc-murky" id="wc-murky"></div>
+    <div class="wc-layer wc-clear" id="wc-clear"></div>
+    <canvas class="wc-particles" id="wc-canvas"></canvas>
+    <svg class="wc-fish" id="wc-fish" width="48" height="28" viewBox="0 0 48 28" fill="none">
+      <ellipse cx="28" cy="14" rx="14" ry="8" fill="rgba(139,189,210,.7)"/>
+      <path d="M14 14 L4 8 L4 20Z" fill="rgba(139,189,210,.6)"/>
+      <circle cx="38" cy="10" r="2.5" fill="rgba(255,255,255,.9)"/>
+    </svg>
+    <div class="wc-label" id="wc-label">scroll to see the water clear</div>
+    <div class="wc-progress" id="wc-progress"></div>
+  </div>
+
   <!-- BODY -->
   <div class="art-body">
 
@@ -306,6 +507,42 @@ body::after{
 
     <div class="pull-quote">
       <p>The cloudiness, the stressed fish, the unstable readings — these are not signs that something has gone wrong. They are signs that something is trying to begin.</p>
+    </div>
+
+
+    <!-- NITROGEN CYCLE VISUAL -->
+    <div class="nitrogen-cycle" aria-label="Nitrogen cycle stages">
+      <span class="nc-label">The nitrogen cycle — tap each stage to explore</span>
+      <div class="nc-track">
+        <div class="nc-stage active" id="nc-0">
+          <div class="nc-bubble"><span class="nc-symbol">NH₃</span></div>
+          <div class="nc-name">Ammonia</div>
+        </div>
+        <div class="nc-arrow" id="nc-arr-0">
+          <svg width="28" height="12" viewBox="0 0 28 12" fill="none">
+            <path d="M0 6 L22 6 M18 2 L26 6 L18 10" stroke="rgba(61,214,232,.8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="nc-stage" id="nc-1">
+          <div class="nc-bubble"><span class="nc-symbol">NO₂</span></div>
+          <div class="nc-name">Nitrite</div>
+        </div>
+        <div class="nc-arrow" id="nc-arr-1">
+          <svg width="28" height="12" viewBox="0 0 28 12" fill="none">
+            <path d="M0 6 L22 6 M18 2 L26 6 L18 10" stroke="rgba(61,214,232,.8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="nc-stage" id="nc-2">
+          <div class="nc-bubble"><span class="nc-symbol">NO₃</span></div>
+          <div class="nc-name">Nitrate</div>
+        </div>
+      </div>
+      <div class="nc-desc" id="nc-desc">Fish waste and uneaten food produce ammonia — toxic at high levels, and the starting point of every new tank's journey.</div>
+      <div class="nc-timer">
+        <div class="nc-dot active" data-nc="0"></div>
+        <div class="nc-dot" data-nc="1"></div>
+        <div class="nc-dot" data-nc="2"></div>
+      </div>
     </div>
 
     <p>The nitrogen cycle — the process by which ammonia is converted first to nitrite and then to nitrate — takes time to establish. Typically several weeks. During this period, the system is fragile, sensitive, and genuinely difficult to manage. Not because you have done anything wrong, but because the ecosystem has not yet developed the capacity to absorb and process what is being introduced to it.</p>
@@ -363,6 +600,16 @@ body::after{
 
   </div>
 
+  <!-- SIMULATOR LINK -->
+  <div style="margin:3.5rem 0;padding:2.4rem 2.8rem;background:rgba(6,16,13,.65);border:1px solid rgba(61,214,232,.12);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem">
+    <div>
+      <span style="display:block;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(157,191,154,.7);margin-bottom:.5rem">Interactive</span>
+      <p style="font-family:var(--serif);font-size:1rem;font-weight:400;color:rgba(255,255,255,.78);margin-bottom:.3rem">Try the new tank simulator</p>
+      <p style="font-size:.84rem;font-weight:300;color:rgba(255,255,255,.38);line-height:1.6">Add fish, feed them, do water changes. Watch what happens when you intervene too much — or just wait.</p>
+    </div>
+    <a href="/articles/tank-simulator" style="display:inline-block;text-decoration:none;font-family:var(--sans);font-size:.62rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;background:rgba(30,165,185,.8);color:#fff;border:1px solid rgba(61,214,232,.45);padding:.75rem 1.6rem;border-radius:2px;white-space:nowrap;transition:background .25s" onmouseover="this.style.background='rgba(40,184,208,.95)'" onmouseout="this.style.background='rgba(30,165,185,.8)'">Open simulator →</a>
+  </div>
+
   <!-- CTA -->
   <div class="art-cta">
     <p>This article is part of Aquatic Rhythm — a project built around the idea that aquarium problems are rarely single failures, and that the most useful thing is often to slow down and read what is actually happening.</p>
@@ -371,13 +618,187 @@ body::after{
 
   <!-- ARTICLE FOOTER -->
   <footer class="art-footer">
-    <a href="/">← Aquatic Rhythm</a>
-    <a href="/reading">More articles</a>
+    <a href="/reading">← Reading</a>
+    <a href="/">Aquatic Rhythm</a>
     <span style="font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.15)">Aquatic Rhythm — Aligned with living systems</span>
   </footer>
 
 </article>
 </main>
 
+
+
+<script>
+/* ── WATER CLARITY SCROLL EFFECT ── */
+(function(){
+  var wrap = document.getElementById('wc-wrap');
+  var murky = document.getElementById('wc-murky');
+  var clear = document.getElementById('wc-clear');
+  var label = document.getElementById('wc-label');
+  var progress = document.getElementById('wc-progress');
+  var fish = document.getElementById('wc-fish');
+  var canvas = document.getElementById('wc-canvas');
+  if(!wrap) return;
+
+  /* Particles */
+  var ctx = canvas.getContext('2d');
+  var particles = [];
+  function resizeCanvas(){
+    canvas.width = wrap.offsetWidth;
+    canvas.height = wrap.offsetHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  for(var i=0; i<28; i++){
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: .8 + Math.random() * 2,
+      vx: (Math.random()-.5) * .25,
+      vy: -(Math.random() * .35 + .1),
+      opacity: Math.random() * .5 + .1,
+      clarity: 0
+    });
+  }
+
+  var clarity = 0;
+  var fishShown = false;
+  var labels = ['scroll to see the water clear','the water is beginning to settle...','the cycle is finding its rhythm','clarity — patience made visible'];
+
+  function updateClarity(){
+    var wrapTop = wrap.getBoundingClientRect().top;
+    var wrapH = wrap.offsetHeight;
+    var winH = window.innerHeight;
+    /* 0 when wrap enters view, 1 when it leaves top */
+    var raw = 1 - (wrapTop / (winH * 0.8));
+    clarity = Math.max(0, Math.min(1, raw));
+
+    murky.style.opacity = (1 - clarity * .9).toFixed(3);
+    clear.style.opacity = (clarity * .95).toFixed(3);
+    progress.style.width = (clarity * 100) + '%';
+
+    var li = Math.min(3, Math.floor(clarity * 4));
+    label.textContent = labels[li];
+    label.style.color = clarity > .6 ? 'rgba(61,214,232,.55)' : 'rgba(255,255,255,.3)';
+
+    if(clarity > .65 && !fishShown){
+      fishShown = true;
+      fish.style.opacity = '0.7';
+      fish.style.bottom = (22 + Math.random()*20) + '%';
+    }
+    if(clarity < .4 && fishShown){
+      fishShown = false;
+      fish.style.opacity = '0';
+    }
+  }
+
+  function drawParticles(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(function(p){
+      p.x += p.vx;
+      p.y += p.vy;
+      if(p.y < -4) p.y = canvas.height + 4;
+      if(p.x < -4) p.x = canvas.width + 4;
+      if(p.x > canvas.width + 4) p.x = -4;
+
+      var alpha = clarity > .5
+        ? p.opacity * (1 - (clarity - .5) * 1.6)
+        : p.opacity * (1 - clarity * .4);
+      alpha = Math.max(0, alpha);
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(180,140,60,' + alpha.toFixed(3) + ')';
+      ctx.fill();
+
+      if(clarity > .3){
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * .6, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(80,200,220,' + (clarity * alpha * .6).toFixed(3) + ')';
+        ctx.fill();
+      }
+    });
+    requestAnimationFrame(drawParticles);
+  }
+
+  window.addEventListener('scroll', updateClarity, {passive:true});
+  updateClarity();
+  drawParticles();
+})();
+
+/* ── NITROGEN CYCLE ANIMATION ── */
+(function(){
+  var stages = [document.getElementById('nc-0'), document.getElementById('nc-1'), document.getElementById('nc-2')];
+  var arrows = [document.getElementById('nc-arr-0'), document.getElementById('nc-arr-1')];
+  var desc = document.getElementById('nc-desc');
+  var dots = document.querySelectorAll('.nc-dot');
+  if(!stages[0]) return;
+
+  var descriptions = [
+    'Fish waste and uneaten food produce ammonia — toxic at high levels, and the starting point of every new tank’s journey.',
+    'Nitrosomonas bacteria convert ammonia into nitrite. Still harmful, but the system is learning. Bacteria are beginning to colonise.',
+    'Nitrobacter bacteria convert nitrite into nitrate — far less toxic, and manageable with water changes. The cycle is established.'
+  ];
+
+  var current = 0;
+  var timer;
+
+  function setStage(i){
+    stages.forEach(function(s,j){
+      s.classList.toggle('active', j===i);
+    });
+    arrows.forEach(function(a,j){
+      a.classList.toggle('lit', j < i);
+    });
+    dots.forEach(function(d,j){
+      d.classList.toggle('active', j===i);
+    });
+    desc.style.color = 'rgba(255,255,255,.42)';
+    setTimeout(function(){
+      desc.textContent = descriptions[i];
+      desc.style.color = 'rgba(255,255,255,.68)';
+    }, 200);
+    current = i;
+  }
+
+  function advance(){
+    setStage((current + 1) % 3);
+  }
+
+  /* Manual only — click dots or stages to explore */
+  dots.forEach(function(d){
+    d.addEventListener('click', function(){
+      setStage(parseInt(d.getAttribute('data-nc')));
+    });
+  });
+
+  /* Also click stage bubbles */
+  stages.forEach(function(s, i){
+    s.style.cursor = 'pointer';
+    s.addEventListener('click', function(){ setStage(i); });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var bg = document.getElementById('art-burger');
+  var nm = document.getElementById('art-nmob');
+  if(!bg||!nm) return;
+  bg.addEventListener('click', function(){
+    var o = bg.classList.toggle('open');
+    nm.classList.toggle('open', o);
+    bg.setAttribute('aria-expanded', o);
+    nm.setAttribute('aria-hidden', !o);
+  });
+  window.addEventListener('resize', function(){
+    if(window.innerWidth > 960){
+      bg.classList.remove('open');
+      nm.classList.remove('open');
+    }
+  });
+})();
+</script>
 </body>
 </html>
