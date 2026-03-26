@@ -379,3 +379,22 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:flex;align-items:center;j
 
 
 
+
+/* ── READING PAGE CATEGORIES ── */
+.rd-cat{margin-bottom:.5rem}
+.rd-cat-header{margin-bottom:1.8rem}
+.rd-cat-label{display:inline-block;font-size:.58rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:rgba(61,214,232,.7);border-bottom:1px solid rgba(61,214,232,.25);padding-bottom:.3rem;margin-bottom:.7rem}
+.rd-cat-desc{font-size:.88rem;font-weight:300;color:rgba(255,255,255,.38);line-height:1.75;max-width:480px}
+.rd-card{display:block;text-decoration:none;background:rgba(6,16,13,.55);border:1px solid rgba(139,189,210,.1);transition:border-color .3s;overflow:hidden;margin-bottom:.85rem}
+.rd-card-bar{height:2px;background:linear-gradient(to right,rgba(61,214,232,.5),rgba(157,191,154,.3),transparent)}
+.rd-card-inner{padding:1.8rem 2.2rem 1.6rem}
+.rd-card-tags{display:flex;align-items:center;gap:.5rem;margin-bottom:.9rem;flex-wrap:wrap}
+.rd-tag{font-size:.48rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(139,189,210,.4)}
+.rd-tag-level{color:rgba(157,191,154,.72);border:1px solid rgba(157,191,154,.2);padding:.14rem .45rem;border-radius:100px}
+.rd-tag-int{color:rgba(61,214,232,.35)}
+.rd-card-title{font-family:var(--serif);font-size:clamp(1.15rem,1.8vw,1.55rem);font-weight:400;color:rgba(255,255,255,.88);line-height:1.22;margin-bottom:.65rem}
+.rd-card-title em{font-style:italic;color:rgba(255,255,255,.48);font-size:clamp(.9rem,1.4vw,1.2rem)}
+.rd-card-desc-text{font-size:.86rem;font-weight:300;color:rgba(255,255,255,.38);line-height:1.8;max-width:520px;margin-bottom:1rem}
+.rd-card-cta{font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(61,214,232,.5)}
+.rd-coming{padding:1.6rem 2rem;border:1px dashed rgba(255,255,255,.07);background:rgba(6,16,13,.3)}
+.rd-coming p{font-family:var(--serif);font-style:italic;font-size:.92rem;color:rgba(255,255,255,.22)}
