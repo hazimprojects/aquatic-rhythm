@@ -819,7 +819,7 @@ function tick(){
       addLog('Ammonia spike detected. This can happen when organic matter decomposes faster than bacteria can process — a normal part of an unstable cycle.','warn');
     } else {
       S.no2=clamp(S.no2+spikeMag,0,8);
-      addLog('Nitrite spike. As Nitrosomonas bacteria multiply rapidly, nitrite can temporarily outpace the Nitrospira colony that hasn\'t caught up yet.','warn');
+      addLog('Nitrite spike. As Nitrosomonas multiply rapidly, nitrite outpaces the second colony (Nitrobacter / Nitrospira) that is still establishing.','warn');
     }
     /* Schedule another possible spike */
     S.spikeDay=0;
@@ -990,7 +990,7 @@ function doSeed(){
   S.bacB=Math.min(S.bacB+0.10,1);
   var btn=document.getElementById('act-seed');
   if(btn){btn.classList.add('ab-used');btn.disabled=true;}
-  addLog('Bacteria starter added. Nitrosomonas and Nitrospira seeded onto surfaces. Expect noticeably faster colonisation.','good');
+  addLog('Bacteria starter added. Nitrosomonas and Nitrobacter / Nitrospira seeded onto surfaces. Expect noticeably faster colonisation.','good');
   render();updateGuide();
 }
 
@@ -1144,13 +1144,13 @@ var insightGroups=[
   ]},
   {t:function(s){return s.no2>.3&&s.no2<1.5&&s.bacA>.3;},msgs:[
     'Nitrite is rising — Nitrosomonas are converting ammonia successfully. Stage one is working.',
-    '🟠 Nitrite spike means the cycle is progressing. Nitrospira (stage two bacteria) need time now.',
+    '🟠 Nitrite spike means stage one is working. The second colony (Nitrobacter / Nitrospira) is still establishing.',
     'This is the most dangerous phase for fish — nitrite blocks oxygen uptake in the blood.'
   ]},
   {t:function(s){return s.no2>=1.5;},msgs:[
     '🔴 Nitrite is very high. If fish are present, a water change is needed now.',
     'High nitrite causes brown blood disease in fish — haemoglobin cannot carry oxygen.',
-    'Nitrospira colonies are still establishing. They grow slower than Nitrosomonas — patience.'
+    'The second-stage colony (Nitrobacter / Nitrospira) is still establishing. It grows slower — patience.'
   ]},
   {t:function(s){return s.bacA>.6&&s.bacB>.4&&!s.cycleOk;},msgs:[
     '🌱 Bacterial colonies are reaching maturity. The end of the cycle is getting close.',
@@ -1179,7 +1179,7 @@ var insightGroups=[
   ]},
   {t:function(s){return !s.heater&&s.temp<22;},msgs:[
     '🌡️ Temperature is dropping. Bacterial growth slows significantly below 22°C.',
-    'Nitrospira are especially sensitive to cold — they slow before Nitrosomonas do.',
+    'Nitrobacter and Nitrospira are especially cold-sensitive — the second stage slows first.',
     'Turn the heater on to restore optimal conditions (25-27°C).'
   ]},
   {t:function(s){return !s.filter;},msgs:[
@@ -1223,11 +1223,11 @@ function addLog(msg,type){
 function genLog(){
   if(S.nh3>2.5&&S.nh3<=4.5)addLog('Ammonia critically high.'+( S.fish>0?' Fish in acute danger — gills are being damaged.':''),'danger');
   else if(S.nh3>.5&&S.day%3===0)addLog('Ammonia elevated. Bacteria are building but not yet sufficient.','warn');
-  if(S.no2>2&&S.day%2===0)addLog('Nitrite spike. Nitrospira colonies are still establishing — this is normal but dangerous for fish.','warn');
+  if(S.no2>2&&S.day%2===0)addLog('Nitrite spike. The second-stage bacteria (Nitrobacter / Nitrospira) are still establishing — normal but dangerous for fish.','warn');
   if(S.no3>40&&S.day%5===0)addLog('Nitrate accumulating. A partial water change would help.','warn');
   if(S.cycleOk&&S.day%6===0)addLog('Parameters stable. Bacterial colonies are self-sustaining.','good');
   if(S.bacA>.3&&S.bacA<.6&&S.day%5===0)addLog('Nitrosomonas colonies growing. Nitrite will begin rising soon.','');
-  if(S.bacB>.3&&S.bacB<.7&&S.day%5===0)addLog('Nitrospira establishing. Nitrite should start falling.','');
+  if(S.bacB>.3&&S.bacB<.7&&S.day%5===0)addLog('Nitrobacter / Nitrospira establishing. Nitrite should start falling.','');
   /* Fish health status */
   if(S.fish>0&&S.fishHealth<70&&S.fishHealth>=40&&S.day%3===0)
     addLog('Fish showing stress signs — slower movement, reduced colour. Health: '+((S.fishHealth||100)).toFixed(0)+'%.','warn');
@@ -1238,7 +1238,7 @@ function genLog(){
   var narratives=[
     {day:3, fn:function(){return !S.warned['n3'];}, msg:'Day 3. Invisible activity has begun. Ammonia-oxidising bacteria are seeding from the air, water, and any surfaces you introduced.',type:''},
     {day:6, fn:function(){return S.bacA<.15&&!S.warned['n6'];}, msg:'Bacterial colonies are microscopic at this stage. You cannot see them, but they are there — multiplying slowly on filter media and substrate.',type:''},
-    {day:10, fn:function(){return S.no2>.2&&!S.warned['n10'];}, msg:'Nitrite appearing is a sign the first stage is working. Nitrosomonas are converting ammonia — the second colony (Nitrospira) now has substrate to grow on.',type:''},
+    {day:10, fn:function(){return S.no2>.2&&!S.warned['n10'];}, msg:'Nitrite appearing is a sign the first stage is working. Nitrosomonas are converting ammonia — the second colony (Nitrobacter / Nitrospira) now has substrate to grow on.',type:''},
     {day:15, fn:function(){return !S.cycleOk&&!S.warned['n15'];}, msg:'Week two. The most difficult waiting period. Parameters may look chaotic — this is normal. The biology is reorganising itself.',type:''},
     {day:20, fn:function(){return !S.cycleOk&&!S.warned['n20'];}, msg:'Bacterial colonies typically reach self-sustaining density around weeks 3-4. Temperature, surface area, and consistency all affect the timeline.',type:''},
     {day:25, fn:function(){return !S.cycleOk&&!S.warned['n25'];}, msg:'Day 25. Some cycles complete by now — others take 6-8 weeks. If parameters are still unstable, the system is still working.',type:''},
@@ -1719,7 +1719,7 @@ function buildReport(type){
     S.seeded?'Provided a head-start for colony seeding':null, false);
   row('Nitrosomonas (A)', (S.bacA*100).toFixed(0)+'%',
     S.bacA>.75?'Fully established':S.bacA>.4?'Partially established':'Still seeding', S.bacA<.5);
-  row('Nitrospira (B)', (S.bacB*100).toFixed(0)+'%',
+  row('Nitrobacter / Nitrospira (B)', (S.bacB*100).toFixed(0)+'%',
     S.bacB>.65?'Fully established':S.bacB>.3?'Growing':'Not yet active', S.bacB<.4);
 
   /* Opening — warm, honest, specific to outcome */
@@ -1736,7 +1736,7 @@ function buildReport(type){
   if(S.totalWc>6) advice='Water changes were frequent. In a real tank, the filter protects bacteria — but the habit of reacting to every spike with a large change still disrupts stability. Learning when not to act changes outcomes.';
   else if(filterWarn) advice='The filter was off for part of the run. In a real aquarium the filter is where most bacteria live. Without it, the biological foundation of the cycle collapses.';
   else if(feedWarn) advice='Feeding was missed for too long. Fish need food every 1-4 days even during a difficult cycle. Starvation compounds ammonia stress — the two together are harder to recover from.';
-  else if(heatWarn) advice='Temperature dropped significantly. Nitrospira bacteria are especially cold-sensitive — below 22\u00b0C they slow dramatically. A reliable heater is one of the best investments in a new tank.';
+  else if(heatWarn) advice='Temperature dropped significantly. The second-stage bacteria (Nitrobacter / Nitrospira) are especially cold-sensitive — below 22\u00b0C they slow dramatically. A reliable heater is one of the best investments in a new tank.';
   else if(type==='won'&&S.totalWc<=2) advice='Remarkably clean. Few changes, stable equipment, patient observation. In a real tank this approach produces the fastest and least stressful cycles.';
   else advice=type==='won'?'Everything was managed thoughtfully. Stable temperature, filter running, measured water changes. This is what good cycling looks like.':'Keep the filter running, maintain 25-27\u00b0C, and resist large water changes during the early weeks. Those three things account for most cycling problems.';
 
