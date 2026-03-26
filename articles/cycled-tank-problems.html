@@ -248,7 +248,7 @@ canvas{display:block;width:100%}
 
     <!-- VISUAL: Stressor selector -->
     <div class="vis-block">
-      <canvas id="cv-stress" style="height:210px"></canvas>
+      <canvas id="cv-stress" style="height:230px"></canvas>
     </div>
 
     <div class="mod-body">
@@ -278,7 +278,7 @@ canvas{display:block;width:100%}
 
     <!-- VISUAL: Nitrate toggle -->
     <div class="vis-block">
-      <canvas id="cv-nitrate" style="height:195px"></canvas>
+      <canvas id="cv-nitrate" style="height:225px"></canvas>
     </div>
 
     <div class="mod-body">
@@ -308,7 +308,7 @@ canvas{display:block;width:100%}
 
     <!-- VISUAL: Behaviour signals slider -->
     <div class="vis-block">
-      <canvas id="cv-behaviour" style="height:200px"></canvas>
+      <canvas id="cv-behaviour" style="height:235px"></canvas>
     </div>
 
     <div class="mod-body">
@@ -492,11 +492,11 @@ canvases[2]=function(){
     ctx.fillText(s.icon,12,22);
 
     /* Signals */
-    ctx.font='300 9px DM Sans,system-ui,sans-serif';
-    ctx.fillStyle='rgba(255,255,255,.3)';ctx.fillText('What you might notice:',12,42);
+    ctx.font='300 11px DM Sans,system-ui,sans-serif';
+    ctx.fillStyle='rgba(255,255,255,.52)';ctx.fillText('What you might notice:',12,42);
     s.signals.forEach(function(sig,i){
-      ctx.fillStyle='rgba(255,255,255,.58)';
-      ctx.fillText('·  '+sig,16,58+i*17);
+      ctx.fillStyle='rgba(255,255,255,.72)';
+      ctx.fillText('·  '+sig,16,60+i*20);
     });
 
     /* Divider */
@@ -504,17 +504,23 @@ canvases[2]=function(){
     ctx.beginPath();ctx.moveTo(12,112);ctx.lineTo(W-12,112);ctx.stroke();
 
     /* Note */
-    ctx.font='italic 300 9.5px Cormorant Garamond,serif';
+    ctx.font='italic 300 13px Cormorant Garamond,serif';
     ctx.fillStyle='rgba(255,255,255,.48)';
+    /* Note text with overflow protection */
+    ctx.save();
+    ctx.rect(0,120,W,H-120);ctx.clip();
     var words=s.note.split(' ');
-    var line='';var y=130;var maxW=W-24;
+    var line='';var y=136;var maxW=W-24;var maxY=H-10;
     words.forEach(function(w){
+      if(y>maxY)return;
       var test=line+(line?' ':'')+w;
       if(ctx.measureText(test).width>maxW&&line){
-        ctx.fillText(line,12,y);line=w;y+=15;
+        if(y+18<=maxY){ctx.fillText(line,12,y);line=w;y+=18;}
+        else{ctx.fillText(line+'…',12,y);line='';y=maxY+1;}
       } else line=test;
     });
-    if(line)ctx.fillText(line,12,y);
+    if(line&&y<=maxY)ctx.fillText(line,12,y);
+    ctx.restore();
   }
   draw();
   window.addEventListener('resize',function(){c.width=c.parentElement.offsetWidth;W=c.width;draw();});
@@ -549,7 +555,7 @@ canvases[3]=function(){
     grd.addColorStop(0,'rgba(4,18,28,.97)');grd.addColorStop(1,'rgba(2,10,18,.99)');
     ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
 
-    var pL=38,pR=16,pT=24,pB=30;
+    var pL=42,pR=12,pT=26,pB=32;
     var gW=W-pL-pR,gH=H-pT-pB,maxV=80;
 
     /* Grid */
@@ -559,20 +565,21 @@ canvases[3]=function(){
       ctx.lineWidth=1;ctx.setLineDash(v===40?[3,4]:[]);
       ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(pL+gW,y);ctx.stroke();
       ctx.setLineDash([]);
-      ctx.font='300 8px DM Sans,system-ui,sans-serif';
-      ctx.fillStyle=v===40?'rgba(220,80,60,.5)':'rgba(255,255,255,.22)';
+      ctx.font='300 10px DM Sans,system-ui,sans-serif';
+      ctx.fillStyle=v===40?'rgba(220,80,60,.7)':'rgba(255,255,255,.48)';
       ctx.fillText(v,2,y+3);
     });
     ctx.fillStyle='rgba(220,80,60,.4)';
-    ctx.fillText('stress zone',pL+gW*.58,pT+gH-(40/maxV)*gH-5);
+    var szLabel='stress zone';
+    ctx.fillText(szLabel,Math.min(pL+gW*.55,W-ctx.measureText(szLabel).width-8),pT+gH-(40/maxV)*gH-5);
 
     /* Axes */
     ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=1;ctx.setLineDash([]);
     ctx.beginPath();ctx.moveTo(pL,pT);ctx.lineTo(pL,pT+gH);ctx.lineTo(pL+gW,pT+gH);ctx.stroke();
-    ctx.font='300 8px DM Sans,system-ui,sans-serif';
-    ctx.fillStyle='rgba(255,255,255,.2)';
+    ctx.font='300 10px DM Sans,system-ui,sans-serif';
+    ctx.fillStyle='rgba(255,255,255,.48)';
     ctx.fillText('NO₃ ppm',2,pT+8);
-    [1,4,8,12].forEach(function(w){ctx.fillText('W'+w,pL+(w/12)*gW-6,pT+gH+13);});
+    [1,4,8,12].forEach(function(w){ctx.fillText('W'+w,pL+(w/12)*gW-5,pT+gH+12);});
 
     /* Line */
     ctx.strokeStyle=withWC?'rgba(61,214,232,.75)':'rgba(220,100,60,.75)';
@@ -593,12 +600,20 @@ canvases[3]=function(){
     ctx.stroke();
 
     /* Caption */
-    ctx.font='italic 300 9.5px Cormorant Garamond,serif';
-    ctx.fillStyle='rgba(255,255,255,.38)';
-    ctx.fillText(withWC
-      ?'Regular changes keep nitrate stable and fish comfortable.'
-      :'Without water changes, nitrate drifts steadily into the stress range.',
-      pL+4,pT+gH-6);
+    ctx.font='italic 300 13px Cormorant Garamond,serif';
+    ctx.fillStyle='rgba(255,255,255,.6)';
+    ctx.font='italic 300 11px Cormorant Garamond,serif';
+    ctx.fillStyle='rgba(255,255,255,.52)';
+    var capText=withWC?'Regular changes keep nitrate stable and fish comfortable.':'Without changes, nitrate rises into the stress range.';
+    /* Word wrap caption */
+    var capW=capText.split(' ');var capL='';var capY=pT+gH-22;var capMaxW=gW-8;
+    capW.forEach(function(w){
+      var test=capL+(capL?' ':'')+w;
+      if(ctx.measureText(test).width>capMaxW&&capL){
+        ctx.fillText(capL,pL+4,capY);capL=w;capY+=14;
+      } else capL=test;
+    });
+    if(capL&&capY<=pT+gH)ctx.fillText(capL,pL+4,capY);
   }
   draw();
   window.addEventListener('resize',function(){c.width=c.parentElement.offsetWidth;W=c.width;draw();});
@@ -655,35 +670,51 @@ canvases[4]=function(){
 
     var s=signals[selected];
 
-    /* Icon */
-    ctx.font='22px serif';ctx.fillText(s.icon,12,28);
+    /* Icon + urgency badge — same row, icon left, badge right */
+    ctx.font='20px DM Sans,system-ui,sans-serif';
+    ctx.textAlign='left';
+    ctx.fillText(s.icon,12,26);
 
-    /* Urgency badge */
+    /* Urgency badge — pill style, safely anchored to right */
     var uc=urgencyColor[s.urgency];
-    ctx.font='300 8px DM Sans,system-ui,sans-serif';
-    ctx.fillStyle=uc;ctx.fillText(urgencyLabel[s.urgency],W-80,16);
+    var uLabel=urgencyLabel[s.urgency];
+    ctx.font='400 10px DM Sans,system-ui,sans-serif';
+    var uW=ctx.measureText(uLabel).width;
+    var uX=W-uW-14; /* safe right margin */
+    /* Pill background */
+    ctx.fillStyle='rgba(0,0,0,.3)';
+    ctx.beginPath();
+    ctx.roundRect ? ctx.roundRect(uX-6,8,uW+12,16,8) : ctx.rect(uX-6,8,uW+12,16);
+    ctx.fill();
+    /* Label */
+    ctx.fillStyle=uc;
+    ctx.fillText(uLabel,uX,20);
+    ctx.textAlign='left';
 
-    /* Meaning */
-    ctx.font='italic 300 10.5px Cormorant Garamond,serif';
-    ctx.fillStyle='rgba(255,255,255,.62)';
+    /* Meaning — word wrapped, starts below icon row */
+    ctx.font='italic 300 13px Cormorant Garamond,serif';
+    ctx.fillStyle='rgba(255,255,255,.68)';
     var words=s.meaning.split(' ');
-    var line='';var y=48;var maxW=W-24;
+    var line='';var y=46;var maxW=W-22;var maxY=H-38;
     words.forEach(function(w){
       var test=line+(line?' ':'')+w;
       if(ctx.measureText(test).width>maxW&&line){
-        ctx.fillText(line,12,y);line=w;y+=16;
+        if(y+17<=maxY){ctx.fillText(line,12,y);line=w;y+=17;}
+        else{ctx.fillText(line+'…',12,y);line='';y=maxY+1;}
       } else line=test;
     });
-    if(line)ctx.fillText(line,12,y);
+    if(line&&y<=maxY)ctx.fillText(line,12,y);
 
     /* Divider */
     ctx.strokeStyle='rgba(255,255,255,.06)';ctx.lineWidth=1;
     ctx.beginPath();ctx.moveTo(12,H-36);ctx.lineTo(W-12,H-36);ctx.stroke();
 
     /* Footer note */
-    ctx.font='300 9px DM Sans,system-ui,sans-serif';
-    ctx.fillStyle='rgba(255,255,255,.28)';
-    ctx.fillText('Signal '+(selected+1)+' of '+signals.length+' · '+s.label,12,H-18);
+    ctx.font='300 11px DM Sans,system-ui,sans-serif';
+    ctx.fillStyle='rgba(255,255,255,.55)';
+    var footerTxt='Signal '+(selected+1)+' of '+signals.length+' · '+s.label;
+    if(ctx.measureText(footerTxt).width>W-24)footerTxt='Signal '+(selected+1)+' / '+signals.length;
+    ctx.fillText(footerTxt,12,H-16);
   }
   draw();
   window.addEventListener('resize',function(){c.width=c.parentElement.offsetWidth;W=c.width;draw();});
