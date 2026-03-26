@@ -790,17 +790,19 @@ canvases[2] = function() {
   var c = resizeCanvas('cv2'); if (!c) return;
   var ctx = c.getContext('2d');
   var W = c.width, H = c.height;
-  var day = 0;
-  var maxDay = 28;
-  var ammonia = 0;
-  var bacteria = 0;
+  var day = 0, maxDay = 28;
+  var ammonia = 0, bacteria = 0, nitrite = 0, nitrate = 0;
 
   var wrap = c.parentElement;
   var existing = wrap.querySelector('.vis-ctrl');
   if (existing) existing.remove();
   var ctrl = document.createElement('div');
   ctrl.className = 'vis-ctrl';
-  ctrl.innerHTML = '<div class="vc-label"><span id="cv2-day">Day 0 — no fish yet</span></div><div style="display:flex;gap:.6rem;align-items:center;justify-content:center;margin:.5rem 0"><button class="vis-btn" id="cv2-adv">+ Add a day</button><button class="vis-btn vis-btn-s" id="cv2-reset">Reset</button></div><div class="vc-hint">tap "add a day" to see what unfolds</div>';
+  ctrl.innerHTML = '<div class="vc-label"><span id="cv2-day">Day 0 — add fish to begin</span></div>'
+    +'<div style="display:flex;gap:.6rem;align-items:center;justify-content:center;margin:.5rem 0">'
+    +'<button class="vis-btn" id="cv2-adv">+ Add a day</button>'
+    +'<button class="vis-btn vis-btn-s" id="cv2-reset">Reset</button></div>'
+    +'<div class="vc-hint">watch how all three parameters change over time</div>';
   wrap.appendChild(ctrl);
 
   var advBtn = document.getElementById('cv2-adv');
@@ -808,101 +810,93 @@ canvases[2] = function() {
   var dayLabel = document.getElementById('cv2-day');
 
   function getDayLabel() {
-    if (day === 0) return 'Day 0 — no fish yet';
-    if (ammonia < .3) return 'Day '+day+' — trace ammonia, bacteria starting';
-    if (ammonia < 1) return 'Day '+day+' — ammonia rising, cycle building';
-    if (ammonia < 2.5) return 'Day '+day+' — elevated ammonia, fish showing stress';
-    if (ammonia >= 2.5 && bacteria < .5) return 'Day '+day+' — high ammonia, cycle still catching up';
-    if (bacteria > .6) return 'Day '+day+' — bacteria processing, ammonia easing';
+    if (day === 0) return 'Day 0 — add fish to begin';
+    if (day < 4) return 'Day '+day+' — ammonia is starting to build';
+    if (nitrite < .2 && ammonia > .5) return 'Day '+day+' — ammonia rising, bacteria seeding';
+    if (nitrite > .3 && ammonia > .5) return 'Day '+day+' — nitrite appearing, stage one working';
+    if (nitrite > 1) return 'Day '+day+' — nitrite peak, Nitrospira establishing';
+    if (ammonia < .5 && nitrite < .3 && nitrate > 2) return 'Day '+day+' — both falling, cycle nearly done';
     return 'Day '+day;
   }
 
   function advance() {
     if (day >= maxDay) return;
     day++;
-    /* Simple ecology */
     ammonia = Math.min(3.5, ammonia + .18);
-    if (ammonia > .2) bacteria = Math.min(1, bacteria + .028 * ammonia);
-    var conversion = bacteria * ammonia * .22;
+    if (ammonia > .2) bacteria = Math.min(1, bacteria + .028*ammonia);
+    var conversion = bacteria*ammonia*.22;
     ammonia = Math.max(0, ammonia - conversion);
+    var bacB = Math.max(0, bacteria - .3);
+    nitrite = Math.max(0, Math.min(3, nitrite + conversion*.7 - bacB*nitrite*.35));
+    nitrate = Math.min(25, nitrate + bacB*nitrite*.2);
     dayLabel.textContent = getDayLabel();
     draw();
     if (day >= maxDay) advBtn.disabled = true;
   }
 
   function reset() {
-    day = 0; ammonia = 0; bacteria = 0;
+    day = 0; ammonia = 0; bacteria = 0; nitrite = 0; nitrate = 0;
     advBtn.disabled = false;
     dayLabel.textContent = getDayLabel();
     draw();
   }
 
-  advBtn.addEventListener('click', advance);
-  resetBtn.addEventListener('click', reset);
-
   function draw() {
     ctx.clearRect(0,0,W,H);
     var danger = Math.min(1, ammonia/3.5);
     var grd = ctx.createLinearGradient(0,0,0,H);
-    grd.addColorStop(0,'rgba('+(4+Math.round(danger*20))+','+(26-Math.round(danger*10))+',' +(40-Math.round(danger*14))+',.94)');
+    grd.addColorStop(0,'rgba('+(4+Math.round(danger*20))+','+(26-Math.round(danger*10))+','+(40-Math.round(danger*14))+',.94)');
     grd.addColorStop(1,'rgba(2,12,20,.97)');
     ctx.fillStyle=grd; ctx.fillRect(0,0,W,H);
-    ctx.fillStyle='rgba(50,35,15,.7)'; ctx.fillRect(0,H-14,W,14);
 
-    /* Ammonia particles */
-    if (ammonia > .3) {
-      var count = Math.floor(ammonia * 10);
-      for (var i = 0; i < count; i++) {
-        var ang = (i/count)*Math.PI*2;
-        var rad = W*.28 * (ammonia/3.5);
-        var px = W*.5 + Math.cos(ang)*rad*(0.5+Math.random()*.5);
-        var py = H*.5 + Math.sin(ang)*rad*.6*(0.5+Math.random()*.5);
-        ctx.beginPath(); ctx.arc(px,py,.8+ammonia*.3,0,Math.PI*2);
-        ctx.fillStyle='rgba(220,160,40,'+(ammonia/3.5*.45).toFixed(3)+')'; ctx.fill();
-      }
-    }
+    /* Parameter bars — NH3 / NO2 / NO3 */
+    var barH=H*.38, barY=10, barW=(W-24)/3-4;
+    var params=[
+      {label:'NH₃',val:ammonia,max:3.5,col:'rgba(220,160,40,'},
+      {label:'NO₂',val:nitrite,max:3.5,col:'rgba(220,100,60,'},
+      {label:'NO₃',val:nitrate,max:25,col:'rgba(80,200,120,'}
+    ];
+    params.forEach(function(p,i){
+      var bx=12+i*(barW+6);
+      var fillH=(p.val/p.max)*barH;
+      ctx.fillStyle='rgba(255,255,255,.05)'; ctx.fillRect(bx,barY,barW,barH);
+      if(fillH>0){ctx.fillStyle=p.col+'0.6)'; ctx.fillRect(bx,barY+barH-fillH,barW,fillH);}
+      ctx.font='300 10px DM Sans,system-ui,sans-serif'; ctx.textAlign='center';
+      ctx.fillStyle=p.col+'0.8)'; ctx.fillText(p.label,bx+barW/2,barY+barH+12);
+      ctx.fillStyle='rgba(255,255,255,.55)';
+      var valY=barY+barH-fillH-4; if(valY<barY+10)valY=barY+10;
+      if(p.val>0.05)ctx.fillText(p.val.toFixed(1),bx+barW/2,valY);
+      ctx.textAlign='left';
+    });
 
-    /* Fish stress indication */
-    if (day > 0) {
-      var fy = danger > .6 ? H*.15 : H*.42;
+    /* Fish in lower half */
+    if(day>0){
+      var fy=danger>.6?H*.68:H*.78;
       ctx.save();
-      ctx.globalAlpha = .78 - danger*.15;
+      ctx.globalAlpha=.75-danger*.1;
+      if(danger>.5)ctx.filter='sepia(0.5) brightness(0.7)';
       ctx.fillStyle='rgba(139,189,210,.85)';
-      ctx.beginPath(); ctx.ellipse(W*.3,fy,13,8,0,0,Math.PI*2); ctx.fill();
-      ctx.beginPath(); ctx.moveTo(W*.3-13,fy); ctx.lineTo(W*.3-19,fy-5); ctx.lineTo(W*.3-19,fy+5); ctx.closePath(); ctx.fill();
-      ctx.fillStyle='rgba(255,255,255,.9)'; ctx.beginPath(); ctx.arc(W*.3+7,fy-2.5,2.2,0,Math.PI*2); ctx.fill();
-      ctx.restore();
+      ctx.beginPath();ctx.ellipse(W*.35,fy,11,7,0,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.moveTo(W*.35-11,fy);ctx.lineTo(W*.35-17,fy-4);ctx.lineTo(W*.35-17,fy+4);ctx.closePath();ctx.fill();
+      ctx.fillStyle='rgba(255,255,255,.9)';ctx.beginPath();ctx.arc(W*.35+6,fy-2,1.8,0,Math.PI*2);ctx.fill();
+      ctx.filter='none'; ctx.restore();
     }
 
     /* Bacteria glow */
-    if (bacteria > .1) {
-      var bg2 = ctx.createRadialGradient(W*.7,H*.65,0,W*.7,H*.65,W*.2);
-      bg2.addColorStop(0,'rgba(80,200,100,'+(bacteria*.12).toFixed(3)+')');
+    if(bacteria>.1){
+      var bg2=ctx.createRadialGradient(W*.7,H*.82,0,W*.7,H*.82,W*.18);
+      bg2.addColorStop(0,'rgba(80,200,100,'+(bacteria*.1).toFixed(3)+')');
       bg2.addColorStop(1,'transparent');
       ctx.fillStyle=bg2; ctx.fillRect(0,0,W,H);
     }
 
-    /* NH3 value */
-    if (day > 0) {
-      ctx.font='600 '+(13+Math.round(danger*3))+'px DM Sans,system-ui,sans-serif';
-      ctx.fillStyle='rgba('+(80+Math.round(danger*140))+','+(180-Math.round(danger*100))+',60,'+(0.55+danger*.35).toFixed(2)+')';
-      ctx.fillText('NH₃  '+ammonia.toFixed(2)+' ppm', W*.55, H*.3);
-      if (bacteria > .2) {
-        ctx.font='300 10px DM Sans,system-ui,sans-serif';
-        ctx.fillStyle='rgba(80,200,100,'+(bacteria*.8).toFixed(2)+')';
-        ctx.fillText('bacteria '+(bacteria*100).toFixed(0)+'%', W*.55, H*.44);
-      }
-    }
-
-    /* Day progress */
-    if (maxDay > 0) {
-      ctx.fillStyle='rgba(255,255,255,.08)';
-      ctx.fillRect(0,H-16,W,2);
-      ctx.fillStyle='rgba(61,214,232,.4)';
-      ctx.fillRect(0,H-16,(day/maxDay)*W,2);
-    }
+    ctx.fillStyle='rgba(50,35,15,.7)'; ctx.fillRect(0,H-10,W,10);
+    ctx.fillStyle='rgba(255,255,255,.07)'; ctx.fillRect(0,H-12,W,2);
+    ctx.fillStyle='rgba(61,214,232,.4)'; ctx.fillRect(0,H-12,(day/maxDay)*W,2);
   }
 
+  advBtn.addEventListener('click', advance);
+  resetBtn.addEventListener('click', reset);
   draw();
 };
 
@@ -969,9 +963,38 @@ canvases[3] = function() {
     ctx.font='300 11px DM Sans,system-ui,sans-serif';
     ctx.fillStyle='rgba(220,140,60,'+(0.3+animP.A*.5).toFixed(2)+')'; ctx.fillText('Nitrosomonas',8,16);
     ctx.fillStyle='rgba(80,200,100,'+(0.3+animP.B*.5).toFixed(2)+')'; ctx.fillText('Nitrobacter / Nitrospira',W*.52+4,16);
-    ctx.fillStyle='rgba(255,255,255,.45)';
+    ctx.fillStyle='rgba(255,255,255,.35)';
     ctx.fillText('NH₃ → NO₂',8,26);
     ctx.fillText('NO₂ → NO₃',Math.min(W*.52+4,W/2+4),26);
+
+    /* Conversion flow arrow — centre ──►── */
+    if(animP.A > .3 && animP.B > .1) {
+      var arrowX = W*.5, arrowY = H*.5;
+      var arrowAlpha = Math.min(animP.A, animP.B) * .8;
+      /* Nitrite label floating between colonies */
+      ctx.font='italic 300 10px Cormorant Garamond,serif';
+      ctx.fillStyle='rgba(200,160,80,'+arrowAlpha.toFixed(2)+')';
+      ctx.textAlign='center';
+      ctx.fillText('NO₂', arrowX, arrowY - 8);
+      /* Arrow line */
+      ctx.strokeStyle='rgba(200,160,80,'+(arrowAlpha*.6).toFixed(2)+')';
+      ctx.lineWidth=1; ctx.setLineDash([2,3]);
+      ctx.beginPath(); ctx.moveTo(W*.38,arrowY); ctx.lineTo(W*.62,arrowY); ctx.stroke();
+      ctx.setLineDash([]);
+      /* Arrowhead */
+      ctx.fillStyle='rgba(200,160,80,'+(arrowAlpha*.6).toFixed(2)+')';
+      ctx.beginPath(); ctx.moveTo(W*.62,arrowY); ctx.lineTo(W*.58,arrowY-3); ctx.lineTo(W*.58,arrowY+3); ctx.closePath(); ctx.fill();
+      ctx.textAlign='left';
+    }
+
+    /* Nitrate output label on right side */
+    if(animP.B > .4) {
+      ctx.font='300 10px DM Sans,system-ui,sans-serif';
+      ctx.fillStyle='rgba(80,200,120,'+(animP.B*.6).toFixed(2)+')';
+      ctx.textAlign='right';
+      ctx.fillText('NO₃ →', W-8, H*.5+4);
+      ctx.textAlign='left';
+    }
 
     ['A','B'].forEach(function(type){
       var p = animP[type];
@@ -1154,30 +1177,27 @@ canvases[7] = function() {
   var c = resizeCanvas('cv5'); if (!c) return;
   var ctx = c.getContext('2d');
   var W = c.width, H = c.height;
-  var day = 0; /* 0-30 */
-  var isDragging = false;
-  var startX = 0;
-  var startDay = 0;
+  var day = 0;
 
   var wrap = c.parentElement;
   var existing = wrap.querySelector('.vis-ctrl');
   if (existing) existing.remove();
   var ctrl = document.createElement('div');
   ctrl.className = 'vis-ctrl';
-  ctrl.innerHTML = '<div class="vc-label"><span id="cv5-label">Day 1 — the cycle has not started</span></div><input type="range" id="cv5-slider" min="0" max="30" value="0" step="1" class="vis-slider"><div class="vc-hint">drag to move through time</div>';
+  ctrl.innerHTML = '<div class="vc-label"><span id="cv5-label">Day 1 — drag to move through the cycle</span></div><input type="range" id="cv5-slider" min="0" max="30" value="0" step="1" class="vis-slider"><div class="vc-hint">watch how ammonia, nitrite, and nitrate move through time</div>';
   wrap.appendChild(ctrl);
 
   var slider = document.getElementById('cv5-slider');
   var label = document.getElementById('cv5-label');
 
   var dayLabels = {
-    0:'Day 1 — the cycle has not started',
-    5:'Day 5 — ammonia is rising, fish are stressed',
-    10:'Day 10 — bacteria arriving, nitrite appears',
-    15:'Day 15 — cycle building, nitrite peaks',
-    20:'Day 20 — ammonia falling, bacteria multiplying',
-    25:'Day 25 — nearly cycled, water clearing',
-    30:'Day 30 — the cycle is complete'
+    0:'Day 1 — the cycle has not started yet',
+    5:'Day 5 — ammonia rising, bacteria seeding',
+    10:'Day 10 — nitrite appears as bacteria convert ammonia',
+    15:'Day 15 — nitrite peaks, cycle in full swing',
+    20:'Day 20 — both begin to fall as Nitrospira establish',
+    25:'Day 25 — parameters stabilising',
+    30:'Day 30 — cycle complete, nitrate is the end product'
   };
 
   function getNearestLabel(d) {
@@ -1186,91 +1206,99 @@ canvases[7] = function() {
     return dayLabels[nearest] || ('Day '+d);
   }
 
-  var fishPositions = [{x:W*.2,y:H*.38},{x:W*.5,y:.28*H},{x:W*.72,y:.48*H}];
-  var plantPositions = [W*.06,W*.18,W*.70,W*.84];
+  /* Parameter paths over 30 days — realistic cycle arc */
+  function nh3Path(d){ /* peaks day 8, falls as bacteria grow */
+    if(d<8) return d*.38;
+    if(d<20) return Math.max(0,3.04-(d-8)*.22);
+    return Math.max(0,(3.04-12*.22)-(d-20)*.04);
+  }
+  function no2Path(d){ /* peaks day 14, falls as Nitrospira establish */
+    if(d<5) return 0;
+    if(d<14) return (d-5)*.35;
+    if(d<25) return Math.max(0,3.15-(d-14)*.28);
+    return Math.max(0,(3.15-11*.28)-(d-25)*.05);
+  }
+  function no3Path(d){ /* rises steadily from day 10 */
+    if(d<10) return 0;
+    return Math.min(20,(d-10)*.75);
+  }
 
   function draw() {
-    var p = day / 30;
     ctx.clearRect(0,0,W,H);
+    var grd=ctx.createLinearGradient(0,0,0,H);
+    grd.addColorStop(0,'rgba(4,18,34,.97)');grd.addColorStop(1,'rgba(2,10,18,.99)');
+    ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
 
-    /* Water clarity improves */
-    var murk = Math.max(0, (1-p)*.5 - Math.max(0,p-.5)*.2);
-    var clear = p * .18;
-    var grd = ctx.createLinearGradient(0,0,0,H);
-    grd.addColorStop(0,'rgba('+(4+Math.round(murk*25))+','+(22+Math.round(clear*10)-Math.round(murk*8))+','+(36+Math.round(clear*12)-Math.round(murk*10))+',.94)');
-    grd.addColorStop(1,'rgba(2,12,20,.97)');
-    ctx.fillStyle=grd; ctx.fillRect(0,0,W,H);
+    var pL=38,pR=12,pT=20,pB=28;
+    var gW=W-pL-pR, gH=H-pT-pB;
+    var maxVal=3.5;
 
-    /* Light increases */
-    if (p > .5) {
-      var lg=ctx.createRadialGradient(W/2,0,0,W/2,0,W*.5);
-      lg.addColorStop(0,'rgba(60,200,220,'+(p*.14).toFixed(3)+')'); lg.addColorStop(1,'transparent');
-      ctx.fillStyle=lg; ctx.fillRect(0,0,W,H);
-    }
+    /* Grid lines */
+    [1,2,3].forEach(function(v){
+      var y=pT+gH-(v/maxVal)*gH;
+      ctx.strokeStyle='rgba(255,255,255,.05)';ctx.lineWidth=1;ctx.setLineDash([2,4]);
+      ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(pL+gW,y);ctx.stroke();
+      ctx.setLineDash([]);
+    });
 
-    /* Turbidity */
-    if (murk > .05) {
-      for(var i=0;i<Math.floor(murk*20);i++){
-        var px=Math.random()*W,py=H*.1+Math.random()*H*.7;
-        ctx.beginPath(); ctx.arc(px,py,.7+murk,0,Math.PI*2);
-        ctx.fillStyle='rgba(160,120,40,'+(murk*.35).toFixed(3)+')'; ctx.fill();
+    /* Axes */
+    ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=1;ctx.setLineDash([]);
+    ctx.beginPath();ctx.moveTo(pL,pT);ctx.lineTo(pL,pT+gH);ctx.lineTo(pL+gW,pT+gH);ctx.stroke();
+    ctx.font='300 9px DM Sans,system-ui,sans-serif';
+    ctx.fillStyle='rgba(255,255,255,.3)';
+    ctx.fillText('ppm',2,pT+10);
+    ctx.fillText('Days →',pL+gW-24,pT+gH+13);
+
+    var lines=[
+      {fn:nh3Path, col:'rgba(220,160,40,', label:'NH₃', lx:pL+4},
+      {fn:no2Path, col:'rgba(220,100,60,', label:'NO₂', lx:pL+gW*.38},
+      {fn:no3Path, col:'rgba(80,200,120,', label:'NO₃', lx:pL+gW*.72}
+    ];
+
+    lines.forEach(function(ln){
+      ctx.strokeStyle=ln.col+'0.75)';ctx.lineWidth=1.8;ctx.setLineDash([]);
+      ctx.beginPath();
+      for(var i=0;i<=day;i++){
+        var x=pL+(i/30)*gW;
+        var v=Math.min(ln.fn(i),maxVal);
+        var y=pT+gH-(v/maxVal)*gH;
+        i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
       }
-    }
+      ctx.stroke();
 
-    /* Plants grow with time */
-    plantPositions.forEach(function(px,i){
-      var plantDay = i*5;
-      if (day < plantDay) return;
-      var ph = Math.min(35+i*8, (day-plantDay)*2.5);
-      ctx.strokeStyle='rgba(80,140,60,'+(Math.min(1,ph/30)*.7).toFixed(2)+')'; ctx.lineWidth=1.4;
-      ctx.beginPath(); ctx.moveTo(px,H-14); ctx.lineTo(px,H-14-ph); ctx.stroke();
-      if (ph > 8) {
-        ctx.fillStyle='rgba(70,120,50,'+(Math.min(1,ph/25)*.55).toFixed(2)+')';
-        ctx.beginPath(); ctx.ellipse(px-3,H-14-ph*.5,4,2.8,-.35,0,Math.PI*2); ctx.fill();
-        ctx.beginPath(); ctx.ellipse(px+2,H-14-ph*.7,3.5,2.5,.3,0,Math.PI*2); ctx.fill();
+      /* Label at current position */
+      if(day>2){
+        var cx=pL+(day/30)*gW;
+        var cv=Math.min(ln.fn(day),maxVal);
+        var cy=pT+gH-(cv/maxVal)*gH;
+        ctx.fillStyle=ln.col+'0.85)';
+        ctx.font='300 10px DM Sans,system-ui,sans-serif';
+        ctx.textAlign='left';
+        var lx=Math.min(cx+3, pL+gW-ctx.measureText(ln.label).width-4);
+        ctx.fillText(ln.label, lx, Math.max(cy-4, pT+12));
+        /* Dot at end */
+        ctx.beginPath();ctx.arc(cx,cy,2.5,0,Math.PI*2);
+        ctx.fillStyle=ln.col+'0.9)';ctx.fill();
       }
     });
 
-    /* Fish — stressed early, calm later */
-    var stress = Math.max(0, 1 - p*1.6);
-    fishPositions.forEach(function(f,i){
-      if (i > Math.floor(p*3)+0) return;
-      var fy = stress > .5 ? H*.1 + i*8 : f.y;
-      ctx.save(); ctx.globalAlpha = .75+p*.1;
-      var fc2=['rgba(139,189,210,.85)','rgba(180,140,80,.85)','rgba(120,160,100,.85)'][i];
-      ctx.fillStyle=fc2;
-      ctx.beginPath(); ctx.ellipse(f.x,fy,12,7,0,0,Math.PI*2); ctx.fill();
-      ctx.beginPath(); ctx.moveTo(f.x-12,fy); ctx.lineTo(f.x-18,fy-5); ctx.lineTo(f.x-18,fy+5); ctx.closePath(); ctx.fill();
-      ctx.fillStyle='rgba(255,255,255,.9)'; ctx.beginPath(); ctx.arc(f.x+7,fy-2,2,0,Math.PI*2); ctx.fill();
-      ctx.restore();
-    });
+    /* Vertical day cursor */
+    var cx=pL+(day/30)*gW;
+    ctx.strokeStyle='rgba(255,255,255,.15)';ctx.lineWidth=1;ctx.setLineDash([2,3]);
+    ctx.beginPath();ctx.moveTo(cx,pT);ctx.lineTo(cx,pT+gH);ctx.stroke();
+    ctx.setLineDash([]);
 
-    /* Bubbles appear when cycled */
-    if (p > .7) {
-      for(var b=0;b<4;b++){
-        var bx=W*(.15+b*.22); var by=H*(.3+Math.sin(Date.now()*.001+b)*.25);
-        ctx.beginPath(); ctx.arc(bx,by,.8,0,Math.PI*2);
-        ctx.strokeStyle='rgba(61,214,232,'+(p*.4).toFixed(2)+')'; ctx.lineWidth=.6; ctx.stroke();
-      }
-    }
-
-    /* Gravel */
-    ctx.fillStyle='rgba(50,35,15,.75)'; ctx.fillRect(0,H-14,W,14);
-
-    /* Status overlay */
-    ctx.font='300 10px DM Sans,system-ui,sans-serif';
-    var statusTxt=''; var statusCol='';
-    if(day<8){statusTxt='Ammonia rising';statusCol='rgba(220,160,40,.6)';}
-    else if(day<16){statusTxt='Nitrite building';statusCol='rgba(200,160,40,.6)';}
-    else if(day<24){statusTxt='Cycle progressing';statusCol='rgba(61,214,232,.5)';}
-    else{statusTxt='Cycle established';statusCol='rgba(80,200,120,.65)';}
-    ctx.fillStyle=statusCol;
-    ctx.fillText(statusTxt,Math.min(W*.56,W-ctx.measureText(statusTxt).width-8),22);
-
-    /* Day progress bar */
-    ctx.fillStyle='rgba(255,255,255,.07)'; ctx.fillRect(0,H-16,W,2);
-    ctx.fillStyle='rgba(61,214,232,'+(p>.5?.5:.3)+')';
-    ctx.fillRect(0,H-16,p*W,2);
+    /* Phase annotation */
+    ctx.font='italic 300 10px Cormorant Garamond,serif';
+    var phase='';var phaseCol='';
+    if(day<6){phase='Seeding';phaseCol='rgba(255,255,255,.3)';}
+    else if(day<14){phase='Nitrosomonas active';phaseCol='rgba(220,160,40,.6)';}
+    else if(day<22){phase='Nitrospira establishing';phaseCol='rgba(220,100,60,.55)';}
+    else{phase='Cycle stable';phaseCol='rgba(80,200,120,.65)';}
+    ctx.fillStyle=phaseCol;
+    ctx.textAlign='center';
+    ctx.fillText(phase,pL+gW/2,pT+gH+22);
+    ctx.textAlign='left';
   }
 
   slider.addEventListener('input', function(){
@@ -1279,15 +1307,13 @@ canvases[7] = function() {
     draw();
   });
 
-  /* Touch/drag on canvas */
-  var startTouchX=0, startTouchDay=0;
-  c.addEventListener('touchstart',function(e){startTouchX=e.touches[0].clientX;startTouchDay=day;},{passive:true});
-  c.addEventListener('touchmove',function(e){
-    var dx=e.touches[0].clientX-startTouchX;
-    day=Math.max(0,Math.min(30,startTouchDay+Math.round(dx/8)));
-    slider.value=day;
-    label.textContent=getNearestLabel(day);
-    draw();
+  c.addEventListener('touchstart',function(e){
+    var startX=e.touches[0].clientX,startDay=day;
+    c.addEventListener('touchmove',function mv(e){
+      var dx=e.touches[0].clientX-startX;
+      day=Math.max(0,Math.min(30,startDay+Math.round(dx/8)));
+      slider.value=day;label.textContent=getNearestLabel(day);draw();
+    },{passive:true});
   },{passive:true});
 
   draw();
