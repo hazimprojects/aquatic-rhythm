@@ -60,7 +60,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;ali
 @media(max-width:600px){.art-back-meta{display:none}}
 
 /* PROGRESS DOTS */
-.progress-dots{position:fixed;right:clamp(1rem,3vw,2.5rem);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:.55rem;z-index:50}
+.progress-dots{position:fixed;right:clamp(1rem,3vw,2.5rem);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:.55rem;z-index:50;opacity:0;pointer-events:none;transition:opacity .4s}
+.progress-dots.visible{opacity:1;pointer-events:all}
 .pdot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.15);transition:background .4s,transform .4s;cursor:pointer;border:none;padding:0}
 .pdot.active{background:rgba(61,214,232,.8);transform:scale(1.4)}
 .pdot.done{background:rgba(61,214,232,.35)}
@@ -69,7 +70,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;ali
 /* INTRO */
 .art-intro{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:8rem clamp(1.5rem,5vw,3rem) 5rem;position:relative}
 .art-intro::after{content:'';position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(to bottom,transparent,var(--abyss));pointer-events:none}
-.art-intro-inner{max-width:620px;margin:0 auto}
+.art-intro-inner{max-width:580px;margin:0 auto}
 .art-eyebrow{display:block;font-size:.6rem;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:rgba(157,191,154,.75);margin-bottom:1.6rem}
 .art-main-title{font-family:var(--serif);font-weight:300;font-size:clamp(2rem,5vw,3.4rem);color:rgba(255,255,255,.92);line-height:1.1;margin-bottom:2rem}
 .art-main-title em{font-style:italic;color:rgba(61,214,232,.72)}
@@ -361,6 +362,8 @@ function goIntro(){
   var intro=document.getElementById('art-intro');
   if(wrap)wrap.classList.remove('active');
   if(intro){intro.classList.remove('hidden');intro.style.display='';}
+  var dots=document.getElementById('progress-dots');
+  if(dots)dots.classList.remove('visible');
   window.scrollTo({top:0,behavior:'auto'});
   currentMod=1;
   updateDots();
@@ -404,6 +407,8 @@ function startLearning(){
   var wrap=document.getElementById('module-wrap');
   if(intro)intro.classList.add('hidden');
   if(wrap)wrap.classList.add('active');
+  var dots=document.getElementById('progress-dots');
+  if(dots)dots.classList.add('visible');
   window.scrollTo({top:0,behavior:'auto'});
   var first=document.getElementById('mod-1');
   if(first){first.classList.add('active');setTimeout(function(){first.classList.add('visible');},30);}
