@@ -1,6 +1,6 @@
 # Aquatic Rhythm
 
-**In rhythm with living water.**
+**Aligned with living systems.**
 
 [aquaticrhythm.com](https://aquaticrhythm.com) · [hello@aquaticrhythm.com](mailto:hello@aquaticrhythm.com)
 
