@@ -76,13 +76,14 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
 /* SLIM PARAM BAR */
 #param-bar{display:flex;align-items:center;gap:.38rem;flex-shrink:0;flex-wrap:wrap}
 .pi{display:flex;align-items:center;gap:.26rem;flex:1;min-width:58px}
-.pi-lbl{font-size:.44rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.24);white-space:nowrap}
-.pi-val{font-size:.62rem;font-weight:300;font-family:var(--serif);transition:color .5s;min-width:24px}
+.pi-lbl{font-size:.52rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.24);white-space:nowrap}
+.pi-val{font-size:.72rem;font-weight:300;font-family:var(--serif);transition:color .5s;min-width:26px}
 .pi-track{flex:1;height:2px;background:rgba(255,255,255,.07);border-radius:1px;overflow:hidden;min-width:16px}
 .pi-fill{height:100%;border-radius:1px;transition:width .8s ease,background .8s}
 .pi-fish{display:flex;align-items:center;gap:.22rem}
-.pi-fish-lbl{font-size:.42rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.2)}
-.pi-fish-val{font-size:.58rem;color:rgba(139,189,210,.6)}
+.pi-fish-icon{font-size:.85rem;line-height:1;flex-shrink:0}
+.pi-fish-lbl{font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.2)}
+.pi-fish-val{font-size:.72rem;color:rgba(139,189,210,.6)}
 .pi-div{width:1px;height:9px;background:rgba(255,255,255,.08);flex-shrink:0}
 
 /* RIGHT PANEL */
@@ -111,9 +112,9 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
 .ov.hide{opacity:0;pointer-events:none}
 .oc{max-width:420px;padding:2rem 1.8rem;text-align:center;margin:1rem auto;border:1px solid rgba(139,189,210,.15);background:rgba(6,16,13,.98)}
 .oi{font-size:2.2rem;display:block;margin-bottom:.65rem}
-.ot{font-family:var(--serif);font-weight:300;font-size:1.6rem;color:rgba(255,255,255,.9);margin-bottom:.5rem;line-height:1.2}
-.om{font-family:var(--serif);font-style:italic;font-size:.86rem;color:rgba(255,255,255,.42);line-height:1.78;margin-bottom:1.4rem}
-.obtn{font-size:.6rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;padding:.68rem 1.5rem;border-radius:2px;cursor:pointer;transition:background .2s,transform .2s;margin:.22rem;display:inline-block;text-decoration:none}
+.ot{font-family:var(--serif);font-weight:300;font-size:1.7rem;color:rgba(255,255,255,.9);margin-bottom:.5rem;line-height:1.2}
+.om{font-family:var(--serif);font-style:italic;font-size:.92rem;color:rgba(255,255,255,.42);line-height:1.78;margin-bottom:1.4rem}
+.obtn{font-size:.72rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;padding:.75rem 1.6rem;border-radius:2px;cursor:pointer;transition:background .2s,transform .2s;margin:.22rem;display:inline-block;text-decoration:none}
 .op{background:rgba(30,165,185,.88);color:#fff;border:1px solid rgba(61,214,232,.45)}
 .op:hover{background:rgba(40,184,208,.98);transform:translateY(-1px)}
 .os{background:transparent;color:rgba(255,255,255,.38);border:1px solid rgba(255,255,255,.12)}
@@ -121,7 +122,7 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
 
 /* ── SETUP OVERLAY ── */
 .setup-section{margin-bottom:1.4rem;text-align:left}
-.setup-section-label{font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(61,214,232,.45);display:block;margin-bottom:.65rem}
+.setup-section-label{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(61,214,232,.45);display:block;margin-bottom:.65rem}
 .setup-options{display:flex;gap:.45rem;flex-wrap:wrap}
 .sopt{
   flex:1;min-width:80px;padding:.6rem .5rem;
@@ -132,26 +133,26 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
 .sopt:hover{background:rgba(9,22,18,.9);border-color:rgba(61,214,232,.2)}
 .sopt.selected{background:rgba(58,110,140,.2);border-color:rgba(61,214,232,.45)}
 .sopt-icon{font-size:1.1rem;display:block;margin-bottom:.22rem}
-.sopt-name{font-size:.56rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65);display:block}
-.sopt-desc{font-size:.5rem;color:rgba(255,255,255,.3);line-height:1.4;display:block;margin-top:.18rem}
+.sopt-name{font-size:.68rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.65);display:block}
+.sopt-desc{font-size:.62rem;color:rgba(255,255,255,.3);line-height:1.45;display:block;margin-top:.2rem}
 .setup-note{
   padding:.75rem .9rem;margin-top:1rem;
   background:rgba(80,180,100,.06);border:1px solid rgba(80,180,100,.18);border-radius:2px;
   text-align:left;
 }
-.setup-note p{font-size:.72rem;font-weight:300;color:rgba(80,180,100,.75);line-height:1.65}
+.setup-note p{font-size:.82rem;font-weight:300;color:rgba(80,180,100,.75);line-height:1.7}
 .setup-note strong{color:rgba(80,180,100,.95);font-weight:400}
 .setup-warn{
   padding:.75rem .9rem;margin-top:.7rem;
   background:rgba(200,140,40,.05);border:1px solid rgba(200,140,40,.18);border-radius:2px;
 }
-.setup-warn p{font-size:.7rem;font-weight:300;color:rgba(200,160,40,.7);line-height:1.65}
+.setup-warn p{font-size:.8rem;font-weight:300;color:rgba(200,160,40,.7);line-height:1.7}
 .expected-box{
   padding:.75rem .9rem;margin-top:1rem;
   background:rgba(6,16,13,.6);border:1px solid rgba(139,189,210,.1);
   border-radius:2px;text-align:left;
 }
-.expected-box p{font-size:.7rem;font-weight:300;color:rgba(255,255,255,.45);line-height:1.65}
+.expected-box p{font-size:.82rem;font-weight:300;color:rgba(255,255,255,.45);line-height:1.7}
 .expected-box strong{color:rgba(61,214,232,.7);font-weight:400}
 
 /* ── MOBILE ── */
@@ -212,13 +213,14 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
     border-bottom:1px solid rgba(139,189,210,.08);
     background:rgba(6,16,13,.35);
   }
-  .pi{flex-shrink:0;gap:.2rem;min-width:auto}
-  .pi-lbl{font-size:.52rem}
-  .pi-val{font-size:.72rem;min-width:22px}
-  .pi-track{width:18px;flex:none}
-  .pi-fish-lbl{font-size:.52rem}
-  .pi-fish-val{font-size:.72rem}
-  .pi-div{height:8px}
+  .pi{flex-shrink:0;gap:.18rem;min-width:auto}
+  .pi-lbl{font-size:.75rem;letter-spacing:.04em}
+  .pi-val{font-size:1.05rem;min-width:28px}
+  .pi-track{display:none}  /* hide bar — save space for bigger text */
+  .pi-arrow{font-size:.65rem}
+  .pi-fish-icon{font-size:1.05rem}
+  .pi-fish-val{font-size:1rem}
+  .pi-div{height:10px}
 
   /* Right panel — takes all remaining space */
   #pright{
@@ -227,12 +229,18 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
     padding:.28rem .75rem 0;
     overflow:hidden;
   }
-  .insight-box{flex-shrink:0;padding:.28rem .5rem}
-  .ib-lbl{font-size:.55rem}
-  .ib-txt{font-size:.8rem;line-height:1.48}
+  .insight-box{flex-shrink:0;padding:.3rem .5rem}
+  .ib-lbl{font-size:.7rem}
+  .ib-txt{font-size:1rem;line-height:1.52}
   .log-box{flex:1;min-height:0;overflow-y:auto}
-  .le{font-size:.75rem;padding:.28rem .5rem;line-height:1.45}
-  .ld{font-size:.6rem;min-width:30px}
+  .le{font-size:.88rem;padding:.32rem .5rem;line-height:1.52}
+  .ld{font-size:.72rem;min-width:34px}
+
+  /* Equipment */
+  .eq-btn{padding:.22rem .55rem}
+  .eq-icon{font-size:.85rem}
+  .eq-lbl{font-size:.55rem}
+  .eq-temp{font-size:.55rem}
 
   /* Actions */
   #bbar{
@@ -241,9 +249,9 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
     gap:.3rem;
     border-top:1px solid rgba(139,189,210,.09);
   }
-  .ab{padding:.48rem .18rem;gap:.12rem}
-  .ai{font-size:1.1rem}
-  .an{font-size:.55rem;letter-spacing:.06em}
+  .ab{padding:.55rem .15rem;gap:.14rem}
+  .ai{font-size:1.2rem}
+  .an{font-size:.65rem;letter-spacing:.04em}
 }
 
 /* DAY PROGRESS BAR */
@@ -371,7 +379,7 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
 
 
 .pi-arrow{
-  font-size:.42rem;
+  font-size:.6rem;
   line-height:1;
   margin-left:.1rem;
   flex-shrink:0;
@@ -654,9 +662,9 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
         <div class="pi-div"></div>
         <div class="pi"><span class="pi-lbl">NO₃</span><span class="pi-val safe" id="v-no3">0.00</span><span class="pi-arrow" id="arr-no3"></span><div class="pi-track"><div class="pi-fill" id="b-no3"></div></div></div>
         <div class="pi-div"></div>
-        <div class="pi-fish"><span class="pi-fish-lbl">Fish</span><span class="pi-fish-val" id="v-fish">0</span></div>
+        <div class="pi-fish"><span class="pi-fish-icon">🐠</span><span class="pi-fish-val" id="v-fish">0</span></div>
         <div class="pi-div"></div>
-        <div class="pi-fish"><span class="pi-fish-lbl">Plants</span><span class="pi-fish-val" id="v-plant" style="color:rgba(100,180,80,.6)">0</span></div>
+        <div class="pi-fish"><span class="pi-fish-icon">🌿</span><span class="pi-fish-val" id="v-plant" style="color:rgba(100,180,80,.6)">0</span></div>
 
       </div>
     </div>
@@ -665,23 +673,23 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
       <!-- Bacteria indicator — always visible above insight -->
       <div id="bac-box" style="background:rgba(4,18,28,.6);border:1px solid rgba(139,189,210,.1);padding:.45rem .62rem;display:none">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.38rem">
-          <span style="font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.28)">Bacteria</span>
-          <span id="bac-status" style="font-size:.52rem;letter-spacing:.06em;color:rgba(255,255,255,.3)">Seeding</span>
+          <span style="font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.28)">Bacteria</span>
+          <span id="bac-status" style="font-size:.65rem;letter-spacing:.04em;color:rgba(255,255,255,.3)">Seeding</span>
         </div>
         <div style="display:flex;flex-direction:column;gap:.28rem">
           <div style="display:flex;align-items:center;gap:.4rem">
-            <span style="font-size:.6rem;color:rgba(220,140,60,.65);min-width:48px;letter-spacing:.03em">NH₃→NO₂</span>
+            <span style="font-size:.72rem;color:rgba(220,140,60,.65);min-width:52px;letter-spacing:.02em">NH₃→NO₂</span>
             <div style="flex:1;height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden">
               <div id="bac-bar-a" style="height:100%;width:0%;background:linear-gradient(to right,rgba(220,140,60,.6),rgba(220,140,60,.9));border-radius:2px;transition:width 1.2s ease"></div>
             </div>
-            <span id="bac-a-pct" style="font-size:.6rem;color:rgba(220,140,60,.7);min-width:28px;text-align:right">0%</span>
+            <span id="bac-a-pct" style="font-size:.72rem;color:rgba(220,140,60,.7);min-width:30px;text-align:right">0%</span>
           </div>
           <div style="display:flex;align-items:center;gap:.4rem">
-            <span style="font-size:.6rem;color:rgba(80,200,100,.65);min-width:48px;letter-spacing:.03em">NO₂→NO₃</span>
+            <span style="font-size:.72rem;color:rgba(80,200,100,.65);min-width:52px;letter-spacing:.02em">NO₂→NO₃</span>
             <div style="flex:1;height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden">
               <div id="bac-bar-b" style="height:100%;width:0%;background:linear-gradient(to right,rgba(80,200,100,.6),rgba(80,200,100,.9));border-radius:2px;transition:width 1.2s ease"></div>
             </div>
-            <span id="bac-b-pct" style="font-size:.6rem;color:rgba(80,200,100,.7);min-width:28px;text-align:right">0%</span>
+            <span id="bac-b-pct" style="font-size:.72rem;color:rgba(80,200,100,.7);min-width:30px;text-align:right">0%</span>
           </div>
           <!-- Stable days indicator — only shows when close to completion -->
           <div id="stable-row" style="display:none;align-items:center;gap:.4rem;margin-top:.1rem">
