@@ -76,8 +76,8 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
 /* SLIM PARAM BAR */
 #param-bar{display:flex;align-items:center;gap:.38rem;flex-shrink:0;flex-wrap:wrap}
 .pi{display:flex;align-items:center;gap:.26rem;flex:1;min-width:58px}
-.pi-lbl{font-size:.42rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.24);white-space:nowrap}
-.pi-val{font-size:.58rem;font-weight:300;font-family:var(--serif);transition:color .5s;min-width:24px}
+.pi-lbl{font-size:.44rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.24);white-space:nowrap}
+.pi-val{font-size:.62rem;font-weight:300;font-family:var(--serif);transition:color .5s;min-width:24px}
 .pi-track{flex:1;height:2px;background:rgba(255,255,255,.07);border-radius:1px;overflow:hidden;min-width:16px}
 .pi-fill{height:100%;border-radius:1px;transition:width .8s ease,background .8s}
 .pi-fish{display:flex;align-items:center;gap:.22rem}
@@ -88,12 +88,12 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
 /* RIGHT PANEL */
 #pright{display:flex;flex-direction:column;gap:.32rem;min-height:0}
 .insight-box{background:rgba(58,110,140,.08);border-left:2px solid rgba(61,214,232,.25);padding:.48rem .62rem;flex-shrink:0}
-.ib-lbl{font-size:.44rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(61,214,232,.4);display:block;margin-bottom:.2rem}
-.ib-txt{font-family:var(--serif);font-style:italic;font-size:.72rem;color:rgba(255,255,255,.54);line-height:1.55}
+.ib-lbl{font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(61,214,232,.4);display:block;margin-bottom:.22rem}
+.ib-txt{font-family:var(--serif);font-style:italic;font-size:.76rem;color:rgba(255,255,255,.54);line-height:1.58}
 .log-box{background:rgba(6,16,13,.5);border:1px solid rgba(255,255,255,.06);overflow-y:auto;flex:1;min-height:0}
-.le{padding:.28rem .5rem;font-size:.65rem;font-weight:300;color:rgba(255,255,255,.42);line-height:1.45;border-bottom:1px solid rgba(255,255,255,.04);display:flex;gap:.35rem}
+.le{padding:.3rem .5rem;font-size:.68rem;font-weight:300;color:rgba(255,255,255,.42);line-height:1.5;border-bottom:1px solid rgba(255,255,255,.04);display:flex;gap:.35rem}
 .le:last-child{border-bottom:none}
-.ld{font-size:.5rem;color:rgba(61,214,232,.35);flex-shrink:0;min-width:32px}
+.ld{font-size:.54rem;color:rgba(61,214,232,.35);flex-shrink:0;min-width:32px}
 .lw{color:rgba(200,160,40,.75)}.ldg{color:rgba(220,100,80,.8)}.lgd{color:rgba(80,200,120,.72)}
 
 /* BOTTOM ACTIONS */
@@ -103,7 +103,7 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
 .ab:active:not(:disabled){transform:translateY(0)}
 .ab:disabled{opacity:.25;cursor:not-allowed}
 .ai{font-size:1.18rem;line-height:1}
-.an{font-size:.5rem;font-weight:400;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.an{font-size:.52rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55)}
 .ah{font-size:.44rem;color:rgba(255,255,255,.22);text-align:center;line-height:1.25}
 
 /* ── OVERLAYS ── */
@@ -213,11 +213,11 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
     background:rgba(6,16,13,.35);
   }
   .pi{flex-shrink:0;gap:.2rem;min-width:auto}
-  .pi-lbl{font-size:.4rem}
-  .pi-val{font-size:.62rem;min-width:18px}
-  .pi-track{width:22px;flex:none}
-  .pi-fish-lbl{font-size:.4rem}
-  .pi-fish-val{font-size:.62rem}
+  .pi-lbl{font-size:.52rem}
+  .pi-val{font-size:.72rem;min-width:22px}
+  .pi-track{width:18px;flex:none}
+  .pi-fish-lbl{font-size:.52rem}
+  .pi-fish-val{font-size:.72rem}
   .pi-div{height:8px}
 
   /* Right panel — takes all remaining space */
@@ -228,11 +228,11 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
     overflow:hidden;
   }
   .insight-box{flex-shrink:0;padding:.28rem .5rem}
-  .ib-lbl{font-size:.4rem}
-  .ib-txt{font-size:.7rem;line-height:1.42}
+  .ib-lbl{font-size:.55rem}
+  .ib-txt{font-size:.8rem;line-height:1.48}
   .log-box{flex:1;min-height:0;overflow-y:auto}
-  .le{font-size:.68rem;padding:.24rem .4rem;line-height:1.38}
-  .ld{font-size:.52rem;min-width:28px}
+  .le{font-size:.75rem;padding:.28rem .5rem;line-height:1.45}
+  .ld{font-size:.6rem;min-width:30px}
 
   /* Actions */
   #bbar{
@@ -241,9 +241,9 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
     gap:.3rem;
     border-top:1px solid rgba(139,189,210,.09);
   }
-  .ab{padding:.42rem .2rem;gap:.12rem}
-  .ai{font-size:1.05rem}
-  .an{font-size:.46rem}
+  .ab{padding:.48rem .18rem;gap:.12rem}
+  .ai{font-size:1.1rem}
+  .an{font-size:.55rem;letter-spacing:.06em}
 }
 
 /* DAY PROGRESS BAR */
@@ -327,8 +327,8 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
 .eq-btn.eq-on{opacity:1}
 .eq-btn:hover{background:rgba(255,255,255,.04)}
 .eq-icon{font-size:.75rem;line-height:1}
-.eq-lbl{font-size:.42rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45)}
-.eq-temp{font-size:.42rem;color:rgba(61,214,232,.6);margin-left:.15rem}
+.eq-lbl{font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.eq-temp{font-size:.48rem;color:rgba(61,214,232,.6);margin-left:.15rem}
 .eq-btn.eq-used{opacity:.25;cursor:default}
 .eq-div{width:1px;height:12px;background:rgba(255,255,255,.07);margin:0 .2rem}
 
@@ -665,23 +665,23 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif
       <!-- Bacteria indicator — always visible above insight -->
       <div id="bac-box" style="background:rgba(4,18,28,.6);border:1px solid rgba(139,189,210,.1);padding:.45rem .62rem;display:none">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.38rem">
-          <span style="font-size:.42rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.28)">Bacteria</span>
-          <span id="bac-status" style="font-size:.44rem;letter-spacing:.08em;color:rgba(255,255,255,.3)">Seeding</span>
+          <span style="font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.28)">Bacteria</span>
+          <span id="bac-status" style="font-size:.52rem;letter-spacing:.06em;color:rgba(255,255,255,.3)">Seeding</span>
         </div>
         <div style="display:flex;flex-direction:column;gap:.28rem">
           <div style="display:flex;align-items:center;gap:.4rem">
-            <span style="font-size:.5rem;color:rgba(220,140,60,.65);min-width:44px;letter-spacing:.04em">NH₃→NO₂</span>
+            <span style="font-size:.6rem;color:rgba(220,140,60,.65);min-width:48px;letter-spacing:.03em">NH₃→NO₂</span>
             <div style="flex:1;height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden">
               <div id="bac-bar-a" style="height:100%;width:0%;background:linear-gradient(to right,rgba(220,140,60,.6),rgba(220,140,60,.9));border-radius:2px;transition:width 1.2s ease"></div>
             </div>
-            <span id="bac-a-pct" style="font-size:.5rem;color:rgba(220,140,60,.7);min-width:26px;text-align:right">0%</span>
+            <span id="bac-a-pct" style="font-size:.6rem;color:rgba(220,140,60,.7);min-width:28px;text-align:right">0%</span>
           </div>
           <div style="display:flex;align-items:center;gap:.4rem">
-            <span style="font-size:.5rem;color:rgba(80,200,100,.65);min-width:44px;letter-spacing:.04em">NO₂→NO₃</span>
+            <span style="font-size:.6rem;color:rgba(80,200,100,.65);min-width:48px;letter-spacing:.03em">NO₂→NO₃</span>
             <div style="flex:1;height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden">
               <div id="bac-bar-b" style="height:100%;width:0%;background:linear-gradient(to right,rgba(80,200,100,.6),rgba(80,200,100,.9));border-radius:2px;transition:width 1.2s ease"></div>
             </div>
-            <span id="bac-b-pct" style="font-size:.5rem;color:rgba(80,200,100,.7);min-width:26px;text-align:right">0%</span>
+            <span id="bac-b-pct" style="font-size:.6rem;color:rgba(80,200,100,.7);min-width:28px;text-align:right">0%</span>
           </div>
           <!-- Stable days indicator — only shows when close to completion -->
           <div id="stable-row" style="display:none;align-items:center;gap:.4rem;margin-top:.1rem">
