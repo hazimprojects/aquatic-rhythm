@@ -55,14 +55,20 @@
 
   /* ── PAGE ROUTING ── */
   var pageMap = {
-    '':         'home',
-    '/':        'home',
-    '/ara':     'ara',
-    '/rhyssa':  'rhyssa',
-    '/about':   'about',
-    '/privacy': 'privacy',
-    '/terms':   'terms',
-    '/reading': 'reading'
+    '':          'home',
+    '/':         'home',
+    '/ara':      'ara',
+    '/ara/':     'ara',
+    '/rhyssa':   'rhyssa',
+    '/rhyssa/':  'rhyssa',
+    '/about':    'about',
+    '/about/':   'about',
+    '/privacy':  'privacy',
+    '/privacy/': 'privacy',
+    '/terms':    'terms',
+    '/terms/':   'terms',
+    '/reading':  'reading',
+    '/reading/': 'reading'
   };
 
   var titleMap = {
