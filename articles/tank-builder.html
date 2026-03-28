@@ -132,7 +132,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;background:linear-grad
 #rack-zone::-webkit-scrollbar-thumb{background:rgba(61,214,232,.12);border-radius:2px}
 
 /* Rack */
-#rack{padding:.5rem .55rem .8rem}
+#rack{padding:.5rem .55rem 1.5rem}
 .rack-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem}
 .rack-cat{grid-column:1/-1;font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.18);padding:.42rem .2rem .16rem;margin-top:.2rem}
 .rack-cat:first-child{margin-top:0}
@@ -179,6 +179,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;background:linear-grad
 #status-bar{
   flex-shrink:0;
   height:36px;
+  z-index:50;
   background:rgba(3,10,8,.96);
   border-top:1px solid rgba(139,189,210,.07);
   display:flex;align-items:center;gap:.6rem;
@@ -197,6 +198,21 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;background:linear-grad
   #rhy-panel{flex-direction:row;flex-wrap:wrap;border-left:none;gap:.2rem}
   .rhy-hdr{width:100%;margin-bottom:0}
 }
+
+/* Insight message inside rhythm panel */
+#rhy-insight{
+  font-size:.48rem;
+  font-style:italic;
+  font-family:var(--serif);
+  color:rgba(255,255,255,.28);
+  line-height:1.45;
+  padding:.28rem 0 .1rem;
+  border-top:1px solid rgba(255,255,255,.05);
+  margin-top:.2rem;
+  flex-shrink:0;
+  transition:opacity .3s;
+}
+#rhy-insight.fade{opacity:0}
 </style>
 </head>
 <body>
@@ -274,6 +290,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;background:linear-grad
         <div class="rdy-item" id="r-test"><div class="rdy-dot-sm"></div>Test kit<span class="rdy-tick">&#x2713;</span></div>
       </div>
     </div>
+    <div id="rhy-insight">Add equipment to see how your system develops.</div>
   </div>
 </div>
 
@@ -327,9 +344,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;background:linear-grad
 
 <!-- STATUS BAR -->
 <div id="status-bar">
-  <div class="st-dot" id="status-dot"></div>
-  <span id="status-txt">Add equipment from the rack to begin building your system.</span>
-  <button id="btn-reset">Reset</button>
+  <button id="btn-reset">Reset lab</button>
 </div>
 
 <script>
@@ -767,12 +782,11 @@ function drawPentagon(scores){
 
 /* ═══ INSIGHT ═══ */
 function setStatus(txt,color){
-  var el=document.getElementById('status-txt');
-  var dot=document.getElementById('status-dot');
+  var el=document.getElementById('rhy-insight');
   if(!el)return;
   el.classList.add('fade');
   clearTimeout(insightTimer);
-  insightTimer=setTimeout(function(){el.textContent=txt;if(dot)dot.style.background=color||'rgba(61,214,232,.5)';el.classList.remove('fade');},280);
+  insightTimer=setTimeout(function(){el.textContent=txt;el.classList.remove('fade');},280);
 }
 
 function getSystemInsight(){
