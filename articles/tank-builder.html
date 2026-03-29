@@ -243,6 +243,28 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;background:linear-grad
 .dq-btn-about.ready{opacity:1;pointer-events:all;color:rgba(139,189,210,.7);border-color:rgba(139,189,210,.25)}
 .dq-btn-about.ready:hover{background:rgba(139,189,210,.08);border-color:rgba(139,189,210,.45);color:rgba(139,189,210,.95)}
 )}
+
+.bi-actions{
+  display:flex;flex-direction:column;gap:.5rem;
+  padding:.75rem 1rem 1rem;
+  border-top:1px solid rgba(255,255,255,.07);
+  flex-shrink:0;
+}
+.bi-btn-use{
+  font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;
+  background:rgba(61,214,232,.82);color:#fff;border:none;
+  padding:.7rem 1rem;border-radius:2px;cursor:pointer;
+  font-family:var(--sans);transition:background .2s;text-align:center;
+}
+.bi-btn-use:hover{background:rgba(40,184,208,.95)}
+.bi-btn-back{
+  font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+  background:none;color:rgba(255,255,255,.35);
+  border:1px solid rgba(255,255,255,.12);
+  padding:.55rem 1rem;border-radius:2px;cursor:pointer;
+  font-family:var(--sans);transition:all .2s;text-align:center;
+}
+.bi-btn-back:hover{color:rgba(255,255,255,.65);border-color:rgba(255,255,255,.25)}
 </style>
 </head>
 <body>
@@ -483,9 +505,9 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;background:linear-grad
         <span class="bi-brand" id="bi-brand-name">Brand</span>
         <span class="bi-eq" id="bi-eq-name"></span>
       </div>
-      <button id="bi-close">&times;</button>
     </div>
     <div class="bi-body" id="bi-body"></div>
+    <div class="bi-actions" id="bi-actions"></div>
   </div>
 </div>
 
@@ -1304,12 +1326,12 @@ document.querySelector('.brief-btn').addEventListener('click',function(){
 
 
 
-var _biCurrentEq=null;
+var _biCurrentEq=null,_biCurrentBrand=null;
 
 function showBrandInfo(brandName,eqId){
   var info=BRAND_INFO[brandName]||{summary:'No detailed information available for this brand yet. Check with your local fish shop or supplier for more details.',pros:[],cons:[],best_for:'',tier:'',tier_note:'',avoid_if:''};
   var eq=EQ[eqId];
-  _biCurrentEq=eqId;
+  _biCurrentEq=eqId;_biCurrentBrand=brandName;
   var overlay=document.getElementById('brand-info-overlay');
   var body=document.getElementById('bi-body');
   var bname=document.getElementById('bi-brand-name');
@@ -1329,22 +1351,48 @@ function showBrandInfo(brandName,eqId){
   if(info.tier){var pr=document.createElement('div');pr.className='bi-section';var prl=document.createElement('div');prl.className='bi-section-lbl';prl.textContent='Price tier';var prt=document.createElement('div');prt.className='bi-tags';var prtag=document.createElement('div');prtag.className='bi-tag neutral';prtag.textContent=info.tier;prt.appendChild(prtag);if(info.tier_note){var prnote=document.createElement('div');prnote.className='bi-section-text';prnote.style.cssText='font-size:.72rem;margin-top:.2rem';prnote.textContent=info.tier_note;pr.appendChild(prl);pr.appendChild(prt);pr.appendChild(prnote);}else{pr.appendChild(prl);pr.appendChild(prt);}body.appendChild(pr);}
   if(info.avoid_if){var av=document.createElement('div');av.className='bi-verdict';av.textContent='⚠️ Avoid if: '+info.avoid_if;body.appendChild(av);}
   var disc=document.createElement('div');disc.style.cssText='font-size:.58rem;color:rgba(255,255,255,.18);font-style:italic;font-family:var(--serif);padding:.55rem .85rem .65rem;border-top:1px solid rgba(255,255,255,.06);margin-top:.3rem';disc.textContent='Brands listed are examples only. Prices and availability vary by region and change over time. Always verify with local suppliers before purchasing.';body.appendChild(disc);
+  /* Action buttons */
+  var acts=document.getElementById('bi-actions');
+  if(acts){
+    acts.innerHTML='';
+    var useBtn=document.createElement('button');
+    useBtn.className='bi-btn-use';
+    useBtn.textContent='Use '+brandName.split(' ')[0]+' →';
+    useBtn.onclick=function(){
+      if(_biCurrentEq){
+        selectedBrands[_biCurrentEq]=brandName;
+        updateEqChoice(_biCurrentEq,brandName);
+        closeAllDropdowns();
+      }
+      overlay.classList.remove('open');
+      _biCurrentEq=null;_biCurrentBrand=null;
+    };
+    var backBtn=document.createElement('button');
+    backBtn.className='bi-btn-back';
+    backBtn.textContent='← Back to selection';
+    backBtn.onclick=function(){
+      overlay.classList.remove('open');
+      if(_biCurrentEq){
+        var eq2=_biCurrentEq;
+        _biCurrentEq=null;_biCurrentBrand=null;
+        setTimeout(function(){openDropdown(eq2);},80);
+      }
+    };
+    acts.appendChild(useBtn);
+    acts.appendChild(backBtn);
+  }
   overlay.classList.add('open');
 }
 
-function closeBrandInfo(){
-  var overlay=document.getElementById('brand-info-overlay');
-  overlay.classList.remove('open');
-  /* Reopen the dropdown for that equipment */
-  if(_biCurrentEq){
-    setTimeout(function(){openDropdown(_biCurrentEq);},80);
-    _biCurrentEq=null;
-  }
-}
-
-document.getElementById('bi-close').addEventListener('click',function(){closeBrandInfo();});
+/* Click outside to close info overlay and reopen dropdown */
 document.getElementById('brand-info-overlay').addEventListener('click',function(e){
-  if(e.target===this)closeBrandInfo();
+  if(e.target===this){
+    this.classList.remove('open');
+    if(_biCurrentEq){
+      var eq2=_biCurrentEq;_biCurrentEq=null;_biCurrentBrand=null;
+      setTimeout(function(){openDropdown(eq2);},80);
+    }
+  }
 });
 
 /* ═══ REPORT ═══ */
