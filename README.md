@@ -81,6 +81,15 @@ Current articles:
 
 ---
 
+
+## Security Operations
+
+Baseline deployment dan tuning WAF di depan origin GitHub Pages didokumentasikan di:
+
+- [`docs/waf-github-pages.md`](docs/waf-github-pages.md)
+
+---
+
 ## Project Status
 
 Aquatic Rhythm evolves slowly and deliberately.
