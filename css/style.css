@@ -21,8 +21,8 @@
   --border-light:rgba(22,28,24,.06);
   --shadow:0 10px 36px rgba(22,48,32,.09),0 2px 10px rgba(22,48,32,.04);
   --shadow-inset:inset 0 1px 0 rgba(255,255,255,.92);
-  --serif:'Cormorant Garamond',Georgia,serif;
-  --sans:'Nunito','DM Sans',system-ui,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Lexend',system-ui,sans-serif;
   --ease:cubic-bezier(0.22,1,0.36,1);
   --panel:var(--surface);
   --panel-border:var(--border);
@@ -43,7 +43,7 @@ body{
   color:var(--text);
   overflow-x:hidden;
   line-height:1.82;
-  letter-spacing:.012em;
+  letter-spacing:.004em;
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
 }
@@ -129,9 +129,9 @@ nav{
 .ey{display:block;font-size:.68rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--accent-mid);margin-bottom:1.6rem}
 .ey-t{color:var(--accent)}
 .div{width:100%;height:1px;background:linear-gradient(to right,transparent,var(--border),transparent)}
-.dxl{font-family:var(--serif);font-weight:300;line-height:1.08;font-size:clamp(3.4rem,6.5vw,6.5rem);letter-spacing:-.01em;color:var(--text)}
-.dlg{font-family:var(--serif);font-weight:300;line-height:1.1;font-size:clamp(2.4rem,4.2vw,4.4rem);color:var(--text)}
-.dmd{font-family:var(--serif);font-weight:300;line-height:1.18;font-size:clamp(1.9rem,2.8vw,2.9rem);color:var(--text)}
+.dxl{font-family:var(--serif);font-weight:300;line-height:1.08;font-size:clamp(3.4rem,6.5vw,6.5rem);letter-spacing:-.01em;color:var(--text);font-optical-sizing:auto}
+.dlg{font-family:var(--serif);font-weight:300;line-height:1.1;font-size:clamp(2.4rem,4.2vw,4.4rem);color:var(--text);font-optical-sizing:auto}
+.dmd{font-family:var(--serif);font-weight:300;line-height:1.18;font-size:clamp(1.9rem,2.8vw,2.9rem);color:var(--text);font-optical-sizing:auto}
 .bt{font-size:1.05rem;font-weight:400;color:var(--text-muted);line-height:1.92}
 .bt+.bt{margin-top:1rem}
 .quick-takeaway{
@@ -175,7 +175,7 @@ nav{
 @keyframes sd{0%,100%{transform:scaleY(1) translateY(0);opacity:.5}50%{transform:scaleY(.6) translateY(8px);opacity:1}}
 
 .psec{padding:9rem clamp(1.5rem,5vw,4.5rem);content-visibility:auto;contain-intrinsic-size:0 500px}
-.pst{font-family:var(--serif);font-size:clamp(1.6rem,2.5vw,2.5rem);font-weight:300;line-height:1.38;color:var(--text);max-width:660px}
+.pst{font-family:var(--serif);font-size:clamp(1.6rem,2.5vw,2.5rem);font-weight:300;line-height:1.38;color:var(--text);max-width:660px;font-optical-sizing:auto}
 .pst em{font-style:italic;color:var(--accent)}
 .pcards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:5rem;background:transparent}
 .pc{
@@ -237,7 +237,7 @@ nav{
 .pb:last-child{border-bottom:none}
 .pnl{font-family:var(--serif);font-size:3.5rem;font-weight:300;color:var(--accent-faint);line-height:1}
 .ptag{font-size:.62rem;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--accent-mid);display:block;margin-bottom:.7rem}
-.ptit{font-family:var(--serif);font-size:clamp(1.3rem,1.9vw,1.85rem);font-weight:500;color:var(--text);line-height:1.28}
+.ptit{font-family:var(--serif);font-size:clamp(1.3rem,1.9vw,1.85rem);font-weight:500;color:var(--text);line-height:1.28;font-optical-sizing:auto}
 .eg{margin-top:1.6rem;padding:1.2rem 1.5rem;border-left:3px solid var(--accent-soft);background:var(--accent-soft)}
 .egtag{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.45rem}
 .eg p{font-family:var(--serif);font-style:italic;font-size:.92rem;color:var(--text-muted);line-height:1.75}
@@ -256,7 +256,7 @@ nav{
 
 .rhhero{min-height:100svh;padding-top:68px;display:flex;align-items:center;padding-left:clamp(1.5rem,5vw,4.5rem);padding-right:clamp(1.5rem,5vw,4.5rem)}
 .rhg{display:grid;grid-template-columns:1.1fr 1fr;gap:8rem;align-items:center;padding:7rem 0}
-.rhtit{font-family:var(--serif);font-weight:300;font-size:clamp(3rem,5.2vw,5.4rem);line-height:1.1;color:var(--text);margin:1.4rem 0 1.8rem}
+.rhtit{font-family:var(--serif);font-weight:300;font-size:clamp(3rem,5.2vw,5.4rem);line-height:1.1;color:var(--text);margin:1.4rem 0 1.8rem;font-optical-sizing:auto}
 .rhtit em{font-style:italic;color:var(--accent)}
 .rhd{font-size:.97rem;font-weight:400;color:var(--text-muted);line-height:2;max-width:420px;margin-bottom:2.8rem}
 .orblg{position:relative;width:360px;height:360px;display:flex;align-items:center;justify-content:center;margin:0 auto}
