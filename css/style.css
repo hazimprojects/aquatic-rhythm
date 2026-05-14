@@ -512,9 +512,17 @@ html[data-theme="aqua"] body{
   color:#062018;
 }
 
-/* ── Hide dark ecosystem, keep fish ── */
-html[data-theme="aqua"] #eco{display:none}
+/* ── Hide only dark background, keep all animations ── */
+html[data-theme="aqua"] #eco .wb{display:none}
 html[data-theme="aqua"] #water-level{display:none}
+
+/* ── Re-tint ecosystem elements for bright aqua ── */
+html[data-theme="aqua"] .cl{background:radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.18) 0%,rgba(200,248,240,.09) 40%,transparent 74%)}
+html[data-theme="aqua"] .cl2{background:radial-gradient(ellipse at 42% 0%,rgba(255,255,255,.1) 0%,transparent 62%)}
+html[data-theme="aqua"] .ray{background:linear-gradient(180deg,rgba(255,255,255,.22) 0%,rgba(200,248,240,.1) 52%,transparent 100%);filter:blur(3px)}
+html[data-theme="aqua"] .sl{background:linear-gradient(to right,transparent,rgba(255,255,255,.45),transparent)}
+html[data-theme="aqua"] .mote{background:rgba(6,80,70,.32)}
+html[data-theme="aqua"] .spk{background:rgba(6,60,55,.22)}
 
 /* ── Nav ── */
 html[data-theme="aqua"] nav{
@@ -567,19 +575,22 @@ html[data-theme="aqua"] .dlg,
 html[data-theme="aqua"] .dmd,
 html[data-theme="aqua"] .rhtit,
 html[data-theme="aqua"] .stit,
-html[data-theme="aqua"] .pst{color:#062018}
-html[data-theme="aqua"] .ht .dxl{color:#052018}
-html[data-theme="aqua"] .pst em{color:rgba(6,80,70,.88)}
-html[data-theme="aqua"] .bt{color:rgba(6,28,22,.78)}
-html[data-theme="aqua"] .hk{color:rgba(6,28,22,.82)}
-html[data-theme="aqua"] .api,html[data-theme="aqua"] .rhd{color:rgba(6,28,22,.68)}
-html[data-theme="aqua"] .apq{color:#062018}
-html[data-theme="aqua"] .apq strong{color:rgba(6,80,70,.88)}
-html[data-theme="aqua"] .snt{color:rgba(6,28,22,.62)}
-html[data-theme="aqua"] .snt em{color:rgba(6,80,70,.82)}
-html[data-theme="aqua"] .stit em{color:rgba(6,80,70,.72)}
-html[data-theme="aqua"] .starr{color:rgba(6,28,22,.48)}
-html[data-theme="aqua"] .stco{color:rgba(6,28,22,.52)}
+html[data-theme="aqua"] .pst{color:#062018!important}
+html[data-theme="aqua"] .ht .dxl{color:#052018!important}
+html[data-theme="aqua"] .pst em{color:rgba(6,80,70,.88)!important}
+html[data-theme="aqua"] .bt{color:rgba(6,28,22,.78)!important}
+html[data-theme="aqua"] .hk{color:rgba(6,28,22,.82)!important}
+html[data-theme="aqua"] .api,html[data-theme="aqua"] .rhd{color:rgba(6,28,22,.68)!important}
+html[data-theme="aqua"] .apq{color:#062018!important}
+html[data-theme="aqua"] .apq strong{color:rgba(6,80,70,.88)!important}
+html[data-theme="aqua"] .snt{color:rgba(6,28,22,.62)!important}
+html[data-theme="aqua"] .snt em{color:rgba(6,80,70,.82)!important}
+html[data-theme="aqua"] .stit em{color:rgba(6,80,70,.72)!important}
+html[data-theme="aqua"] .starr{color:rgba(6,28,22,.48)!important}
+html[data-theme="aqua"] .stco{color:rgba(6,28,22,.52)!important}
+/* Catch inline-styled em/strong (e.g. white text from dark-mode remapping) */
+html[data-theme="aqua"] em[style],
+html[data-theme="aqua"] strong[style]{color:rgba(6,28,22,.72)!important}
 
 /* ── Panels / cards ── */
 html[data-theme="aqua"] .pc,
