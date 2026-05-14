@@ -145,15 +145,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:800;height:68px;display:flex;ali
 }
 .quick-takeaway strong{font-weight:500;color:rgba(255,255,255,.82)}
 .btn{display:inline-block;text-decoration:none;font-family:var(--sans);font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;border-radius:10px;transition:all .32s var(--ease)}
-.bf{background:rgba(30,165,185,.88);color:#ffffff;border:1px solid rgba(61,214,232,.55);padding:.9rem 2rem;backdrop-filter:blur(8px);letter-spacing:.01em}
+.bf,.bf:link,.bf:visited{background:rgba(30,165,185,.88);color:#ffffff;border:1px solid rgba(61,214,232,.55);padding:.9rem 2rem;backdrop-filter:blur(8px);letter-spacing:.01em;text-decoration:none}
 .bf:hover{background:rgba(40,184,208,.95);border-color:rgba(61,214,232,.8);transform:translateY(-2px);box-shadow:0 12px 36px rgba(40,184,208,.35)}
-.bg{background:transparent;color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.12);padding:.9rem 2rem}
+.bg,.bg:link,.bg:visited{background:transparent;color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.12);padding:.9rem 2rem;text-decoration:none}
 .bg:hover{border-color:rgba(61,214,232,.28);color:rgba(61,214,232,.78)}
 .bl{background:transparent;color:rgba(61,214,232,.72);border-bottom:1px solid rgba(61,214,232,.32);border-radius:0;padding:0;font-size:.62rem}
 .bl:hover{color:rgba(61,214,232,1);border-bottom-color:rgba(61,214,232,.7)}
 
 /* ── HOME HERO ── */
 .hero{min-height:100svh;display:flex;align-items:center;padding:68px clamp(1.5rem,5vw,4.5rem) 0;position:relative}
+@media(max-width:768px){.hero{align-items:flex-start;padding-top:calc(68px + 5vh)}}
 .hi{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;padding:8rem 0 6rem}
 .ht .ey{opacity:0;animation:ru .9s var(--ease) forwards .3s}
 .ht .dxl{color:rgba(255,255,255,.95);opacity:0;animation:ru .9s var(--ease) forwards .48s}
