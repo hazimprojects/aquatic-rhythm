@@ -793,11 +793,11 @@ canvases[1] = function() {
 
     /* NH3 indicator if murky */
     if (p < .4) {
-      ctx.font='300 10px 'DM Sans',system-ui,sans-serif';
+      ctx.font='300 10px DM Sans,system-ui,sans-serif';
       ctx.fillStyle='rgba(220,160,40,'+((.4-p)*1.5).toFixed(2)+')';
       ctx.fillText('NH₃ rising', W*.68, 22);
     } else if (p > .7) {
-      ctx.font='300 10px 'DM Sans',system-ui,sans-serif';
+      ctx.font='300 10px DM Sans,system-ui,sans-serif';
       ctx.fillStyle='rgba(80,200,120,.6)';
       var t2='Stabilising';
       ctx.fillText(t2,Math.min(W*.72,W-ctx.measureText(t2).width-8),22);
@@ -891,7 +891,7 @@ canvases[2] = function() {
       var fillH=(p.val/p.max)*barH;
       ctx.fillStyle='rgba(235,240,236,.06)'; ctx.fillRect(bx,barY,barW,barH);
       if(fillH>0){ctx.fillStyle=p.col+'0.6)'; ctx.fillRect(bx,barY+barH-fillH,barW,fillH);}
-      ctx.font='300 10px 'DM Sans',system-ui,sans-serif'; ctx.textAlign='center';
+      ctx.font='300 10px DM Sans,system-ui,sans-serif'; ctx.textAlign='center';
       ctx.fillStyle=p.col+'0.8)'; ctx.fillText(p.label,bx+barW/2,barY+barH+12);
       ctx.fillStyle='rgba(235,240,236,.62)';
       var valY=barY+barH-fillH-4; if(valY<barY+10)valY=barY+10;
@@ -990,7 +990,7 @@ canvases[3] = function() {
     ctx.beginPath(); ctx.moveTo(W*.5,H*.12); ctx.lineTo(W*.5,H-.14); ctx.stroke();
 
     /* Labels */
-    ctx.font='300 11px 'DM Sans',system-ui,sans-serif';
+    ctx.font='300 11px DM Sans,system-ui,sans-serif';
     ctx.fillStyle='rgba(220,140,60,'+(0.3+animP.A*.5).toFixed(2)+')'; ctx.fillText('Nitrosomonas',8,16);
     ctx.fillStyle='rgba(80,200,100,'+(0.3+animP.B*.5).toFixed(2)+')'; ctx.fillText('Nitrobacter / Nitrospira',W*.52+4,16);
     ctx.fillStyle='rgba(235,240,236,.42)';
@@ -1002,7 +1002,7 @@ canvases[3] = function() {
       var arrowX = W*.5, arrowY = H*.5;
       var arrowAlpha = Math.min(animP.A, animP.B) * .8;
       /* Nitrite label floating between colonies */
-      ctx.font='italic 300 10px 'Cormorant Garamond',serif';
+      ctx.font='italic 300 10px Cormorant Garamond,serif';
       ctx.fillStyle='rgba(200,160,80,'+arrowAlpha.toFixed(2)+')';
       ctx.textAlign='center';
       ctx.fillText('NO₂', arrowX, arrowY - 8);
@@ -1019,7 +1019,7 @@ canvases[3] = function() {
 
     /* Nitrate output label on right side */
     if(animP.B > .4) {
-      ctx.font='300 10px 'DM Sans',system-ui,sans-serif';
+      ctx.font='300 10px DM Sans,system-ui,sans-serif';
       ctx.fillStyle='rgba(80,200,120,'+(animP.B*.6).toFixed(2)+')';
       ctx.textAlign='right';
       ctx.fillText('NO₃ →', W-8, H*.5+4);
@@ -1154,7 +1154,7 @@ canvases[6] = function() {
     /* Axes */
     ctx.strokeStyle='rgba(255,255,255,.1)'; ctx.lineWidth=1; ctx.setLineDash([]);
     ctx.beginPath(); ctx.moveTo(padL,padT); ctx.lineTo(padL,padT+gH); ctx.lineTo(padL+gW,padT+gH); ctx.stroke();
-    ctx.font='300 10px 'DM Sans',system-ui,sans-serif';
+    ctx.font='300 10px DM Sans,system-ui,sans-serif';
     ctx.fillStyle='rgba(235,240,236,.46)'; ctx.fillText('NH₃',2,padT+9);
     ctx.fillStyle='rgba(235,240,236,.38)'; ctx.fillText('Days →',padL+gW-26,padT+gH+14);
 
@@ -1163,7 +1163,7 @@ canvases[6] = function() {
     ctx.strokeStyle='rgba(220,80,60,.2)'; ctx.setLineDash([3,4]);
     ctx.beginPath(); ctx.moveTo(padL,dy); ctx.lineTo(padL+gW,dy); ctx.stroke();
     ctx.setLineDash([]);
-    ctx.fillStyle='rgba(220,80,60,.4)'; ctx.font='300 9px 'DM Sans',system-ui,sans-serif';
+    ctx.fillStyle='rgba(220,80,60,.4)'; ctx.font='300 9px DM Sans,system-ui,sans-serif';
     ctx.fillText('stress zone',padL+gW*.55,dy-3);
 
     if(!chosen){
@@ -1178,7 +1178,7 @@ canvases[6] = function() {
       }
       ctx.stroke();
       /* Idle text */
-      ctx.font='italic 300 12px 'Cormorant Garamond',serif';
+      ctx.font='italic 300 12px Cormorant Garamond,serif';
       ctx.fillStyle='rgba(235,240,236,.46)';
       ctx.fillText('choose a response above',padL+gW*.12,padT+gH*.65);
     } else {
@@ -1274,7 +1274,7 @@ canvases[7] = function() {
     /* Axes */
     ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=1;ctx.setLineDash([]);
     ctx.beginPath();ctx.moveTo(pL,pT);ctx.lineTo(pL,pT+gH);ctx.lineTo(pL+gW,pT+gH);ctx.stroke();
-    ctx.font='300 9px 'DM Sans',system-ui,sans-serif';
+    ctx.font='300 9px DM Sans,system-ui,sans-serif';
     ctx.fillStyle='rgba(235,240,236,.38)';
     ctx.fillText('ppm',2,pT+10);
     ctx.fillText('Days →',pL+gW-24,pT+gH+13);
@@ -1302,7 +1302,7 @@ canvases[7] = function() {
         var cv=Math.min(ln.fn(day),maxVal);
         var cy=pT+gH-(cv/maxVal)*gH;
         ctx.fillStyle=ln.col+'0.85)';
-        ctx.font='300 10px 'DM Sans',system-ui,sans-serif';
+        ctx.font='300 10px DM Sans,system-ui,sans-serif';
         ctx.textAlign='left';
         var lx=Math.min(cx+3, pL+gW-ctx.measureText(ln.label).width-4);
         ctx.fillText(ln.label, lx, Math.max(cy-4, pT+12));
@@ -1319,7 +1319,7 @@ canvases[7] = function() {
     ctx.setLineDash([]);
 
     /* Phase annotation */
-    ctx.font='italic 300 10px 'Cormorant Garamond',serif';
+    ctx.font='italic 300 10px Cormorant Garamond,serif';
     var phase='';var phaseCol='';
     if(day<6){phase='Seeding';phaseCol='rgba(235,240,236,.38)';}
     else if(day<14){phase='Nitrosomonas active';phaseCol='rgba(220,160,40,.6)';}

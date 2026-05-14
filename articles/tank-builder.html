@@ -1299,12 +1299,12 @@ function drawTank(){
   /* Tank frame on top */
   ctx.strokeStyle='rgba(61,214,232,.32)';ctx.lineWidth=1.5;rr(tx,ty,tw,th);ctx.stroke();
   var slbl=tankSize==='large'?'150L+':tankSize==='medium'?'60\u201360L':'20\u201340L';
-  ctx.font='300 9px 'DM Sans',sans-serif';ctx.fillStyle='rgba(255,255,255,.12)';ctx.textAlign='right';
+  ctx.font='300 9px DM Sans,sans-serif';ctx.fillStyle='rgba(255,255,255,.12)';ctx.textAlign='right';
   ctx.fillText(slbl,tx+tw-5,ty+th-5);ctx.textAlign='left';
   /* Filter hint when no filter selected */
   if(!f){
     ctx.save();
-    ctx.font='300 '+(W>400?'10':'8')+'px DM Sans',sans-serif';
+    ctx.font='300 '+(W>400?'10':'8')+'px DM Sans,sans-serif';
     ctx.fillStyle='rgba(235,240,236,.28)';ctx.textAlign='center';
     ctx.fillText('Add a filter to establish your biological rhythm',W/2,ty+th/2);
     ctx.restore();
@@ -1363,7 +1363,7 @@ function drawTank(){
       });ctx.restore();
     }
     if(stockKeys.length===0&&plantKeys.length===0&&hardKeys.length===0){
-      ctx.save();ctx.font='300 '+(W>400?'10':'8')+'px DM Sans',sans-serif';
+      ctx.save();ctx.font='300 '+(W>400?'10':'8')+'px DM Sans,sans-serif';
       ctx.fillStyle='rgba(255,255,255,.14)';ctx.textAlign='center';
       ctx.fillText('Select species below to populate your tank',W/2,ty+th*.5);ctx.restore();
     }
@@ -1372,7 +1372,7 @@ function drawTank(){
 
 function drawLabel(ctx,x,y,txt,col){
   ctx.save();
-  ctx.font='600 8px 'DM Sans',sans-serif';
+  ctx.font='600 8px DM Sans,sans-serif';
   var w=ctx.measureText(txt).width;
   ctx.fillStyle='rgba(2,10,18,.7)';ctx.fillRect(x-w/2-2,y-5,w+4,10);
   ctx.fillStyle=col||'rgba(235,240,236,.38)';ctx.textAlign='center';ctx.textBaseline='middle';
@@ -1423,7 +1423,7 @@ function drawPentagon(s){
   rctx.strokeStyle='rgba(61,214,232,.38)';rctx.lineWidth=1.2;rctx.stroke();
   /* Labels AT rim edge, with dark background pill */
   var fs=Math.max(7,Math.min(9,r/5));
-  rctx.font='600 '+fs+'px DM Sans',system-ui,sans-serif';
+  rctx.font='600 '+fs+'px DM Sans,system-ui,sans-serif';
   angs.forEach(function(a,i){
     var v=vals[i]/100;
     var c=clrs[dims[i]];

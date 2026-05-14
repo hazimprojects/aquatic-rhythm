@@ -582,7 +582,7 @@ canvases[2]=function(){
       ctx.fillRect(bx,cur,bW,bMaxH);
       ctx.fillStyle=s.color+(0.45+b.val*.45).toFixed(2)+')';
       ctx.fillRect(bx,cur+bMaxH-fillH,bW,fillH);
-      ctx.font='300 9px 'DM Sans',system-ui,sans-serif';
+      ctx.font='300 9px DM Sans,system-ui,sans-serif';
       ctx.fillStyle='rgba(235,240,236,.38)';
       ctx.textAlign='center';
       ctx.fillText(b.label,bx+bW/2,cur+bMaxH+12);
@@ -596,7 +596,7 @@ canvases[2]=function(){
     cur+=16;
 
     /* Signals header */
-    ctx.font='300 10px 'DM Sans',system-ui,sans-serif';
+    ctx.font='300 10px DM Sans,system-ui,sans-serif';
     ctx.fillStyle='rgba(235,240,236,.40)';
     ctx.fillText('What you might notice:',pad,cur);
     cur+=18;
@@ -618,7 +618,7 @@ canvases[2]=function(){
     cur+=14;
 
     /* Note */
-    ctx.font='italic 300 12px 'Cormorant Garamond',serif';
+    ctx.font='italic 300 12px Cormorant Garamond,serif';
     ctx.fillStyle='rgba(235,240,236,.48)';
     var words=s.note.split(' ');
     var line='';var maxW=W-pad*2;var maxY=H-8;
@@ -701,7 +701,7 @@ canvases[3]=function(){
     ctx.strokeRect(mediaX,mediaY,mediaW,mediaH);
 
     /* Label */
-    ctx.font='300 10px 'DM Sans',system-ui,sans-serif';
+    ctx.font='300 10px DM Sans,system-ui,sans-serif';
     ctx.fillStyle='rgba(235,240,236,.38)';ctx.textAlign='center';
     ctx.fillText('Filter media',mediaX+mediaW/2,mediaY-6);
 
@@ -729,7 +729,7 @@ canvases[3]=function(){
       ctx.fillStyle=s.color+'0.7)';
       ctx.fillRect(barX,barY+barH-fillH,barW,fillH);
     }
-    ctx.font='300 9px 'DM Sans',system-ui,sans-serif';
+    ctx.font='300 9px DM Sans,system-ui,sans-serif';
     ctx.fillStyle=s.color+'0.8)';ctx.textAlign='center';
     ctx.fillText(Math.round(colony*100)+'%',barX+barW/2,barY+barH+14);
     ctx.fillStyle='rgba(235,240,236,.34)';
@@ -739,7 +739,7 @@ canvases[3]=function(){
     /* Description */
     var words=s.desc.split(' ');
     var line='';var y=mediaY+mediaH+28;var maxW=W-24;var maxY=H-4;
-    ctx.font='italic 300 12px 'Cormorant Garamond',serif';
+    ctx.font='italic 300 12px Cormorant Garamond,serif';
     ctx.fillStyle='rgba(235,240,236,.58)';
     words.forEach(function(w){
       if(y>maxY)return;
@@ -799,7 +799,7 @@ canvases[4]=function(){
       ctx.lineWidth=1;ctx.setLineDash(v===40?[3,4]:[]);
       ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(pL+gW,y);ctx.stroke();
       ctx.setLineDash([]);
-      ctx.font='300 10px 'DM Sans',system-ui,sans-serif';
+      ctx.font='300 10px DM Sans,system-ui,sans-serif';
       ctx.fillStyle=v===40?'rgba(220,80,60,.7)':'rgba(235,240,236,.54)';
       ctx.fillText(v,2,y+3);
     });
@@ -810,7 +810,7 @@ canvases[4]=function(){
     /* Axes */
     ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=1;ctx.setLineDash([]);
     ctx.beginPath();ctx.moveTo(pL,pT);ctx.lineTo(pL,pT+gH);ctx.lineTo(pL+gW,pT+gH);ctx.stroke();
-    ctx.font='300 10px 'DM Sans',system-ui,sans-serif';
+    ctx.font='300 10px DM Sans,system-ui,sans-serif';
     ctx.fillStyle='rgba(235,240,236,.54)';
     ctx.fillText('NO₃ ppm',2,pT+8);
     [1,4,8,12].forEach(function(w){ctx.fillText('W'+w,pL+(w/12)*gW-5,pT+gH+12);});
@@ -839,7 +839,7 @@ canvases[4]=function(){
         var endY=pT+gH-(Math.min(endVal,maxV)/maxV)*gH;
         endY=Math.max(pT+10, Math.min(pT+gH-10, endY));
         ctx.fillStyle=m.col+'0.85)';
-        ctx.font='300 10px 'DM Sans',system-ui,sans-serif';
+        ctx.font='300 10px DM Sans,system-ui,sans-serif';
         ctx.textAlign='right';
         ctx.fillText(Math.round(endVal)+' ppm',W-4,endY);
         ctx.textAlign='left';
@@ -850,7 +850,7 @@ canvases[4]=function(){
     var capText=wcMode==='wc'?'Weekly 15-25% changes keep nitrate stable.':
                 wcMode==='none'?'Without changes, nitrate rises into the stress range.':
                 'Plants + regular changes — the most effective combination.';
-    ctx.font='italic 300 12px 'Cormorant Garamond',serif';
+    ctx.font='italic 300 12px Cormorant Garamond,serif';
     ctx.fillStyle='rgba(235,240,236,.54)';
     ctx.textAlign='center';
     ctx.fillText(capText,W/2,H-8);
@@ -936,7 +936,7 @@ canvases[5]=function(){
     ctx.fillStyle='rgba(50,35,15,.6)';ctx.fillRect(12,tankTop+tankH,W-24,6);
 
     if(selected===0){ /* Surface breathing — fish at surface */
-      ctx.font='300 9px 'DM Sans',system-ui,sans-serif';
+      ctx.font='300 9px DM Sans,system-ui,sans-serif';
       ctx.fillStyle='rgba(61,214,232,.48)';ctx.fillText('surface',14,tankTop+8);
       drawFish(W*.35,tankTop+10,false,0.85,true,true,false);
       drawFish(W*.62,tankTop+12,true,0.75,true,true,false);
@@ -965,7 +965,7 @@ canvases[5]=function(){
       drawFish(W*.35,tankTop+tankH*.5,false,0.45,true,false,false);
       drawFish(W*.62,tankTop+tankH*.38,true,0.5,true,false,false);
       /* Colour comparison hint */
-      ctx.font='italic 300 9px 'Cormorant Garamond',serif';
+      ctx.font='italic 300 9px Cormorant Garamond,serif';
       ctx.fillStyle='rgba(235,240,236,.34)';
       ctx.fillText('colour faded',W*.55,tankTop+tankH*.62);
     } else { /* Near heater */
@@ -981,14 +981,14 @@ canvases[5]=function(){
 
     /* s already declared above */
     /* Icon + urgency badge — same row, icon left, badge right */
-    ctx.font='20px 'DM Sans',system-ui,sans-serif';
+    ctx.font='20px DM Sans,system-ui,sans-serif';
     ctx.textAlign='left';
     ctx.fillText(s.icon,12,H*.49);
 
     /* Urgency badge — pill style, safely anchored to right */
     var uc=urgencyColor[s.urgency];
     var uLabel=urgencyLabel[s.urgency];
-    ctx.font='400 10px 'DM Sans',system-ui,sans-serif';
+    ctx.font='400 10px DM Sans,system-ui,sans-serif';
     var uW=ctx.measureText(uLabel).width;
     var uX=W-uW-14;
     /* Pill background */
@@ -1003,7 +1003,7 @@ canvases[5]=function(){
     ctx.textAlign='left';
 
     /* Meaning — word wrapped */
-    ctx.font='italic 300 13px 'Cormorant Garamond',serif';
+    ctx.font='italic 300 13px Cormorant Garamond,serif';
     ctx.fillStyle='rgba(255,255,255,.68)';
     var words=s.meaning.split(' ');
     var line='';var y=H*.54;var maxW=W-22;var maxY=H-26;
@@ -1021,7 +1021,7 @@ canvases[5]=function(){
     ctx.beginPath();ctx.moveTo(12,H-26);ctx.lineTo(W-12,H-26);ctx.stroke();
 
     /* Footer note */
-    ctx.font='300 11px 'DM Sans',system-ui,sans-serif';
+    ctx.font='300 11px DM Sans,system-ui,sans-serif';
     ctx.fillStyle='rgba(235,240,236,.62)';
     var footerTxt='Signal '+(selected+1)+' of '+signals.length+' · '+s.label;
     if(ctx.measureText(footerTxt).width>W-24)footerTxt='Signal '+(selected+1)+' / '+signals.length;
