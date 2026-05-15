@@ -456,6 +456,13 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:flex;align-items:center;j
 .rd-coming{padding:1.6rem 2rem;border:1px dashed rgba(255,255,255,.07);background:rgba(6,16,13,.3)}
 .rd-coming p{font-family:var(--serif);font-style:italic;font-size:.92rem;color:rgba(255,255,255,.22)}
 
+/* ── ARA IN-PAGE NAVIGATION ── */
+.ara-ipnav{position:sticky;top:68px;z-index:90;background:rgba(3,11,9,.92);border-bottom:1px solid rgba(139,189,210,.08);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.ara-ipnav-inner{display:flex;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:0 clamp(1.5rem,5vw,4.5rem)}
+.ara-ipnav-inner::-webkit-scrollbar{display:none}
+.ara-iplink{flex-shrink:0;font-size:.53rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.30);text-decoration:none;padding:.78rem 1.1rem .78rem 0;margin-right:.6rem;border-bottom:1px solid transparent;transition:color .25s,border-color .25s;white-space:nowrap}
+.ara-iplink:hover{color:rgba(124,168,156,.85);border-bottom-color:rgba(124,168,156,.28)}
+
 .seo-links{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .seo-links a{color:inherit}
 

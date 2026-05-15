@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Caring Without Guilt — Aquatic Rhythm</title>
+<meta name="description" content="Why guilt makes tanks worse — and what ARA says about your actual relationship with the system you tend. When the keeper's mind is part of the ecosystem.">
+<link rel="canonical" href="https://aquaticrhythm.com/articles/caring-without-guilt">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon.png">
+<meta name="theme-color" content="#030b09">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://aquaticrhythm.com/articles/caring-without-guilt">
+<meta property="og:title" content="Caring Without Guilt — Aquatic Rhythm">
+<meta property="og:description" content="Why guilt makes tanks worse — and what ARA says about your actual relationship with the system you tend.">
+<meta property="og:site_name" content="Aquatic Rhythm">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Caring Without Guilt — When the keeper's mind is part of the ecosystem","description":"Why guilt makes tanks worse — and what ARA says about your actual relationship with the system you tend.","url":"https://aquaticrhythm.com/articles/caring-without-guilt","author":{"@type":"Organization","name":"Aquatic Rhythm"},"publisher":{"@type":"Organization","name":"Aquatic Rhythm","url":"https://aquaticrhythm.com"}}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8MDN065WNW"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-8MDN065WNW');</script>
+<script>
+(function(){
+  try{
+    localStorage.setItem('ar_last_location', JSON.stringify({
+      href: window.location.pathname + window.location.hash,
+      title: document.title,
+      type: 'article'
+    }));
+  }catch(e){}
+  document.addEventListener('click', function(ev){
+    var el = ev.target.closest('[data-analytics-event]');
+    if(!el || typeof gtag==='undefined') return;
+    gtag('event', el.getAttribute('data-analytics-event'), {
+      pathway: el.getAttribute('data-pathway') || '',
+      cta: el.getAttribute('data-cta') || '',
+      destination: el.getAttribute('href') || ''
+    });
+  });
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet"></noscript>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:17px;scroll-behavior:smooth}
+:root{--abyss:#030b09;--serif:'Cormorant Garamond',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;--accent:#3DD6E8;--ease:cubic-bezier(0.19,1,0.22,1)}
+body{font-family:var(--sans);background:var(--abyss);color:rgba(235,240,236,.94);overflow-x:hidden;line-height:1.72}
+body::before{content:'';position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg,#052535 0%,#073040 18%,#062a38 38%,#041e28 58%,#030f18 78%,#020810 100%)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.5rem,5vw,4.5rem);background:linear-gradient(to bottom,rgba(3,18,30,.88),transparent);backdrop-filter:blur(6px)}
+.nav-logo{display:flex;align-items:center;text-decoration:none;transition:opacity .3s}
+.nav-logo:hover{opacity:.75}
+.art-nlinks{display:flex;gap:2.4rem;list-style:none}
+.art-nlinks a{font-size:.63rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:rgba(235,240,236,.50);text-decoration:none;transition:color .3s;position:relative}
+.art-nlinks a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:rgba(61,214,232,.78);transition:width .35s ease}
+.art-nlinks a:hover{color:rgba(255,255,255,.8)}
+.art-nlinks a:hover::after{width:100%}
+.art-nlinks a[href="/reading"]{color:rgba(61,214,232,.66)}
+.art-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:34px;height:34px;background:none;border:none;padding:5px;cursor:pointer}
+.art-burger span{display:block;height:1px;background:rgba(235,240,236,.46);transition:transform .36s ease,width .3s;transform-origin:center}
+.art-burger span:nth-child(1){width:18px}
+.art-burger span:nth-child(2){width:12px}
+.art-burger.open span:nth-child(1){transform:translateY(6px) rotate(45deg);width:18px}
+.art-burger.open span:nth-child(2){transform:translateY(-6px) rotate(-45deg);width:18px}
+.art-nmob{position:fixed;top:64px;left:0;right:0;z-index:99;background:rgba(6,16,13,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(139,189,210,.08);padding:0 clamp(1.5rem,5vw,4.5rem);max-height:0;overflow:hidden;pointer-events:none;transition:max-height .48s ease,padding-top .35s,padding-bottom .35s}
+.art-nmob.open{max-height:320px;padding-top:1.6rem;padding-bottom:2rem;pointer-events:all}
+.art-nmob ul{list-style:none}
+.art-nmob li{border-bottom:1px solid rgba(235,240,236,.06)}
+.art-nmob li:last-child{border-bottom:none}
+.art-nmob a{display:block;padding:.9rem 0;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(235,240,236,.38);text-decoration:none;transition:color .25s,padding-left .3s}
+.art-nmob a:hover{color:rgba(139,189,210,.85);padding-left:.5rem}
+@media(max-width:960px){.art-nlinks{display:none}.art-burger{display:flex}}
+
+/* BACK BAR */
+.art-back-bar{position:sticky;top:64px;z-index:80;display:flex;align-items:center;justify-content:space-between;padding:.5rem clamp(1.5rem,5vw,3rem);background:rgba(3,11,9,.88);border-bottom:1px solid rgba(139,189,210,.08);backdrop-filter:blur(8px)}
+.art-back-link{display:flex;align-items:center;gap:.45rem;text-decoration:none;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(61,214,232,.66);transition:color .25s}
+.art-back-link:hover{color:rgba(61,214,232,.9)}
+.art-back-meta{font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.2)}
+@media(max-width:600px){.art-back-meta{display:none}}
+
+/* PROGRESS BAR */
+#cwg-progress{height:2px;background:rgba(235,240,236,.06);position:sticky;top:calc(64px + 41px);z-index:79}
+#cwg-prog-fill{height:100%;width:0%;background:rgba(61,214,232,.54);transition:width .7s var(--ease)}
+
+main{min-height:100vh;padding-top:64px}
+
+/* MODULE SYSTEM */
+.module-wrap{max-width:680px;margin:0 auto;padding:7rem clamp(1.5rem,5vw,3rem) 6rem;display:none}
+.module-wrap.active{display:block}
+.module{display:none;opacity:0;transform:translateY(18px);transition:opacity .55s var(--ease),transform .55s var(--ease);min-height:60vh;padding-bottom:3rem}
+.module.active{display:block}
+.module.visible{opacity:1;transform:translateY(0)}
+
+.mod-eyebrow{display:flex;align-items:center;gap:.8rem;margin-bottom:1.4rem}
+.mod-num{font-size:.58rem;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:rgba(61,214,232,.48)}
+.mod-tag{font-size:.58rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:rgba(235,240,236,.30)}
+.mod-title{font-family:var(--serif);font-weight:300;font-size:clamp(1.9rem,4.5vw,3rem);color:rgba(235,240,236,.94);line-height:1.1;margin-bottom:1.4rem}
+.mod-title em{font-style:italic;color:rgba(61,214,232,.78)}
+.mod-body p{font-size:1rem;font-weight:300;color:rgba(255,255,255,.68);line-height:1.95;margin-bottom:1.2rem}
+.mod-body p:last-child{margin-bottom:0}
+.mod-body strong{font-weight:400;color:rgba(235,240,236,.88)}
+.mod-body em{font-style:italic;color:rgba(235,240,236,.56)}
+
+/* PULL QUOTE */
+.pq{margin:2.4rem 0;padding:1.6rem 2rem;border-left:2px solid rgba(61,214,232,.44);background:rgba(58,110,140,.07)}
+.pq p{font-family:var(--serif);font-style:italic;font-size:clamp(1rem,1.7vw,1.15rem);color:rgba(235,240,236,.74);line-height:1.85;margin:0}
+
+/* HIGHLIGHT NOTE */
+.hn{margin:2rem 0;padding:1.4rem 1.8rem;border:1px solid rgba(139,189,210,.14);background:rgba(255,255,255,.04);position:relative}
+.hn-label{position:absolute;top:-.5rem;left:1rem;background:rgba(3,11,9,.95);padding:0 .45rem;font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(139,189,210,.5)}
+.hn p{font-size:.92rem;font-weight:300;color:rgba(235,240,236,.65);line-height:1.85;margin-bottom:.6rem}
+.hn p:last-child{margin-bottom:0}
+
+/* RHYTHM GRID */
+.rhythm-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(139,189,210,.06);margin:2.4rem 0}
+.rhythm-cell{padding:1.6rem 1.8rem;background:rgba(12,26,20,.82)}
+.rhythm-cell h4{font-family:var(--serif);font-size:.97rem;font-weight:400;color:rgba(255,255,255,.88);margin-bottom:.45rem}
+.rhythm-cell p{font-size:.84rem;font-weight:300;color:rgba(255,255,255,.50);line-height:1.8;margin:0}
+@media(max-width:540px){.rhythm-grid{grid-template-columns:1fr}}
+
+/* NEXT BUTTON */
+.mod-next{margin-top:2.8rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.btn-next{font-size:.65rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;background:rgba(61,214,232,.92);color:#fff;border:1px solid rgba(61,214,232,.54);padding:.75rem 1.8rem;border-radius:2px;cursor:pointer;transition:background .25s,transform .2s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-next:hover{background:rgba(110,165,155,.95);transform:translateY(-1px)}
+.btn-next span{opacity:.6;font-size:.8rem}
+.btn-prev{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(235,240,236,.34);background:none;border:none;cursor:pointer;transition:color .25s;padding:0}
+.btn-prev:hover{color:rgba(235,240,236,.62)}
+.btn-ar{display:inline-block;text-decoration:none;font-size:.62rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:rgba(235,240,236,.42);border:1px solid rgba(255,255,255,.1);padding:.8rem 2rem;border-radius:2px;transition:color .25s,border-color .25s;margin:.3rem}
+.btn-ar:hover{color:rgba(61,214,232,.8);border-color:rgba(61,214,232,.3)}
+
+/* ARTICLE INTRO */
+.art-intro{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:8rem clamp(1.5rem,5vw,3rem) 5rem;position:relative;transition:opacity .4s ease}
+.art-intro.hidden{display:none}
+.art-intro::after{content:'';position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(to bottom,transparent,var(--abyss));pointer-events:none}
+.art-intro-inner{max-width:640px;margin:0 auto}
+.art-eyebrow{display:block;font-size:.6rem;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:rgba(157,191,154,.75);margin-bottom:1.6rem}
+.art-main-title{font-family:var(--serif);font-weight:300;font-size:clamp(2.2rem,5.5vw,3.8rem);color:rgba(235,240,236,.94);line-height:1.08;margin-bottom:2.2rem}
+.art-main-title em{font-style:italic;color:rgba(61,214,232,.78)}
+.art-intro-text{font-size:1rem;font-weight:300;color:rgba(235,240,236,.70);line-height:1.95;margin-bottom:1rem}
+.art-intro-subtitle{font-family:var(--serif);font-style:italic;font-size:clamp(1rem,1.6vw,1.18rem);font-weight:300;color:rgba(235,240,236,.56);line-height:1.85;margin-bottom:1.4rem}
+.art-intro-meta{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-top:2rem;margin-bottom:2rem;font-size:.6rem;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:rgba(235,240,236,.34)}
+.meta-dot{color:rgba(255,255,255,.12)}
+.art-begin-btn{font-size:.65rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;background:rgba(61,214,232,.92);color:#fff;border:1px solid rgba(61,214,232,.54);padding:.8rem 2rem;border-radius:2px;cursor:pointer;transition:background .25s,transform .2s}
+.art-begin-btn:hover{background:rgba(110,165,155,.95);transform:translateY(-1px)}
+
+/* ART FOOTER */
+.art-footer{margin-top:4rem;padding-top:1.6rem;border-top:1px solid rgba(235,240,236,.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.art-footer a{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(235,240,236,.30);text-decoration:none;transition:color .3s}
+.art-footer a:hover{color:rgba(61,214,232,.70)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo" aria-label="Aquatic Rhythm home">
+    <svg width="130" height="24" viewBox="0 0 175 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="13" cy="15" r="11.5" stroke="rgba(61,214,232,0.30)" stroke-width="1.0" fill="none"/><line x1="16.8" y1="24.5" x2="16.8" y2="9" stroke="rgba(100,200,82,0.9)" stroke-width="1.6" stroke-linecap="round"/><line x1="19.8" y1="23.0" x2="19.8" y2="17" stroke="rgba(100,200,82,0.7)" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="12" cy="15" rx="4.0" ry="2.3" fill="rgba(40,120,150,0.88)"/><path d="M8.2 15 L6 12.5 L6 17.5 Z" fill="rgba(40,120,150,0.80)"/><path d="M2 15 C5 8.5 9 8.5 12 15 C15 21.5 19 21.5 22 15" stroke="rgba(61,214,232,0.96)" stroke-width="1.1" fill="none" stroke-linecap="round"/><circle cx="14.8" cy="14.2" r=".9" fill="rgba(255,255,255,0.96)"/><text x="32" y="13" font-family="DM Sans,system-ui,sans-serif" font-size="6" font-weight="300" fill="rgba(255,255,255,.42)" letter-spacing="2.5">AQUATIC</text><text x="32" y="27" font-family="Cormorant Garamond,Georgia,serif" font-size="17" font-weight="300" font-style="italic" fill="rgba(255,255,255,.88)">Rhythm</text></svg>
+  </a>
+  <ul class="art-nlinks" aria-label="Main navigation">
+    <li><a href="/">Home</a></li>
+    <li><a href="/reading">Reading</a></li>
+    <li><a href="/ara">ARA</a></li>
+    <li><a href="/rhyssa">Rhyssa</a></li>
+  </ul>
+  <button class="art-burger" id="cwg-burger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span>
+  </button>
+</nav>
+<div class="art-nmob" id="cwg-nmob" aria-hidden="true">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/reading">Reading</a></li>
+    <li><a href="/ara">ARA</a></li>
+    <li><a href="/rhyssa">Rhyssa</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+</div>
+
+<div class="art-back-bar">
+  <a href="/reading" class="art-back-link">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 2L4 7l5 5" stroke="rgba(61,214,232,.8)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Reading
+  </a>
+  <span class="art-back-meta">Keeper &amp; Rhythm · 5 modules</span>
+</div>
+
+<div id="cwg-progress"><div id="cwg-prog-fill"></div></div>
+
+<main>
+
+<!-- ══════════ INTRO ══════════ -->
+<div class="art-intro" id="cwg-intro">
+  <div class="art-intro-inner">
+    <span class="art-eyebrow">Keeper &amp; Rhythm</span>
+    <h1 class="art-main-title">Caring Without Guilt<br><em>When the keeper's mind<br>is part of the ecosystem.</em></h1>
+    <p class="art-intro-subtitle">Why guilt makes tanks worse — and what ARA says about your actual relationship with the system you tend.</p>
+    <p class="art-intro-text">When something goes wrong in the tank, the instinct is often self-blame. But guilt is not just uncomfortable — it is ecologically harmful. This is not a soft observation. It is a structural one.</p>
+    <p class="art-intro-text">This piece draws on the ARA framework to explain why, and what a more honest relationship with care actually looks like.</p>
+    <div class="art-intro-meta">
+      <span>All levels</span>
+      <span class="meta-dot">·</span>
+      <span>5 modules</span>
+      <span class="meta-dot">·</span>
+      <span>~9 min</span>
+      <span class="meta-dot">·</span>
+      <span>Reflective reading</span>
+    </div>
+    <button class="art-begin-btn" id="cwg-begin">Begin reading <span style="opacity:.6;margin-left:.3rem">→</span></button>
+  </div>
+</div>
+
+<!-- ══════════ MODULES ══════════ -->
+<div class="module-wrap" id="cwg-wrap">
+
+  <!-- MODULE 1 -->
+  <div class="module" id="cwg-m1">
+    <div class="mod-eyebrow">
+      <span class="mod-num">01 / 05</span>
+      <span class="mod-tag">The guilt trap</span>
+    </div>
+    <h2 class="mod-title">When something goes wrong,<br><em>the first casualty is your reasoning.</em></h2>
+    <div class="mod-body">
+      <p>Cloudy water. A fish that stops eating. Algae that keeps returning no matter what you do. When these things happen, the first thought for many keepers is some version of the same thing: <em>"I should have done something sooner."</em></p>
+      <p>That feeling is understandable. But it is worth examining carefully — because guilt does not just feel bad. It changes how you act. And in a closed aquatic system, anxious action almost always makes things worse before it makes them better.</p>
+
+      <div class="pq">
+        <p>"Problems in closed systems do not begin with moral failures. They begin with rhythm misalignments — gradual, structural, often invisible until they are not."</p>
+      </div>
+
+      <p>When guilt leads, the result is usually one of two things: over-intervention (emergency water changes, rapid dosing, adding and removing things quickly) or withdrawal (the shame of feeling like a bad keeper making it hard to even look at the tank). Neither of these is what the ecosystem actually needs.</p>
+      <p>ARA reframes the moment of failure entirely. A problem in a closed system is not a verdict on you as a person. It is information about a rhythm that has drifted out of alignment. The goal is not to punish yourself. It is to read what the system is telling you — and respond with the smallest, most honest adjustment available.</p>
+
+      <div class="hn">
+        <span class="hn-label">From ARA</span>
+        <p>Shame reduces learning. Fear accelerates overreaction. Guidance — including the guidance you give yourself — must preserve dignity, curiosity, and confidence. Without those, sustainable care tends to collapse.</p>
+      </div>
+    </div>
+    <div class="mod-next">
+      <button class="btn-prev" style="visibility:hidden">← Previous</button>
+      <button class="btn-next" data-to="2">Your rhythm is real information <span>→</span></button>
+    </div>
+    <div class="art-footer">
+      <a href="/reading">← All guides</a>
+      <a href="/ara">Explore ARA →</a>
+    </div>
+  </div>
+
+  <!-- MODULE 2 -->
+  <div class="module" id="cwg-m2">
+    <div class="mod-eyebrow">
+      <span class="mod-num">02 / 05</span>
+      <span class="mod-tag">Your rhythm is real information</span>
+    </div>
+    <h2 class="mod-title">The way you actually care<br><em>is not a character flaw.</em></h2>
+    <div class="mod-body">
+      <p>ARA identifies four patterns that describe how people genuinely interact with their tanks — not how they hope to, or think they should, but how they actually do when life is happening around them.</p>
+      <p>These are not personality types. They are not measurements of how much you care. They are <strong>care rhythms shaped by life conditions</strong> — and they shift over time.</p>
+
+      <div class="rhythm-grid">
+        <div class="rhythm-cell">
+          <h4>Episodic</h4>
+          <p>Care happens in bursts — intense attention when something looks wrong, or when a free hour opens up. Long quiet periods in between.</p>
+        </div>
+        <div class="rhythm-cell">
+          <h4>Irregular</h4>
+          <p>Actions happen when they happen. No fixed schedule. Timing shifts with mood, energy, and whatever else is going on in life.</p>
+        </div>
+        <div class="rhythm-cell">
+          <h4>Incremental</h4>
+          <p>Small, careful actions — done slowly and cautiously. A preference for doing less and watching what happens before doing more.</p>
+        </div>
+        <div class="rhythm-cell">
+          <h4>Low-engagement</h4>
+          <p>The system is expected to run mostly on its own. Intervention is rare, and usually only when something becomes impossible to ignore.</p>
+        </div>
+      </div>
+
+      <p>None of these is a failure. Each one is a real ecological input — and each one can be designed for. A system built to tolerate episodic care is not a lesser system. It is an honest one.</p>
+
+      <div class="pq">
+        <p>"A system designed for episodic care is not a lesser system. It is an honest one. Sustainability does not come from demanding more from the keeper. It comes from building something that holds even when life does not cooperate."</p>
+      </div>
+
+      <p>The question ARA asks is not: <em>"Can I be more consistent?"</em> It asks: <em>"What kind of system remains stable within the rhythm I actually have?"</em> That shift — from self-improvement to honest design — is one of the most useful things the framework offers.</p>
+    </div>
+    <div class="mod-next">
+      <button class="btn-prev" data-to="1">← Previous</button>
+      <button class="btn-next" data-to="3">The cost of over-correction <span>→</span></button>
+    </div>
+    <div class="art-footer">
+      <a href="/reading">← All guides</a>
+      <a href="/ara">Explore ARA →</a>
+    </div>
+  </div>
+
+  <!-- MODULE 3 -->
+  <div class="module" id="cwg-m3">
+    <div class="mod-eyebrow">
+      <span class="mod-num">03 / 05</span>
+      <span class="mod-tag">The cost of over-correction</span>
+    </div>
+    <h2 class="mod-title">Guilt in motion looks like<br><em>a reaction loop.</em></h2>
+    <div class="mod-body">
+      <p>When a keeper feels responsible for a problem, the natural response is to <em>do something</em>. Quickly. Comprehensively. To fix everything at once before it gets worse.</p>
+      <p>ARA calls this a reaction loop — and it is one of the most common causes of escalating instability in closed systems. One correction triggers a new imbalance. Another correction follows. The system never settles, because it is never allowed to.</p>
+
+      <div class="hn">
+        <span class="hn-label">From ARA</span>
+        <p>Cognitive overload increases the risk of overreaction. Fatigue often precedes drastic or unnecessary intervention. Systems designed without tolerance for these realities become fragile.</p>
+      </div>
+
+      <p>The keeper who feels guilty tends to act in ways that feel proportionate to their guilt, not proportionate to the system's actual need. A large water change when the system is mid-recovery. An emergency dose of a supplement that the tank did not need. Adding more fish or plants to "fix" something that was already resolving.</p>
+      <p>ARA does not say that action is wrong. It says that action taken without understanding the system's current state — and without accounting for your own state — often delays the recovery it is trying to cause.</p>
+
+      <div class="pq">
+        <p>"Doing less, when the system is mid-recovery, is not passivity. It is the most aligned response available."</p>
+      </div>
+
+      <p>There is a discipline in restraint that is harder than action — especially when anxiety is present. But living systems are not waiting for you to fix them. They are waiting for you to stop disrupting what is already trying to resolve.</p>
+    </div>
+    <div class="mod-next">
+      <button class="btn-prev" data-to="2">← Previous</button>
+      <button class="btn-next" data-to="4">What the tank needs from you <span>→</span></button>
+    </div>
+    <div class="art-footer">
+      <a href="/reading">← All guides</a>
+      <a href="/ara">Explore ARA →</a>
+    </div>
+  </div>
+
+  <!-- MODULE 4 -->
+  <div class="module" id="cwg-m4">
+    <div class="mod-eyebrow">
+      <span class="mod-num">04 / 05</span>
+      <span class="mod-tag">What the tank actually needs</span>
+    </div>
+    <h2 class="mod-title">Not a perfect keeper.<br><em>A present one.</em></h2>
+    <div class="mod-body">
+      <p>There is a common assumption that "better" aquarium keeping means more frequent care, more precise parameters, more equipment, more attention. ARA challenges this directly.</p>
+      <p>What a closed ecosystem most reliably responds to is continuity — not intensity. Small, consistent actions create far more stability than dramatic interventions, however well-intentioned those interventions are. A little water topped up quietly every few days outperforms a major overhaul every three weeks. Steady feeding at consistent intervals matters more than perfect nutritional composition. Watching the tank regularly — even briefly — teaches you more than any test result.</p>
+
+      <div class="pq">
+        <p>"Living systems usually respond better to coherent continuity than to bursts of intervention. Doing a little, regularly, with honest attention, creates more stability than doing a great deal occasionally in a surge of effort that cannot be sustained."</p>
+      </div>
+
+      <p>ARA uses the concept of <strong>ecological forgiveness</strong> — a system's capacity to remain stable despite human variability. A forgiving system is not one that has been perfectly maintained. It is one that has been thoughtfully designed to absorb the keeper's real rhythm, including the tired weeks and the distracted months and the stretches when life simply takes over.</p>
+
+      <div class="hn">
+        <span class="hn-label">In practice</span>
+        <p>Maturity in a system comes from time and continuity, not perfection. A tank that has been quietly tended — even imperfectly — for two years often holds far more resilience than one that has been intensely managed for six months.</p>
+      </div>
+
+      <p>This is worth sitting with: the goal of all the effort you put into a tank is not a tank that requires constant effort. It is a tank that becomes progressively more forgiving — until the days when you cannot do much, and the tank simply holds.</p>
+    </div>
+    <div class="mod-next">
+      <button class="btn-prev" data-to="3">← Previous</button>
+      <button class="btn-next" data-to="5">When you and the tank both rest <span>→</span></button>
+    </div>
+    <div class="art-footer">
+      <a href="/reading">← All guides</a>
+      <a href="/ara">Explore ARA →</a>
+    </div>
+  </div>
+
+  <!-- MODULE 5 -->
+  <div class="module" id="cwg-m5">
+    <div class="mod-eyebrow">
+      <span class="mod-num">05 / 05</span>
+      <span class="mod-tag">Room to breathe</span>
+    </div>
+    <h2 class="mod-title">The keeper and the ecosystem<br><em>breathe together.</em></h2>
+    <div class="mod-body">
+      <p>There is something that aquarium keeping offers that is rarely named directly: the experience of watching something live.</p>
+      <p>Not managing it. Not correcting it. Just being near it, noticing it, letting it reveal itself quietly over time. This kind of attention — slow, present, unhurried — is something ARA describes as the primary diagnostic tool. But it is also something else. It is a form of rest for the keeper.</p>
+      <p>When care becomes anxious — when every glance at the tank carries the weight of "what do I need to fix?" — something important is lost. The tank stops being a place to arrive and becomes another problem to manage. That shift is worth noticing. Not because it makes you a bad keeper, but because it is the tank reflecting your own state back at you.</p>
+
+      <div class="pq">
+        <p>"By observing rhythms, respecting limits, and aligning action with reality — both ecosystems and humans gain room to breathe."</p>
+      </div>
+
+      <p>ARA treats the keeper's mental state as part of the ecosystem's ecology. Not metaphorically — structurally. How you feel when you approach the tank shapes what you do. What you do shapes what the system can absorb. A keeper who has released guilt and replaced it with curiosity is a different ecological force than one driven by anxiety and obligation.</p>
+      <p>Caring without guilt is not about lowering your standards. It is about raising your honesty — about what you can realistically provide, what the system genuinely needs, and what it means for both to be in alignment.</p>
+
+      <div class="hn">
+        <span class="hn-label">A closing thought</span>
+        <p>You did not set out to fail. You set out to care for something living. That intention is still valid — even on the days when the tank looks worse than you hoped, even on the weeks when you did not do everything you planned. Misalignment is information, not verdict. It is where honest care begins.</p>
+      </div>
+
+      <p style="margin-top:2rem;font-size:.9rem;color:rgba(255,255,255,.38);font-family:var(--serif);font-style:italic;line-height:1.8">Continue exploring what ARA says about your keeper rhythm and your system's phase — or bring your question to Rhyssa.</p>
+
+      <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.8rem">
+        <a href="/articles/know-your-rhythm" class="btn-ar">Know Your Rhythm →</a>
+        <a href="/ara" class="btn-ar">Explore ARA →</a>
+        <a href="/rhyssa" class="btn-ar">Talk with Rhyssa →</a>
+      </div>
+    </div>
+    <div class="mod-next">
+      <button class="btn-prev" data-to="4">← Previous</button>
+      <span style="font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.22)">End of article</span>
+    </div>
+    <div class="art-footer">
+      <a href="/reading">← All guides</a>
+      <a href="/ara">Explore ARA →</a>
+    </div>
+  </div>
+
+</div><!-- /module-wrap -->
+</main>
+
+<script>
+(function(){
+  var TOTAL = 5;
+  var intro  = document.getElementById('cwg-intro');
+  var wrap   = document.getElementById('cwg-wrap');
+  var fill   = document.getElementById('cwg-prog-fill');
+  var burger = document.getElementById('cwg-burger');
+  var nmob   = document.getElementById('cwg-nmob');
+  var current = 0;
+
+  function showModule(n){
+    if(n < 1 || n > TOTAL) return;
+    var prev = document.getElementById('cwg-m' + current);
+    var next = document.getElementById('cwg-m' + n);
+    if(prev){ prev.classList.remove('active','visible'); }
+    current = n;
+    if(next){
+      next.classList.add('active');
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          next.classList.add('visible');
+        });
+      });
+    }
+    fill.style.width = Math.round((n / TOTAL) * 100) + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.getElementById('cwg-begin').addEventListener('click', function(){
+    intro.classList.add('hidden');
+    wrap.classList.add('active');
+    showModule(1);
+  });
+
+  wrap.addEventListener('click', function(e){
+    var btn = e.target.closest('[data-to]');
+    if(!btn) return;
+    showModule(parseInt(btn.getAttribute('data-to'), 10));
+  });
+
+  if(burger && nmob){
+    burger.addEventListener('click', function(){
+      var open = burger.classList.toggle('open');
+      nmob.classList.toggle('open', open);
+      burger.setAttribute('aria-expanded', open);
+      nmob.setAttribute('aria-hidden', !open);
+    });
+  }
+})();
+</script>
+</body>
+</html>
