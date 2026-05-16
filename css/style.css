@@ -67,7 +67,7 @@ nav:not(.bnav){position:fixed;z-index:800}
 .fish svg{display:block}
 
 /* ── TEXT PROTECTION ── */
-.ht,.pst,.bt,.hk,.api,.rhd,.apq,.snt,.sco,.stit,.starr,.stco,.home-ara-lead,.home-ara-card h3,.home-ara-card p,.home-strip q,.home-tile h3,.home-tile p,.home-hero-note,.home-ara-pr-list li,.home-ara-rf p,.home-ara-rf span,.home-tile-tag,.home-tile-cta{text-shadow:0 1px 12px rgba(3,9,8,.9),0 0 32px rgba(3,9,8,.7)}
+.ht,.pst,.bt,.hk,.api,.rhd,.apq,.snt,.sco,.stit,.starr,.stco,.home-ara-lead,.home-ara-card h3,.home-ara-card p,.home-strip q,.home-tile h3,.home-tile p,.home-hero-note,.home-ara-pr-list li,.home-ara-rf p,.home-ara-rf span,.home-tile-tag,.home-tile-cta,.rd-card-hit-text{text-shadow:0 1px 12px rgba(3,9,8,.9),0 0 32px rgba(3,9,8,.7)}
 .dxl,.dlg,.dmd,.rhtit{text-shadow:0 2px 16px rgba(3,9,8,.95),0 0 48px rgba(3,9,8,.8)}
 .pc,.snb,.eg,.scv,.rhr,.qi,.pb{background:rgba(6,14,11,.72)}
 
@@ -496,7 +496,7 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:flex;align-items:center;j
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
-  #cd,#cr,#eco,.cl,.cl2,.sl,.ray,.plant,.mote,.spk,.str,.or,.oc,.on,.sline,.sr{animation:none!important;transition:none!important}
+  #cd,#cr,#eco,.cl,.cl2,.sl,.ray,.plant,.mote,.spk,.str,.or,.oc,.on,.sline,.sr,.rd-card-chevron{animation:none!important;transition:none!important}
 }
 
 /* ── READING PAGE CATEGORIES ── */
@@ -504,18 +504,29 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:flex;align-items:center;j
 .rd-cat-header{margin-bottom:1.8rem}
 .rd-cat-label{display:inline-block;font-size:.58rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:rgba(61,214,232,.7);border-bottom:1px solid rgba(61,214,232,.25);padding-bottom:.3rem;margin-bottom:.7rem}
 .rd-cat-desc{font-size:.88rem;font-weight:300;color:rgba(255,255,255,.72);line-height:1.75;max-width:480px}
-.rd-card{display:block;text-decoration:none;background:var(--panel);border:1px solid var(--panel-border);border-radius:14px;box-shadow:var(--panel-shadow),var(--panel-inset);transition:border-color .3s,transform .3s var(--ease);overflow:hidden;margin-bottom:.85rem}
-.rd-card:hover{transform:translateY(-2px);border-color:rgba(61,214,232,.28)}
+.rd-cards.rd-acc-wrap{display:flex;flex-direction:column;gap:.02rem}
+.rd-card--acc{display:block;margin:0 0 .5rem;padding:0;background:transparent;border:none;box-shadow:none;overflow:visible}
+.rd-card-hit{width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;padding:0;margin:0;border:none;background:var(--panel);border:1px solid var(--panel-border);border-radius:12px;box-shadow:var(--panel-shadow),var(--panel-inset);transition:border-color .28s var(--ease),background .28s var(--ease);display:block;-webkit-tap-highlight-color:transparent}
+.rd-card-hit:hover,.rd-card-hit:focus-visible{background:rgba(16,32,26,.92);border-color:rgba(61,214,232,.22)}
+.rd-card--acc.is-expanded .rd-card-hit{border-color:rgba(61,214,232,.32);border-bottom-left-radius:0;border-bottom-right-radius:0}
+.rd-card-hit .rd-card-bar{display:block}
+.rd-card-hit-row{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;padding:.68rem .95rem .75rem;text-align:left}
+.rd-card-hit-text{font-family:var(--serif);font-size:clamp(.86rem,3.3vw,1.04rem);font-weight:400;line-height:1.28;color:rgba(255,255,255,.9);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;min-width:0;padding:2px 0}
+.rd-card-chevron{flex-shrink:0;width:.42rem;height:.42rem;border-right:2px solid rgba(124,168,156,.55);border-bottom:2px solid rgba(124,168,156,.55);transform:rotate(45deg);margin-top:.4rem;margin-right:.1rem;transition:transform .28s var(--ease)}
+.rd-card--acc.is-expanded .rd-card-chevron{transform:rotate(-135deg);margin-top:.5rem}
+.rd-card-panel{background:rgba(5,12,10,.58);border:1px solid var(--panel-border);border-top:none;border-radius:0 0 12px 12px;margin-top:-1px}
+.rd-card--acc .rd-card-inner{padding:1.05rem 1.15rem .95rem}
+.rd-card-go{display:block;margin:0 .85rem 1rem;padding:.7rem 1rem;text-align:center;text-decoration:none;border-radius:10px}
+.rd-reading-h1{font-size:clamp(2rem,5.2vw,3.35rem)!important;line-height:1.08!important}
 .rd-card-bar{height:2px;background:linear-gradient(to right,rgba(61,214,232,.5),rgba(157,191,154,.3),transparent)}
-.rd-card-inner{padding:1.8rem 2.2rem 1.6rem}
-.rd-card-tags{display:flex;align-items:center;gap:.5rem;margin-bottom:.9rem;flex-wrap:wrap}
+.rd-card-tags{display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem;flex-wrap:wrap}
 .rd-tag{font-size:.48rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(139,189,210,.7)}
 .rd-tag-level{color:rgba(157,191,154,.72);border:1px solid rgba(157,191,154,.2);padding:.14rem .45rem;border-radius:100px}
 .rd-tag-int{color:rgba(61,214,232,.68)}
-.rd-card-title{font-family:var(--serif);font-size:clamp(1.15rem,1.8vw,1.55rem);font-weight:400;color:rgba(255,255,255,.88);line-height:1.22;margin-bottom:.65rem}
-.rd-card-title em{font-style:italic;color:rgba(255,255,255,.7);font-size:clamp(.9rem,1.4vw,1.2rem)}
-.rd-card-desc-text{font-size:.91rem;font-weight:400;color:rgba(235,240,236,.72);line-height:1.88;max-width:520px;margin-bottom:1rem}
-.rd-card-cta{font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(61,214,232,.84)}
+.rd-card-title{font-family:var(--serif);font-size:clamp(1.05rem,1.65vw,1.45rem);font-weight:400;color:rgba(255,255,255,.88);line-height:1.22;margin-bottom:.55rem}
+.rd-card-title em{font-style:italic;color:rgba(255,255,255,.7);font-size:clamp(.85rem,1.35vw,1.1rem)}
+.rd-card-desc-text{font-size:.88rem;font-weight:400;color:rgba(235,240,236,.72);line-height:1.85;max-width:520px;margin-bottom:.85rem}
+.rd-card-cta{font-size:.54rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(61,214,232,.78)}
 .rd-coming{padding:1.6rem 2rem;border:1px dashed rgba(255,255,255,.07);background:rgba(6,16,13,.3)}
 .rd-coming p{font-family:var(--serif);font-style:italic;font-size:.92rem;color:rgba(255,255,255,.22)}
 
@@ -532,7 +543,7 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:flex;align-items:center;j
 .nlinks a:focus-visible,
 .nmob a:focus-visible,
 .ncta:focus-visible,
-.rd-card:focus-visible,
+.rd-card-hit:focus-visible,
 .sflink:focus-visible,
 .bl:focus-visible{
   outline:2px solid var(--accent);

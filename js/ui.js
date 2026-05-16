@@ -101,7 +101,7 @@
     'about':     'Why Aquatic Rhythm exists — from uneven advice to a calmer, ecology-first way of reading small tanks.',
     'privacy':   'Privacy Policy for Aquatic Rhythm. What we collect, how it is handled, and what it means for you.',
     'terms':     'Terms of Use for Aquatic Rhythm and Rhyssa. Written plainly, without unnecessary complexity.',
-    'reading':   'Short aquarium ecology guides — modular, mobile-friendly, grounded in ARA.',
+    'reading':   'Short aquarium ecology guides — modular, mobile-friendly, grounded in ARA. Expand a title for details; simulators live under Labs & tools.',
     'tools':     'Interactive aquarium simulators and planners. Try decisions on screen before you make them in the tank.',
     'journal':   'A keeper journal for your aquarium. Observe, reflect, and track your ARA rhythm — stored privately on your device.'
   };
@@ -116,6 +116,29 @@
       var tab = item.getAttribute('data-bnav');
       item.classList.toggle('active', tab === id);
       item.setAttribute('aria-current', tab === id ? 'page' : 'false');
+    });
+  }
+
+  function closeAllReadingAccordions() {
+    var root = document.getElementById('pg-reading');
+    if (!root) return;
+    root.querySelectorAll('.rd-card--acc.is-expanded').forEach(function (card) {
+      card.classList.remove('is-expanded');
+      var btn = card.querySelector('.rd-card-hit');
+      var panel = card.querySelector('.rd-card-panel');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+      if (panel) panel.hidden = true;
+    });
+  }
+
+  function initReadingAccordionTitles() {
+    var root = document.getElementById('pg-reading');
+    if (!root) return;
+    root.querySelectorAll('.rd-card--acc').forEach(function (card) {
+      var hitText = card.querySelector('.rd-card-hit-text');
+      var h2 = card.querySelector('.rd-card-panel .rd-card-title');
+      if (!hitText || !h2 || hitText.textContent.trim()) return;
+      hitText.textContent = h2.textContent.replace(/\s+/g, ' ').trim();
     });
   }
 
@@ -135,6 +158,12 @@
     closeMenu();
     updateBottomNav(id);
     setTimeout(function () { observeScrollReveal(t); }, 80);
+
+    if (id !== 'reading') closeAllReadingAccordions();
+    else {
+      closeAllReadingAccordions();
+      initReadingAccordionTitles();
+    }
 
     if (titleMap[id]) document.title = titleMap[id];
     updateMeta(id);
@@ -212,6 +241,37 @@
     var active = hasSpaPages ? document.querySelector('.page.active') : document;
     if (active) observeScrollReveal(active);
   })();
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('.rd-card-go')) return;
+    var hit = e.target.closest('.rd-card-hit');
+    if (!hit) return;
+    var card = hit.closest('.rd-card--acc');
+    var root = document.getElementById('pg-reading');
+    if (!card || !root || !root.contains(card)) return;
+    e.preventDefault();
+    var panel = card.querySelector('.rd-card-panel');
+    if (card.classList.contains('is-expanded')) {
+      card.classList.remove('is-expanded');
+      hit.setAttribute('aria-expanded', 'false');
+      if (panel) panel.hidden = true;
+      return;
+    }
+    closeAllReadingAccordions();
+    card.classList.add('is-expanded');
+    hit.setAttribute('aria-expanded', 'true');
+    if (panel) panel.hidden = false;
+    initReadingAccordionTitles();
+  }, true);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    var pg = document.getElementById('pg-reading');
+    if (!pg || !pg.classList.contains('active')) return;
+    closeAllReadingAccordions();
+  });
+
+  initReadingAccordionTitles();
 
 
   /* ── WATER LEVEL ── */
