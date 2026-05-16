@@ -270,7 +270,7 @@ body.eq-dd-open{overflow:hidden}
   .rhy-pct{font-size:.54rem;min-width:1.2rem}
   #readiness-badge{font-size:.64rem!important}
   #rdy-section,.rack-grid{grid-template-columns:1fr 1fr}
-  .lab-tab{font-size:.58rem;padding:.38rem .35rem;min-height:0}
+  .lab-tab{font-size:.5rem;padding:.36rem .12rem;min-height:0;letter-spacing:.04em}
   .ph2-tag{font-size:.62rem;padding:.16rem .36rem}
   .ph2-chip{font-size:.58rem;padding:.16rem .42rem}
   .ph2-count{font-size:.68rem}
@@ -467,9 +467,9 @@ body.eq-dd-open{overflow:hidden}
   flex-shrink:0;
 }
 .lab-tab{
-  flex:1;font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;
+  flex:1;min-width:0;font-size:.48rem;letter-spacing:.05em;text-transform:uppercase;
   color:rgba(235,240,236,.36);background:none;border:none;
-  padding:.4rem .32rem;cursor:pointer;font-family:var(--sans);
+  padding:.38rem .14rem;cursor:pointer;font-family:var(--sans);
   border-bottom:2px solid transparent;transition:all .2s;
 }
 
@@ -529,9 +529,9 @@ body.eq-dd-open{overflow:hidden}
   flex-shrink:0;
 }
 .lab-tab{
-  flex:1;font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;
+  flex:1;min-width:0;font-size:.48rem;letter-spacing:.05em;text-transform:uppercase;
   color:rgba(235,240,236,.36);background:none;border:none;
-  padding:.4rem .32rem;cursor:pointer;font-family:var(--sans);
+  padding:.38rem .14rem;cursor:pointer;font-family:var(--sans);
   border-bottom:2px solid transparent;transition:all .2s;
 }
 .lab-tab:hover{color:rgba(235,240,236,.62)}
@@ -852,7 +852,7 @@ body.eq-dd-open{overflow:hidden}
   <div class="brief-inner">
     <span class="brief-eyebrow">Aquatic Rhythm Lab</span>
     <h1 class="brief-title">Build your<br><em>first tank.</em></h1>
-    <p class="brief-body">Start anywhere. Choose fish you love and discover what they need — or build your equipment setup and see what it can support. The two panels work together, and the tank visual responds to both.</p>
+    <p class="brief-body">Start anywhere. Choose fish you love and discover what they need — or build your equipment setup and see what it can support. Use the tabs to move between equipment, livestock, plants, and hardscape; the tank visual responds to all of them.</p>
     <div class="brief-panels">
       <div class="brief-panel">
         <span class="brief-panel-title">Start with fish</span>
@@ -914,8 +914,10 @@ body.eq-dd-open{overflow:hidden}
 
 <!-- TAB NAV -->
 <div id="lab-tabs">
-  <button class="lab-tab active" data-tab="equipment">Equipment</button>
-  <button class="lab-tab" data-tab="ecosystem">Fish &amp; Plants</button>
+  <button type="button" class="lab-tab active" data-tab="equipment">Equipment</button>
+  <button type="button" class="lab-tab" data-tab="livestock">Livestock</button>
+  <button type="button" class="lab-tab" data-tab="plants">Plants</button>
+  <button type="button" class="lab-tab" data-tab="hardscape">Hardscape</button>
 </div>
 
 <!-- EQUIPMENT TAB -->
@@ -1006,24 +1008,30 @@ body.eq-dd-open{overflow:hidden}
     <div class="ph2-search-wrap">
       <span class="ph2-search-icon">&#x2315;</span>
       <input class="ph2-search" id="ph2-search" type="text"
-        placeholder="Search fish, plants, invertebrates&#x2026;"
+        placeholder="Search fish &amp; invertebrates&#x2026;"
         autocomplete="off" autocorrect="off" spellcheck="false">
       <button class="ph2-search-clear" id="ph2-search-clear">&#x2715;</button>
     </div>
     <div class="ph2-chips" id="ph2-chips"></div>
     <div class="ph2-count" id="ph2-count"></div>
-    <!-- Grids -->
-    <div class="eco-section" id="ph2-stock-section">
-      <div class="eco-section-hdr">Fish &amp; Invertebrates</div>
-      <div class="ph2-grid" id="ph2-stock-grid"></div>
+    <!-- Grids (one pane visible per biology tab) -->
+    <div class="ph2-bio-pane" id="ph2-pane-livestock" hidden>
+      <div class="eco-section" id="ph2-stock-section">
+        <div class="eco-section-hdr">Fish &amp; Invertebrates</div>
+        <div class="ph2-grid" id="ph2-stock-grid"></div>
+      </div>
     </div>
-    <div class="eco-section" id="ph2-plant-section">
-      <div class="eco-section-hdr">Plants</div>
-      <div class="ph2-grid" id="ph2-plant-grid"></div>
+    <div class="ph2-bio-pane" id="ph2-pane-plants" hidden>
+      <div class="eco-section" id="ph2-plant-section">
+        <div class="eco-section-hdr">Plants</div>
+        <div class="ph2-grid" id="ph2-plant-grid"></div>
+      </div>
     </div>
-    <div class="eco-section" id="ph2-hard-section">
-      <div class="eco-section-hdr">Hardscape</div>
-      <div class="ph2-grid" id="ph2-hard-grid"></div>
+    <div class="ph2-bio-pane" id="ph2-pane-hardscape" hidden>
+      <div class="eco-section" id="ph2-hard-section">
+        <div class="eco-section-hdr">Hardscape</div>
+        <div class="ph2-grid" id="ph2-hard-grid"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -1590,6 +1598,27 @@ function tankTier(){return tankLiters<=45?'small':tankLiters<=130?'medium':'larg
 function stockingKeyFromLiters(){return tankLiters<=52?'small_40l':tankLiters<=132?'medium_80l':'large_150l';}
 var ph2Active={stock:{},plants:{},hard:{}};
 var ph2Style=null, _ph2Query='';
+function isEcoTab(tab){
+  return tab==='livestock'||tab==='plants'||tab==='hardscape';
+}
+function updateEcoPane(tab){
+  ['ph2-pane-livestock','ph2-pane-plants','ph2-pane-hardscape'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el)return;
+    var show=(tab==='livestock'&&id==='ph2-pane-livestock')||
+      (tab==='plants'&&id==='ph2-pane-plants')||
+      (tab==='hardscape'&&id==='ph2-pane-hardscape');
+    if(show)el.removeAttribute('hidden');
+    else el.setAttribute('hidden','');
+  });
+}
+function updateSearchPlaceholder(tab){
+  var el=document.getElementById('ph2-search');
+  if(!el)return;
+  if(tab==='plants')el.placeholder='Search plants\u2026';
+  else if(tab==='hardscape')el.placeholder='Search hardscape\u2026';
+  else el.placeholder='Search fish & invertebrates\u2026';
+}
 var cvs,ctx,tick=0,animFrame=null;
 var _biCurrentEq=null,_biCurrentBrand=null;
 var _biCarouselIdx=0,_biCarouselSlides=[],_biCarouselResizeHandler=null;
@@ -1724,6 +1753,8 @@ function switchTab(tab){
     if(rz)rz.style.display='none';
     if(ez)ez.classList.add('active');
     if(d1)d1.className='phase-dot'; if(d2)d2.className='phase-dot active';
+    updateEcoPane(tab);
+    updateSearchPlaceholder(tab);
     buildChips(); buildAllGrids();
   }
   updateRhythms(); checkAnimNeeded(); scheduleRedraw();
@@ -1798,7 +1829,7 @@ function calcEcoRhythms(){
 }
 
 function updateRhythms(){
-  var s=(_currentTab==='ecosystem')?calcEcoRhythms():calcRhythms();
+  var s=isEcoTab(_currentTab)?calcEcoRhythms():calcRhythms();
   updateRhythmBars(s);
 }
 
@@ -2148,33 +2179,37 @@ function buildAllGrids(){
   var countEl=document.getElementById('ph2-count');
   if(!stockCont)return;
   stockCont.innerHTML='';plantCont.innerHTML='';hardCont.innerHTML='';
-  var total=0;
+  var nStock=0,nPlant=0,nHard=0;
   var allStock=Object.assign({},ECOSYSTEM.FISH,ECOSYSTEM.INVERTEBRATES);
   Object.keys(allStock).forEach(function(k){
     var item=allStock[k];
     if(ph2Style&&item.setup&&item.setup.indexOf(ph2Style)<0&&!q)return;
     if(!filterMatch(item,q))return;
-    buildEcoCard(stockCont,k,item,'stock');total++;
+    buildEcoCard(stockCont,k,item,'stock');nStock++;
   });
   if(stockSec)stockSec.style.display=stockCont.children.length?'':'none';
   Object.keys(ECOSYSTEM.PLANTS).forEach(function(k){
     var item=ECOSYSTEM.PLANTS[k];
     if(ph2Style&&item.setup&&item.setup.indexOf(ph2Style)<0&&!q)return;
     if(!filterMatch(item,q))return;
-    buildEcoCard(plantCont,k,item,'plants');total++;
+    buildEcoCard(plantCont,k,item,'plants');nPlant++;
   });
   if(plantSec)plantSec.style.display=plantCont.children.length?'':'none';
   Object.keys(ECOSYSTEM.HARDSCAPE).forEach(function(k){
     var item=ECOSYSTEM.HARDSCAPE[k];
     if(ph2Style&&item.setup&&item.setup.indexOf(ph2Style)<0&&!q)return;
     if(!filterMatch(item,q))return;
-    buildEcoCard(hardCont,k,item,'hard');total++;
+    buildEcoCard(hardCont,k,item,'hard');nHard++;
   });
   if(hardSec)hardSec.style.display=hardCont.children.length?'':'none';
   if(countEl){
-    if(q)countEl.textContent=total+' result'+(total===1?'':'s')+' for \u201c'+q+'\u201d';
-    else if(ph2Style)countEl.textContent=total+' entries';
-    else countEl.textContent='';
+    if(!isEcoTab(_currentTab))countEl.textContent='';
+    else{
+      var slice=_currentTab==='livestock'?nStock:_currentTab==='plants'?nPlant:nHard;
+      if(q)countEl.textContent=slice+' result'+(slice===1?'':'s')+' for \u201c'+q+'\u201d';
+      else if(ph2Style)countEl.textContent=slice+' entries';
+      else countEl.textContent='';
+    }
   }
 }
 
