@@ -789,12 +789,12 @@
 
     function rhythmWeeks(entries) {
       var now = new Date();
-      var result = [false, false, false, false];
+      var result = [false, false, false, false, false, false, false, false];
       (entries || []).forEach(function (e) {
         if (!e.date) return;
         var days = Math.floor((now - new Date(e.date)) / 86400000);
         var week = Math.floor(days / 7);
-        if (week >= 0 && week < 4) result[week] = true;
+        if (week >= 0 && week < 8) result[week] = true;
       });
       return result;
     }
@@ -976,14 +976,18 @@
           if (e.params.temp) parts.push(e.params.temp + '°C');
           if (parts.length) paramsStr = parts.join(' · ');
         }
-        return '<li class="jn-entry-item">'
-          + '<div class="jn-entry-meta">'
-          + '<span class="jn-entry-date">' + (e.date || '') + '</span>'
-          + (stateLabel ? '<span class="jn-entry-state">' + stateLabel + '</span>' : '')
+        var nodeClass = 'tl-entry-node' + (e.keeperState ? ' state-' + e.keeperState : '');
+        return '<li class="tl-entry-item">'
+          + '<div class="' + nodeClass + '" aria-hidden="true"></div>'
+          + '<div class="tl-entry-content">'
+          + '<div class="tl-entry-meta">'
+          + '<span class="tl-entry-date">' + (e.date || '') + '</span>'
+          + (stateLabel ? '<span class="tl-entry-state-tag">' + stateLabel + '</span>' : '')
           + '</div>'
-          + (e.observation ? '<p class="jn-entry-obs">' + e.observation + '</p>' : '')
-          + (careStr ? '<span class="jn-entry-care">' + careStr + '</span>' : '')
-          + (paramsStr ? '<span class="jn-entry-params">' + paramsStr + '</span>' : '')
+          + (e.observation ? '<p class="tl-entry-obs">' + e.observation + '</p>' : '')
+          + (careStr ? '<span class="tl-entry-care">' + careStr + '</span>' : '')
+          + (paramsStr ? '<span class="tl-entry-params">' + paramsStr + '</span>' : '')
+          + '</div>'
           + '</li>';
       }).join('');
       var moreEl = document.getElementById('jn-load-more');
@@ -1149,22 +1153,25 @@
         grouped[cat].push(i);
       });
       var order = ['fish', 'plant', 'invertebrate', 'coral', 'other'];
-      bodyEl.innerHTML = order.filter(function (cat) { return grouped[cat]; }).map(function (cat) {
-        return grouped[cat].map(function (i) {
-          var icon     = INH_CATS[cat] || '◈';
-          var label    = i.commonName || i.species || INH_CAT_LABELS[cat] || cat;
-          var nameTag  = i.name ? ' <em class="jn-inh-alias">“' + i.name + '”</em>' : '';
-          var countTag = i.count > 1 ? '<span class="jn-inh-count">' + i.count + '×</span> ' : '';
-          return '<div class="jn-inh-row">'
-            + '<span class="jn-inh-icon">' + icon + '</span>'
-            + '<span class="jn-inh-info">' + countTag + label + nameTag + '</span>'
-            + '<div class="jn-inh-actions">'
-            + '<button class="jn-inh-status-btn" data-inh-id="' + i.id + '" data-action="rehomed">rehomed</button>'
-            + '<button class="jn-inh-status-btn" data-inh-id="' + i.id + '" data-action="passed">passed</button>'
-            + '</div>'
-            + '</div>';
-        }).join('');
-      }).join('');
+      bodyEl.innerHTML = '<div class=”tl-inh-chips”>'
+        + order.filter(function (cat) { return grouped[cat]; }).map(function (cat) {
+          return grouped[cat].map(function (i) {
+            var icon  = INH_CATS[cat] || '◈';
+            var label = i.commonName || i.species || INH_CAT_LABELS[cat] || cat;
+            var count = i.count > 1 ? '<span class=”tl-inh-chip-count”>×' + i.count + '</span>' : '';
+            return '<div class=”tl-inh-chip” tabindex=”0” data-inh-id=”' + i.id + '”>'
+              + '<span class=”tl-inh-chip-icon”>' + icon + '</span>'
+              + '<span>' + label + '</span>' + count
+              + '<div class=”tl-inh-chip-actions”>'
+              + '<button class=”tl-inh-chip-btn jn-inh-status-btn”'
+              + ' data-inh-id=”' + i.id + '” data-action=”rehomed”>rehomed</button>'
+              + '<button class=”tl-inh-chip-btn jn-inh-status-btn”'
+              + ' data-inh-id=”' + i.id + '” data-action=”passed”>passed</button>'
+              + '</div>'
+              + '</div>';
+          }).join('');
+        }).join('')
+        + '</div>';
     }
 
     function showInhabitantToast(inh, action) {
@@ -1207,17 +1214,25 @@
       var d = loadData();
       renderTankSelector(d);
       var tank = getActiveTank(d);
+
+      var stickyCTA = document.getElementById('jn-sticky-cta');
       if (!tank) {
         var tlPage = document.getElementById('pg-tank-log');
         if (tlPage && tlPage.classList.contains('active')) window.go('journal', false);
+        if (stickyCTA) stickyCTA.classList.remove('visible');
         return;
       }
+      if (stickyCTA) stickyCTA.classList.add('visible');
 
       var p = tank.profile;
       var nameEl = document.getElementById('jn-tank-name');
       var infoEl = document.getElementById('jn-tank-info');
       if (nameEl) nameEl.textContent = p.name || 'My Tank';
       if (infoEl) infoEl.textContent = [(p.volume ? p.volume + ' ' + (p.unit || 'L') : ''), p.type, tankAge(p.setupDate)].filter(Boolean).join(' · ');
+
+      /* Identity hero icon */
+      var iconEl = document.getElementById('jn-identity-icon');
+      if (iconEl) iconEl.innerHTML = tankTypeIconLg(p.type, p.shape);
 
       var entries = tank.entries || [];
       var latest = entries.length ? entries[entries.length - 1] : null;
@@ -1228,14 +1243,32 @@
         if (phase) fromParams = true;
       }
       if (!phase && latest) phase = assessPhaseFromState(latest.keeperState, p.setupDate);
+      var info = (phase && phaseInfo[phase]) ? phaseInfo[phase] : null;
 
+      /* Phase pill in identity hero */
+      var pillEl = document.getElementById('jn-identity-phase');
+      if (pillEl) {
+        if (info) { pillEl.textContent = info.label; pillEl.style.color = info.color; pillEl.style.display = ''; }
+        else { pillEl.style.display = 'none'; }
+      }
+
+      /* Snapshot strip */
+      var activeInhCount = (tank.inhabitants || []).filter(function (i) { return i.status === 'active'; }).length;
+      var streak = calcStreak(entries);
+      var ageDays = p.setupDate ? Math.floor((new Date() - new Date(p.setupDate)) / 86400000) : null;
+      var el;
+      el = document.getElementById('jn-snap-entries');   if (el) el.textContent = entries.length;
+      el = document.getElementById('jn-snap-residents');  if (el) el.textContent = activeInhCount;
+      el = document.getElementById('jn-snap-streak');     if (el) el.textContent = streak > 0 ? streak + '' : '—';
+      el = document.getElementById('jn-snap-age');        if (el) el.textContent = ageDays !== null ? ageDays : '—';
+
+      /* Phase name, note, next, src */
       var phaseNameEl = document.getElementById('jn-phase-name');
       var phaseNoteEl = document.getElementById('jn-phase-note');
       var phaseNextEl = document.getElementById('jn-phase-next');
       var phaseSrcEl  = document.getElementById('jn-phase-src');
       if (phaseNameEl) {
-        if (phase && phaseInfo[phase]) {
-          var info = phaseInfo[phase];
+        if (info) {
           phaseNameEl.textContent = info.label;
           phaseNameEl.style.color = info.color;
           if (phaseNoteEl) phaseNoteEl.textContent = info.note;
@@ -1250,20 +1283,37 @@
         }
       }
 
+      /* Phase card: left accent color + subtle tint */
+      var phaseCard = document.getElementById('jn-phase-card');
+      if (phaseCard) {
+        if (info) {
+          phaseCard.style.borderLeftColor = info.color;
+          var m = info.color.match(/[\d.]+/g);
+          if (m && m.length >= 3) phaseCard.style.setProperty('--tl-phase-bg', 'rgba(' + m[0] + ',' + m[1] + ',' + m[2] + ',.06)');
+        } else {
+          phaseCard.style.borderLeftColor = 'rgba(255,255,255,.07)';
+          phaseCard.style.removeProperty('--tl-phase-bg');
+        }
+      }
+
+      /* Rhythm dots (8 weeks, RTL grid = week 0 rightmost) */
       var weeks = rhythmWeeks(entries);
       var rhythmEl = document.getElementById('jn-rhythm-dots');
       if (rhythmEl) {
-        var weekLabels = ['This week', 'Last week', '2 weeks ago', '3 weeks ago'];
+        var weekLabels = ['This week', 'Last week', '2w ago', '3w ago', '4w ago', '5w ago', '6w ago', '7w ago'];
         rhythmEl.innerHTML = weeks.map(function (has, i) {
-          return '<div class="jn-rhythm-dot' + (has ? ' active' : '') + '" title="' + weekLabels[i] + '"></div>';
+          return '<div class="jn-rhythm-dot' + (has ? ' active' : '') + '"'
+            + ' title="' + weekLabels[i] + '"'
+            + ' aria-label="' + weekLabels[i] + (has ? ': entry logged' : ': no entry') + '">'
+            + '</div>';
         }).join('');
       }
 
-      var streak = calcStreak(entries);
+      /* Streak badge */
       var streakEl = document.getElementById('jn-streak-count');
       if (streakEl) {
         if (streak >= 1) {
-          streakEl.textContent = streak === 1 ? 'Week 1 — keep going' : streak + '-week streak';
+          streakEl.textContent = streak === 1 ? '1-week streak' : streak + '-week streak';
           streakEl.style.display = '';
         } else {
           streakEl.style.display = 'none';
@@ -1494,6 +1544,15 @@
       if (catChip && catChip.closest('#mt-modal-inhabitant')) {
         document.querySelectorAll('.jn-inh-cat-chip').forEach(function (c) { c.classList.remove('active'); });
         catChip.classList.add('active');
+        return;
+      }
+
+      var inhChip = target.closest('.tl-inh-chip');
+      if (inhChip && !target.closest('.jn-inh-status-btn')) {
+        document.querySelectorAll('.tl-inh-chip').forEach(function (c) {
+          if (c !== inhChip) c.classList.remove('expanded');
+        });
+        inhChip.classList.toggle('expanded');
         return;
       }
 

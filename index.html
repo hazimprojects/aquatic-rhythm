@@ -1474,102 +1474,127 @@
 <!-- ═══════════ TANK LOG (individual tank detail) ═══════════ -->
 <div id="pg-tank-log" class="page"><div class="pl">
 
-  <!-- Back navigation -->
+  <!-- Topbar: back + edit right-aligned -->
   <div class="jn-tl-topbar">
     <a href="/journal" class="jn-back-btn" data-page="journal" aria-label="Back to Keeper's Log">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span>Keeper's Log</span>
     </a>
+    <button class="mt-icon-btn" id="jn-tank-edit" aria-label="Edit tank" title="Edit tank">
+      <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M12 3l3 3-9 9H3v-3L12 3z" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linejoin="round"/></svg>
+    </button>
   </div>
 
-  <section class="pad" style="padding-top:1rem;padding-bottom:6rem">
-    <div class="cap" style="max-width:760px">
-
-      <!-- DASHBOARD -->
+  <section class="pad" style="padding-top:.5rem;padding-bottom:7rem">
+    <div class="cap" style="max-width:680px">
       <div id="jn-dashboard" class="mt-dashboard">
 
-        <!-- Tank selector (shown when >1 tank) -->
+        <!-- Tank selector (multi-tank carousel) -->
         <div id="jn-tank-selector" class="jn-tank-selector" style="display:none"></div>
 
-        <!-- Tank header -->
-        <div class="mt-tank-header">
-          <div class="mt-tank-meta">
+        <!-- 1. TANK IDENTITY HERO -->
+        <div class="tl-identity">
+          <div class="tl-identity-icon" id="jn-identity-icon" aria-hidden="true"></div>
+          <div class="tl-identity-body">
             <h2 class="mt-tank-name" id="jn-tank-name">—</h2>
             <span class="mt-tank-info" id="jn-tank-info">—</span>
+            <span class="tl-phase-pill" id="jn-identity-phase" style="display:none"></span>
           </div>
-          <button class="mt-icon-btn" id="jn-tank-edit" aria-label="Edit tank" title="Edit tank">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M12 3l3 3-9 9H3v-3L12 3z" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linejoin="round"/></svg>
-          </button>
         </div>
 
-        <!-- ARA Phase card -->
-        <div class="mt-phase-card" id="jn-phase-card">
-          <div class="mt-phase-label">ARA Phase</div>
+        <!-- 2. QUICK SNAPSHOT STRIP -->
+        <div class="tl-snapshot-strip">
+          <div class="tl-snap-stat">
+            <span class="tl-snap-num" id="jn-snap-entries">—</span>
+            <span class="tl-snap-label">entries</span>
+          </div>
+          <div class="tl-snap-divider" aria-hidden="true"></div>
+          <div class="tl-snap-stat">
+            <span class="tl-snap-num" id="jn-snap-residents">—</span>
+            <span class="tl-snap-label">residents</span>
+          </div>
+          <div class="tl-snap-divider" aria-hidden="true"></div>
+          <div class="tl-snap-stat">
+            <span class="tl-snap-num" id="jn-snap-streak">—</span>
+            <span class="tl-snap-label">wk streak</span>
+          </div>
+          <div class="tl-snap-divider" aria-hidden="true"></div>
+          <div class="tl-snap-stat">
+            <span class="tl-snap-num" id="jn-snap-age">—</span>
+            <span class="tl-snap-label">days old</span>
+          </div>
+        </div>
+
+        <!-- 3. ARA PHASE CARD -->
+        <div class="tl-card tl-phase-card" id="jn-phase-card">
+          <div class="tl-card-eyebrow">ARA Phase</div>
           <div class="jn-phase-name" id="jn-phase-name">—</div>
           <p class="mt-phase-desc" id="jn-phase-note">Write your first entry to get an ARA phase reading.</p>
           <p class="jn-phase-next" id="jn-phase-next" style="display:none"></p>
           <span class="jn-phase-src" id="jn-phase-src" style="display:none"></span>
         </div>
 
-        <!-- Rhythm indicator -->
-        <div class="mt-phase-card jn-rhythm-card">
-          <div class="mt-params-header" style="margin-bottom:.85rem">
-            <span class="mt-section-label">Your rhythm</span>
-            <span class="jn-rhythm-weeks">last 4 weeks</span>
+        <!-- 4. RHYTHM CARD (8 weeks) -->
+        <div class="tl-card tl-rhythm-card">
+          <div class="tl-card-header">
+            <span class="tl-card-eyebrow">Your Rhythm</span>
+            <span style="font-size:.52rem;color:rgba(255,255,255,.22)">last 8 weeks</span>
           </div>
-          <div class="jn-rhythm-dots" id="jn-rhythm-dots"></div>
-          <p class="jn-rhythm-hint">Each dot = one week. Lit means you wrote an entry.</p>
-          <div class="jn-streak-row">
-            <span class="jn-streak-count" id="jn-streak-count" style="display:none"></span>
+          <div class="tl-rhythm-grid" id="jn-rhythm-dots"></div>
+          <div class="tl-rhythm-footer">
+            <p class="jn-rhythm-hint">Each dot = one week. Lit = you wrote an entry.</p>
+            <span class="tl-streak-badge" id="jn-streak-count" style="display:none"></span>
           </div>
         </div>
 
-        <!-- Parameter trend charts -->
-        <div class="mt-phase-card" id="jn-param-charts" style="display:none">
-          <div class="mt-params-header" style="margin-bottom:.9rem">
-            <span class="mt-section-label">Parameter trends</span>
+        <!-- 5. PARAMETER SPARKLINES (conditional) -->
+        <div class="tl-card" id="jn-param-charts" style="display:none">
+          <div class="tl-card-header">
+            <span class="tl-card-eyebrow">Parameter Trends</span>
           </div>
           <div id="jn-param-charts-body"></div>
         </div>
 
-        <!-- Tank family / inhabitants -->
-        <div class="mt-phase-card" id="jn-inhabitants">
-          <div class="mt-params-header" style="margin-bottom:.85rem">
-            <span class="mt-section-label">Tank family</span>
-            <button class="mt-text-btn" id="jn-inh-add">+ Add resident</button>
+        <!-- 6. TANK FAMILY (chips) -->
+        <div class="tl-card" id="jn-inhabitants">
+          <div class="tl-card-header">
+            <span class="tl-card-eyebrow">Tank Family</span>
+            <button class="mt-text-btn" id="jn-inh-add">+ Add</button>
           </div>
           <div id="jn-inh-body"><p class="jn-entry-empty">No residents recorded yet.</p></div>
         </div>
 
-        <!-- No entries yet -->
-        <div id="jn-no-entries" style="text-align:center;padding:2rem 0">
-          <p class="bt" style="color:rgba(235,240,236,.38);margin-bottom:1.4rem">No entries yet. What did you notice today?</p>
+        <!-- 7. ENTRIES TIMELINE -->
+        <div id="jn-no-entries" class="tl-empty-state" style="display:none">
+          <p class="tl-empty-text">No entries yet.<br>What did you notice today?</p>
           <button class="btn bf" id="jn-entry-open-2">Write your first entry</button>
         </div>
 
-        <!-- Entries -->
         <div id="jn-has-entries" style="display:none">
-          <div class="mt-params-header" style="margin-bottom:.85rem">
-            <span class="mt-section-label">Entries</span>
+          <div class="tl-card-header" style="margin-bottom:.75rem">
+            <span class="tl-card-eyebrow" style="margin-bottom:0">Entries</span>
             <button class="mt-text-btn" id="jn-entry-open">+ New entry</button>
           </div>
-          <ul class="jn-entry-list" id="jn-entry-list"></ul>
+          <ul class="tl-timeline" id="jn-entry-list"></ul>
           <div style="text-align:center;padding:.8rem 0">
             <button class="mt-text-btn" id="jn-load-more" style="display:none">Show older entries</button>
           </div>
         </div>
 
-        <div style="margin-top:2rem">
-          <button class="btn bf" style="width:100%;margin-bottom:1.1rem" id="jn-entry-open-main">Write today's entry</button>
-          <div style="text-align:center;display:flex;justify-content:center;gap:1.4rem">
-            <button class="mt-text-btn" id="jn-export">Export data</button>
-            <button class="mt-text-btn mt-danger" id="jn-reset-tank">Delete this tank</button>
-          </div>
+        <!-- SECONDARY ACTIONS -->
+        <div class="tl-secondary-actions">
+          <button class="mt-text-btn" id="jn-export">Export data</button>
+          <button class="mt-text-btn mt-danger" id="jn-reset-tank">Delete this tank</button>
         </div>
 
-      </div>
+      </div><!-- /jn-dashboard -->
     </div>
   </section>
+
+  <!-- STICKY CTA: single button, replaces duplicate buttons -->
+  <div class="tl-sticky-cta" id="jn-sticky-cta">
+    <button class="btn bf tl-sticky-btn" id="jn-entry-open-main">Write today's entry</button>
+  </div>
 
   <footer><div style="opacity:.5;pointer-events:none;display:flex;align-items:center;justify-content:center"><svg width="175" height="30" viewBox="0 0 175 30" fill="none" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true"><circle cx="13" cy="15" r="11.5" stroke="rgba(61,214,232,0.22)" stroke-width="1.0" fill="none"/><line x1="16.8" y1="24.5" x2="16.8" y2="9" stroke="rgba(100,200,82,0.82)" stroke-width="1.6" stroke-linecap="round"/><line x1="19.8" y1="23.0" x2="19.8" y2="17" stroke="rgba(100,200,82,0.65)" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="12" cy="15" rx="4.0" ry="2.3" fill="rgba(40,120,150,0.85)"/><path d="M8.2 15 L6 12.5 L6 17.5 Z" fill="rgba(40,120,150,0.78)"/><path d="M2 15 C5 8.5 9 8.5 12 15 C15 21.5 19 21.5 22 15" stroke="rgba(61,214,232,0.96)" stroke-width="1.1" fill="none" stroke-linecap="round"/><circle cx="14.8" cy="14.2" r=".9" fill="rgba(255,255,255,0.96)"/><text x="32" y="13" font-family="DM Sans,system-ui,sans-serif" font-size="6" font-weight="300" fill="rgba(255,255,255,.42)" letter-spacing="2.5">AQUATIC</text><text x="32" y="27" font-family="Cormorant Garamond,Georgia,serif" font-size="17" font-weight="300" font-style="italic" fill="rgba(255,255,255,.82)">Rhythm</text></svg></div><span class="fm">Aligned with living systems.</span></footer>
   <div class="subfooter"><a href="/privacy" data-page="privacy" class="sflink">Privacy Policy</a><span class="sfdot">·</span><a href="/terms" data-page="terms" class="sflink">Terms of Use</a><span class="sfdot">·</span><a href="/about" data-page="about" class="sflink">About</a></div>
