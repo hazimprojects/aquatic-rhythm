@@ -852,6 +852,15 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:flex;align-items:center;j
 .mt-setup-divider{height:1px;background:rgba(255,255,255,.06);margin:1rem 0 .9rem}
 .mt-save-btn{width:100%;margin-top:.5rem}
 
+/* ── Tank selector (multi-tank) ── */
+.jn-tank-selector{display:flex;gap:.35rem;overflow-x:auto;margin-bottom:1.4rem;padding-bottom:.2rem;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.jn-tank-selector::-webkit-scrollbar{display:none}
+.jn-tank-tab{display:flex;align-items:center;gap:.42rem;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.42rem .78rem;color:rgba(255,255,255,.45);font-size:.7rem;font-family:var(--sans);cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.jn-tank-tab:hover{border-color:rgba(61,214,232,.3);color:rgba(255,255,255,.75)}
+.jn-tank-tab.active{background:rgba(61,214,232,.12);border-color:rgba(61,214,232,.4);color:rgba(61,214,232,.9)}
+.jn-tank-add{font-size:1rem;padding:.36rem .7rem;border-style:dashed;color:rgba(255,255,255,.3)}
+.jn-tank-add:hover{color:rgba(61,214,232,.7);border-color:rgba(61,214,232,.3)}
+
 /* ── P1: Entry params line ── */
 .jn-entry-params{display:block;font-size:.56rem;letter-spacing:.08em;font-family:monospace;color:rgba(255,255,255,.25);margin-top:.3rem}
 
