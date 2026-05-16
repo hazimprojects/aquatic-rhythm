@@ -79,7 +79,9 @@
     '/tools':      'tools',
     '/tools/':     'tools',
     '/journal':    'journal',
-    '/journal/':   'journal'
+    '/journal/':   'journal',
+    '/tank-log':   'tank-log',
+    '/tank-log/':  'tank-log'
   };
 
   var titleMap = {
@@ -91,7 +93,8 @@
     'terms':     'Terms of Use — Aquatic Rhythm',
     'reading':   'Reading — Aquarium Ecology Guides',
     'tools':     'Labs & Tools — Aquatic Rhythm',
-    'journal':   'Keeper\'s Log — Aquatic Rhythm'
+    'journal':   'Keeper\'s Log — Aquatic Rhythm',
+    'tank-log':  'Keeper\'s Log — Aquatic Rhythm'
   };
 
   var descMap = {
@@ -103,7 +106,8 @@
     'terms':     'Terms of Use for Aquatic Rhythm and Rhyssa. Written plainly, without unnecessary complexity.',
     'reading':   'Short aquarium ecology guides — modular, mobile-friendly, grounded in ARA. Expand a title for details; simulators live under Labs & tools.',
     'tools':     'Interactive aquarium simulators and planners. Try decisions on screen before you make them in the tank.',
-    'journal':   'A keeper\'s log for your aquarium. Observe, reflect, and track your ARA rhythm — stored privately on your device.'
+    'journal':   'A keeper\'s log for your aquarium. Observe, reflect, and track your ARA rhythm — stored privately on your device.',
+    'tank-log':  'Your aquarium\'s keeper log — ARA phase, rhythm, tank family, and private entries. Stored on your device.'
   };
 
   function updateMeta(id) {
@@ -112,10 +116,11 @@
   }
 
   function updateBottomNav(id) {
+    var navId = id === 'tank-log' ? 'journal' : id;
     document.querySelectorAll('.bnav-item').forEach(function (item) {
       var tab = item.getAttribute('data-bnav');
-      item.classList.toggle('active', tab === id);
-      item.setAttribute('aria-current', tab === id ? 'page' : 'false');
+      item.classList.toggle('active', tab === navId);
+      item.setAttribute('aria-current', tab === navId ? 'page' : 'false');
     });
   }
 
@@ -799,6 +804,112 @@
       return '<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="5" width="16" height="11" rx="1.2" stroke="' + c + '" stroke-width="1.2" fill="none"/><line x1="2" y1="12" x2="18" y2="12" stroke="' + c + '" stroke-width=".7" opacity=".4"/></svg>';
     }
 
+    /* ── Large tank icons for overview cards ── */
+    function tankTypeIconLg(type, shape) {
+      var cols = {
+        freshwater: 'rgba(61,214,232,.55)',
+        planted:    'rgba(100,200,82,.65)',
+        marine:     'rgba(61,130,232,.7)',
+        brackish:   'rgba(150,180,100,.6)',
+        coldwater:  'rgba(160,210,240,.65)',
+        paludarium: 'rgba(120,200,120,.65)'
+      };
+      var c = cols[type] || 'rgba(61,214,232,.45)';
+      var fill = 'rgba(61,214,232,.04)';
+      if (type === 'planted') {
+        return '<svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true" fill="none">'
+          + '<rect x="5" y="12" width="44" height="30" rx="2.5" stroke="' + c + '" stroke-width="1.5" fill="rgba(100,200,82,.05)"/>'
+          + '<line x1="5" y1="34" x2="49" y2="34" stroke="' + c + '" stroke-width=".8" opacity=".3"/>'
+          + '<line x1="17" y1="42" x2="13" y2="26" stroke="' + c + '" stroke-width="1.4" stroke-linecap="round"/>'
+          + '<line x1="27" y1="42" x2="27" y2="20" stroke="' + c + '" stroke-width="1.4" stroke-linecap="round"/>'
+          + '<line x1="37" y1="42" x2="41" y2="26" stroke="' + c + '" stroke-width="1.4" stroke-linecap="round"/>'
+          + '</svg>';
+      }
+      if (type === 'marine') {
+        return '<svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true" fill="none">'
+          + '<rect x="5" y="12" width="44" height="30" rx="2.5" stroke="' + c + '" stroke-width="1.5" fill="rgba(61,130,232,.05)"/>'
+          + '<path d="M10 36 Q15 28 20 36 Q25 28 30 36 Q35 28 40 36 Q44 30 49 33" stroke="' + c + '" stroke-width="1.3" fill="none" stroke-linecap="round"/>'
+          + '<circle cx="20" cy="22" r="3.5" stroke="' + c + '" stroke-width="1" opacity=".6"/>'
+          + '<line x1="5" y1="29" x2="49" y2="29" stroke="' + c + '" stroke-width=".8" opacity=".2"/>'
+          + '</svg>';
+      }
+      if (type === 'paludarium') {
+        return '<svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true" fill="none">'
+          + '<rect x="5" y="12" width="44" height="30" rx="2.5" stroke="' + c + '" stroke-width="1.5" fill="rgba(120,200,120,.05)"/>'
+          + '<line x1="5" y1="30" x2="49" y2="30" stroke="' + c + '" stroke-width="1" opacity=".35"/>'
+          + '<line x1="17" y1="30" x2="14" y2="20" stroke="' + c + '" stroke-width="1.3" stroke-linecap="round"/>'
+          + '<line x1="27" y1="30" x2="27" y2="16" stroke="' + c + '" stroke-width="1.3" stroke-linecap="round"/>'
+          + '<line x1="37" y1="30" x2="40" y2="20" stroke="' + c + '" stroke-width="1.3" stroke-linecap="round"/>'
+          + '</svg>';
+      }
+      if (shape === 'sphere') {
+        return '<svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true" fill="none">'
+          + '<circle cx="27" cy="27" r="22" stroke="' + c + '" stroke-width="1.5" fill="rgba(61,214,232,.04)"/>'
+          + '<path d="M8 27 Q27 19 46 27" stroke="' + c + '" stroke-width="1" opacity=".4"/>'
+          + '<path d="M8 33 Q27 25 46 33" stroke="' + c + '" stroke-width=".8" opacity=".2"/>'
+          + '</svg>';
+      }
+      if (shape === 'cube') {
+        return '<svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true" fill="none">'
+          + '<rect x="8" y="8" width="37" height="37" stroke="' + c + '" stroke-width="1.5" fill="rgba(61,214,232,.04)"/>'
+          + '<line x1="8" y1="33" x2="45" y2="33" stroke="' + c + '" stroke-width=".8" opacity=".3"/>'
+          + '</svg>';
+      }
+      return '<svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true" fill="none">'
+        + '<rect x="5" y="14" width="44" height="28" rx="2.5" stroke="' + c + '" stroke-width="1.5" fill="rgba(61,214,232,.04)"/>'
+        + '<line x1="5" y1="32" x2="49" y2="32" stroke="' + c + '" stroke-width="1" opacity=".3"/>'
+        + '<ellipse cx="20" cy="25" rx="7" ry="4" fill="' + c + '" opacity=".35"/>'
+        + '<path d="M14 25 L10 20.5 L10 29.5 Z" fill="' + c + '" opacity=".3"/>'
+        + '</svg>';
+    }
+
+    /* ── Journal overview: card list of all tanks ── */
+    function renderJournalOverview() {
+      var cardsEl = document.getElementById('jn-tank-cards');
+      if (!cardsEl) return;
+      var d = loadData();
+      if (!d.tanks || !d.tanks.length) {
+        cardsEl.innerHTML = '<div class="jn-ov-empty">'
+          + '<div class="jn-ov-empty-icon" aria-hidden="true">'
+          + '<svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="5" y="14" width="42" height="27" rx="2.5" stroke="rgba(61,214,232,.28)" stroke-width="1.4"/><line x1="5" y1="32" x2="47" y2="32" stroke="rgba(61,214,232,.14)" stroke-width="1"/><line x1="15" y1="24" x2="37" y2="24" stroke="rgba(61,214,232,.22)" stroke-width="1.2" stroke-linecap="round"/></svg>'
+          + '</div>'
+          + '<h2 class="jn-ov-empty-title">Start your log</h2>'
+          + '<p class="jn-ov-empty-desc">Set up your first aquarium to begin writing entries, tracking your rhythm, and reading your ARA phase.</p>'
+          + '<button class="btn bf" id="jn-ov-setup-open">Set up my aquarium</button>'
+          + '</div>';
+        return;
+      }
+      cardsEl.innerHTML = d.tanks.map(function (t) {
+        var p = t.profile || {};
+        var entries = t.entries || [];
+        var inhs = t.inhabitants || [];
+        var lastEntry = entries.length ? entries[entries.length - 1] : null;
+        var phase = null;
+        if (lastEntry && lastEntry.params) phase = assessPhaseFromParams(lastEntry.params);
+        if (!phase && lastEntry) phase = assessPhaseFromState(lastEntry.keeperState, p.setupDate);
+        var phData = phase ? phaseInfo[phase] : null;
+        var age = tankAge(p.setupDate);
+        var meta = [(p.volume ? p.volume + ' ' + (p.unit || 'L') : ''), p.type, age].filter(Boolean).join(' · ');
+        var icon = tankTypeIconLg(p.type, p.shape);
+        var activeInhs = inhs.filter(function (i) { return i.status !== 'passed' && i.status !== 'rehomed'; }).length;
+        var entryLabel = entries.length ? entries.length + (entries.length === 1 ? ' entry' : ' entries') : '';
+        return '<button class="jn-tank-card" data-tank-id="' + t.id + '" aria-label="Open log for ' + (p.name || 'tank') + '">'
+          + '<div class="jn-card-icon">' + icon + '</div>'
+          + '<div class="jn-card-body">'
+          + '<h3 class="jn-card-name">' + (p.name || 'My Tank') + '</h3>'
+          + '<p class="jn-card-meta">' + meta + '</p>'
+          + (phData ? '<span class="jn-card-phase" style="color:' + phData.color + '">' + phData.label + '</span>'
+                    : '<span class="jn-card-phase jn-card-phase--empty">' + (entries.length ? '—' : 'No entries yet') + '</span>')
+          + (activeInhs || entryLabel
+            ? '<span class="jn-card-stats">' + [activeInhs ? activeInhs + (activeInhs === 1 ? ' resident' : ' residents') : '', entryLabel].filter(Boolean).join(' · ') + '</span>'
+            : '')
+          + '</div>'
+          + '<div class="jn-card-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>'
+          + '</button>';
+      }).join('')
+      + '<button class="jn-card-add" id="jn-ov-add-tank">+ Add aquarium</button>';
+    }
+
     /* ── Tank selector renderer ── */
     function renderTankSelector(d) {
       var sel = document.getElementById('jn-tank-selector');
@@ -1063,16 +1174,15 @@
     }
 
     function renderDashboard() {
+      renderJournalOverview();
       var d = loadData();
       renderTankSelector(d);
       var tank = getActiveTank(d);
       if (!tank) {
-        document.getElementById('jn-empty') && (document.getElementById('jn-empty').style.display = '');
-        document.getElementById('jn-dashboard') && (document.getElementById('jn-dashboard').style.display = 'none');
+        var tlPage = document.getElementById('pg-tank-log');
+        if (tlPage && tlPage.classList.contains('active')) window.go('journal', false);
         return;
       }
-      document.getElementById('jn-empty') && (document.getElementById('jn-empty').style.display = 'none');
-      document.getElementById('jn-dashboard') && (document.getElementById('jn-dashboard').style.display = '');
 
       var p = tank.profile;
       var nameEl = document.getElementById('jn-tank-name');
@@ -1197,6 +1307,27 @@
 
     document.addEventListener('click', function (e) {
       var target = e.target;
+
+      /* Tank card click → navigate to tank log */
+      var tankCard = target.closest('.jn-tank-card[data-tank-id]');
+      if (tankCard && tankCard.dataset.tankId) {
+        var d = loadData();
+        d.activeTankId = tankCard.dataset.tankId;
+        saveData(d);
+        window.go('tank-log', true);
+        return;
+      }
+
+      /* Add aquarium / Setup from overview */
+      if (target.id === 'jn-ov-add-tank' || target.id === 'jn-ov-setup-open') {
+        resetSetupModal();
+        if (formSetup) formSetup.dataset.editingId = '';
+        var delBtnOv = document.getElementById('mt-setup-delete');
+        if (delBtnOv) delBtnOv.style.display = 'none';
+        openModal('mt-modal-setup');
+        return;
+      }
+
       if (target.id === 'mt-setup-open' || target.id === 'jn-setup-open') {
         if (formSetup) formSetup.dataset.editingId = '';
         var delBtnNew = document.getElementById('mt-setup-delete');
@@ -1242,6 +1373,7 @@
         }
         closeAllModals();
         renderDashboard();
+        window.go('journal', false);
         return;
       }
       if (target.id === 'jn-add-tank') {
@@ -1276,6 +1408,7 @@
             saveData(d);
           }
           renderDashboard();
+          window.go('journal', false);
         }
         return;
       }
@@ -1378,10 +1511,12 @@
           d.tanks.push(newTank);
           d.activeTankId = newTank.id;
         }
+        var isNew = !editingId;
         saveData(d);
         resetSetupModal();
         closeAllModals();
         renderDashboard();
+        if (isNew) window.go('tank-log', true);
       });
     }
 
@@ -1569,6 +1704,16 @@
       if (openBtn) {
         openBtn.addEventListener('click', function () { resetSetupModal(); }, true);
       }
+    }());
+
+    /* ── Hook go() to re-render on journal/tank-log navigation ── */
+    (function () {
+      var _origGo = window.go;
+      window.go = function (id, push) {
+        _origGo.call(window, id, push);
+        if (id === 'journal') renderJournalOverview();
+        else if (id === 'tank-log') renderDashboard();
+      };
     }());
 
     renderDashboard();
