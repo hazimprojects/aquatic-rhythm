@@ -919,11 +919,16 @@
       sel.innerHTML = d.tanks.map(function (t) {
         var active = t.id === d.activeTankId;
         var icon = tankTypeIcon((t.profile || {}).type, (t.profile || {}).shape);
+        var name = ((t.profile || {}).name || 'Tank');
         return '<button class="jn-tank-tab' + (active ? ' active' : '') + '" data-tank-id="' + t.id + '">'
-          + icon + '<span>' + ((t.profile || {}).name || 'Tank') + '</span>'
+          + '<span class="jn-ttab-icon">' + icon + '</span>'
+          + '<span class="jn-ttab-name">' + name + '</span>'
           + '</button>';
       }).join('')
-      + '<button class="jn-tank-tab jn-tank-add" id="jn-add-tank" title="Add tank">+</button>';
+      + '<button class="jn-tank-tab jn-tank-add" id="jn-add-tank" title="Add aquarium">'
+      + '<span class="jn-ttab-icon" style="font-size:1.1rem;line-height:1;color:rgba(255,255,255,.3)">+</span>'
+      + '<span class="jn-ttab-name" style="color:rgba(255,255,255,.2)">Add</span>'
+      + '</button>';
     }
 
     /* ── P1: Entry list with pagination ── */
