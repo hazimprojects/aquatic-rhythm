@@ -931,13 +931,13 @@
 <div id="pg-reading" class="page"><div class="pl">
 
   <!-- HEADER -->
-  <section style="padding:10rem clamp(1.5rem,5vw,4.5rem) 4rem">
+  <section class="rd-reading-head" style="padding:clamp(5.5rem,14vw,7rem) clamp(1.5rem,5vw,4.5rem) 2.2rem">
     <div class="cap" style="max-width:760px">
       <div class="sr">
         <span class="ey">Reading</span>
-        <h1 class="dlg" style="color:rgba(255,255,255,.88)">Read at your<br><em style="font-style:italic;color:rgba(124,168,156,.78)">own rhythm.</em></h1>
+        <h1 class="dlg rd-reading-h1" style="color:rgba(255,255,255,.88)">Read at your<br><em style="font-style:italic;color:rgba(124,168,156,.78)">own rhythm.</em></h1>
         <p class="bt sr d1" style="max-width:540px;margin-top:1.4rem;line-height:1.9">Short ecology guides — broken into small blocks so you can read on a phone, pause, and come back. Plain language first; Latin names only when they help.</p>
-        <p class="bt sr d2" style="max-width:540px;margin-top:.8rem;font-size:.88rem;color:rgba(255,255,255,.50);line-height:1.85">Articles on biology and chemistry · reflections on keeper rhythm · interactive labs.</p>
+        <p class="bt sr d2" style="max-width:540px;margin-top:.8rem;font-size:.88rem;color:rgba(255,255,255,.50);line-height:1.85">Ecology and behaviour in plain language · keeper rhythm and ARA. <a href="/tools" data-page="tools" style="color:rgba(124,168,156,.75);text-decoration:none;border-bottom:1px solid rgba(124,168,156,.22)">Labs &amp; tools</a> for simulators live on their own tab.</p>
       </div>
     </div>
   </section>
@@ -955,9 +955,18 @@
           <p class="rd-cat-desc">What the water, fish, plants, and biology are telling you — before problems become visible.</p>
         </div>
 
-        <a href="/articles/new-tank-syndrome" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-          <div class="rd-card-bar"></div>
-          <div class="rd-card-inner">
+        <div class="rd-cards rd-acc-wrap">
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-1" id="rd-acc-1-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-1" hidden>
+            <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
             <div class="rd-card-tags">
               <span class="rd-tag rd-tag-level">Beginner &amp; Intermediate</span>
               <span class="rd-tag">7 modules · ~14 min</span>
@@ -967,11 +976,20 @@
             <p class="rd-card-desc-text">Cloudy water, weary fish, rising ammonia — a gentle walk through the nitrogen cycle and why "doing more" often stresses the biology.</p>
             <span class="rd-card-cta">Read →</span>
           </div>
-        </a>
-
-        <a href="/articles/cycled-tank-problems" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-          <div class="rd-card-bar"></div>
-          <div class="rd-card-inner">
+            <a href="/articles/new-tank-syndrome" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-2" id="rd-acc-2-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-2" hidden>
+            <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
             <div class="rd-card-tags">
               <span class="rd-tag rd-tag-level">Intermediate</span>
               <span class="rd-tag">5 modules · ~10 min</span>
@@ -981,11 +999,20 @@
             <p class="rd-card-desc-text">The cycle is done but problems keep returning. Filter maintenance, nitrate biology, dominant stressors, and learning to read what your fish are telling you.</p>
             <span class="rd-card-cta">Read →</span>
           </div>
-        </a>
-
-        <a href="/articles/why-is-my-aquarium-water-cloudy" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-          <div class="rd-card-bar"></div>
-          <div class="rd-card-inner">
+            <a href="/articles/cycled-tank-problems" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-3" id="rd-acc-3-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-3" hidden>
+            <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
             <div class="rd-card-tags">
               <span class="rd-tag rd-tag-level">All levels</span>
               <span class="rd-tag">4 modules · ~7 min</span>
@@ -994,11 +1021,20 @@
             <p class="rd-card-desc-text">White haze, green tint, yellow cast — a guide to reading what each type of cloudy water means, and what ARA says about responding without panicking.</p>
             <span class="rd-card-cta">Read →</span>
           </div>
-        </a>
-
-        <a href="/articles/how-often-water-changes" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-          <div class="rd-card-bar"></div>
-          <div class="rd-card-inner">
+            <a href="/articles/why-is-my-aquarium-water-cloudy" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-4" id="rd-acc-4-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-4" hidden>
+            <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
             <div class="rd-card-tags">
               <span class="rd-tag rd-tag-level">All levels</span>
               <span class="rd-tag">4 modules · ~7 min</span>
@@ -1007,11 +1043,20 @@
             <p class="rd-card-desc-text">There is no universal answer — only an honest look at your keeper rhythm, your tank's phase, and what coherent continuity actually means for a living system.</p>
             <span class="rd-card-cta">Read →</span>
           </div>
-        </a>
-
-        <a href="/articles/fish-hiding-what-does-it-mean" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-          <div class="rd-card-bar"></div>
-          <div class="rd-card-inner">
+            <a href="/articles/how-often-water-changes" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-5" id="rd-acc-5-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-5" hidden>
+            <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
             <div class="rd-card-tags">
               <span class="rd-tag rd-tag-level">All levels</span>
               <span class="rd-tag">4 modules · ~7 min</span>
@@ -1020,11 +1065,20 @@
             <p class="rd-card-desc-text">Before you test the water or change anything, read the signal. A fish hiding in a corner is showing you something your test kit cannot.</p>
             <span class="rd-card-cta">Read →</span>
           </div>
-        </a>
-
-        <a href="/articles/fish-keep-dying-new-tank" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-          <div class="rd-card-bar"></div>
-          <div class="rd-card-inner">
+            <a href="/articles/fish-hiding-what-does-it-mean" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-6" id="rd-acc-6-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-6" hidden>
+            <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
             <div class="rd-card-tags">
               <span class="rd-tag rd-tag-level">All levels</span>
               <span class="rd-tag">4 modules · ~7 min</span>
@@ -1033,11 +1087,20 @@
             <p class="rd-card-desc-text">Early fish losses feel like failure. They almost never are. What actually happens in a new tank, what was never in your control, and how to move forward.</p>
             <span class="rd-card-cta">Read →</span>
           </div>
-        </a>
-
-        <a href="/articles/algae-in-aquarium" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-          <div class="rd-card-bar"></div>
-          <div class="rd-card-inner">
+            <a href="/articles/fish-keep-dying-new-tank" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-7" id="rd-acc-7-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-7" hidden>
+            <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
             <div class="rd-card-tags">
               <span class="rd-tag rd-tag-level">All levels</span>
               <span class="rd-tag">4 modules · ~7 min</span>
@@ -1046,11 +1109,20 @@
             <p class="rd-card-desc-text">Algae is not the problem — it is the reading. Different types signal different Environmental Rhythm misalignments. Learn to identify and align, not just eradicate.</p>
             <span class="rd-card-cta">Read →</span>
           </div>
-        </a>
-
-        <a href="/articles/perfect-parameters-fish-dying" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-          <div class="rd-card-bar"></div>
-          <div class="rd-card-inner">
+            <a href="/articles/algae-in-aquarium" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-8" id="rd-acc-8-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-8" hidden>
+            <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
             <div class="rd-card-tags">
               <span class="rd-tag rd-tag-level">All levels</span>
               <span class="rd-tag">4 modules · ~7 min</span>
@@ -1059,11 +1131,20 @@
             <p class="rd-card-desc-text">When ammonia is zero and fish are still struggling, the answer is almost always in what the test kit doesn't measure. A guide to dominant stressors and reading the Livestock Rhythm.</p>
             <span class="rd-card-cta">Read →</span>
           </div>
-        </a>
-
-        <a href="/articles/betta-fish-behaviour" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-          <div class="rd-card-bar"></div>
-          <div class="rd-card-inner">
+            <a href="/articles/perfect-parameters-fish-dying" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-9" id="rd-acc-9-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-9" hidden>
+            <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
             <div class="rd-card-tags">
               <span class="rd-tag rd-tag-level">All levels</span>
               <span class="rd-tag">4 modules · ~7 min</span>
@@ -1072,11 +1153,20 @@
             <p class="rd-card-desc-text">Bettas are the most readable fish in the hobby. Inactivity, colour loss, surface breathing — each is a Livestock Rhythm signal with a specific meaning, before it becomes urgent.</p>
             <span class="rd-card-cta">Read →</span>
           </div>
-        </a>
-
-        <a href="/articles/aquarium-plants-not-growing" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-          <div class="rd-card-bar"></div>
-          <div class="rd-card-inner">
+            <a href="/articles/betta-fish-behaviour" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-10" id="rd-acc-10-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-10" hidden>
+            <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
             <div class="rd-card-tags">
               <span class="rd-tag rd-tag-level">All levels</span>
               <span class="rd-tag">4 modules · ~7 min</span>
@@ -1085,11 +1175,20 @@
             <p class="rd-card-desc-text">Melting, yellowing, algae on leaves — plants fail before water tests show anything. A guide to reading what your plants are actually responding to, and aligning your setup to what it can genuinely support.</p>
             <span class="rd-card-cta">Read →</span>
           </div>
-        </a>
-
-        <a href="/articles/shrimp-dying-aquarium" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-          <div class="rd-card-bar"></div>
-          <div class="rd-card-inner">
+            <a href="/articles/aquarium-plants-not-growing" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-11" id="rd-acc-11-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-11" hidden>
+            <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
             <div class="rd-card-tags">
               <span class="rd-tag rd-tag-level">All levels</span>
               <span class="rd-tag">4 modules · ~7 min</span>
@@ -1098,11 +1197,20 @@
             <p class="rd-card-desc-text">Shrimp are the most sensitive readers of Water Rhythm in the hobby. TDS creep, temperature swing, copper traces — they signal drift long before your test kit does.</p>
             <span class="rd-card-cta">Read →</span>
           </div>
-        </a>
-
-        <a href="/articles/low-tech-planted-tank" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-          <div class="rd-card-bar"></div>
-          <div class="rd-card-inner">
+            <a href="/articles/shrimp-dying-aquarium" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-12" id="rd-acc-12-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-12" hidden>
+            <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
             <div class="rd-card-tags">
               <span class="rd-tag rd-tag-level">All levels</span>
               <span class="rd-tag">4 modules · ~8 min</span>
@@ -1111,11 +1219,20 @@
             <p class="rd-card-desc-text">Low-tech planted tanks succeed when they match the keeper's actual rhythm — not an idealised version of it. Plant selection, light consistency, and starting small before expanding.</p>
             <span class="rd-card-cta">Read →</span>
           </div>
-        </a>
-
-        <a href="/articles/community-fish-tank" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-          <div class="rd-card-bar"></div>
-          <div class="rd-card-inner">
+            <a href="/articles/low-tech-planted-tank" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-13" id="rd-acc-13-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-13" hidden>
+            <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
             <div class="rd-card-tags">
               <span class="rd-tag rd-tag-level">All levels</span>
               <span class="rd-tag">4 modules · ~7 min</span>
@@ -1124,11 +1241,20 @@
             <p class="rd-card-desc-text">Compatibility charts tell you which fish won't kill each other. They don't tell you which fish will stress each other slowly. A guide to reading community dynamics through the Livestock Rhythm.</p>
             <span class="rd-card-cta">Read →</span>
           </div>
-        </a>
-
-        <a href="/articles/when-is-tank-ready-for-fish" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-          <div class="rd-card-bar"></div>
-          <div class="rd-card-inner">
+            <a href="/articles/community-fish-tank" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-14" id="rd-acc-14-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-14" hidden>
+            <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
             <div class="rd-card-tags">
               <span class="rd-tag rd-tag-level">All levels</span>
               <span class="rd-tag">4 modules · ~7 min</span>
@@ -1137,11 +1263,20 @@
             <p class="rd-card-desc-text">Zero ammonia and nitrite means the cycle exists — not that the tank is ready. A guide to reading the Early-to-Developing phase transition and choosing the right first fish.</p>
             <span class="rd-card-cta">Read →</span>
           </div>
-        </a>
-
-        <a href="/articles/ich-keeps-coming-back" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-          <div class="rd-card-bar"></div>
-          <div class="rd-card-inner">
+            <a href="/articles/when-is-tank-ready-for-fish" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-15" id="rd-acc-15-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-15" hidden>
+            <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
             <div class="rd-card-tags">
               <span class="rd-tag rd-tag-level">All levels</span>
               <span class="rd-tag">4 modules · ~7 min</span>
@@ -1150,9 +1285,12 @@
             <p class="rd-card-desc-text">Recurring ich is a Livestock Rhythm signal, not a treatment failure. The parasite returns because the tank returned to the same conditions that suppressed the fish in the first place.</p>
             <span class="rd-card-cta">Read →</span>
           </div>
-        </a>
+            <a href="/articles/ich-keeps-coming-back" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+</div>
 
-      </div>
+        </div>
 
       <!-- DIVIDER -->
       <div style="height:1px;background:linear-gradient(to right,transparent,rgba(139,189,210,.1),transparent);margin:3.5rem 0"></div>
@@ -1164,10 +1302,18 @@
           <p class="rd-cat-desc">Rhythm, capacity, and the honest relationship between keeper and tank.</p>
         </div>
 
-        <div class="rd-cards">
-          <a href="/articles/know-your-rhythm" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-            <div class="rd-card-bar"></div>
+        <div class="rd-cards rd-acc-wrap">
+          <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-16" id="rd-acc-16-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-16" hidden>
             <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
               <div class="rd-card-tags">
                 <span class="rd-tag rd-tag-level">All levels</span>
                 <span class="rd-tag">7 questions</span>
@@ -1176,11 +1322,20 @@
               <p class="rd-card-desc-text">Seven plain questions about how you actually maintain tanks — before volume, lights, or stocking lists.</p>
               <span class="rd-card-cta">Begin the reflection →</span>
             </div>
-          </a>
-
-          <a href="/articles/caring-without-guilt" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-            <div class="rd-card-bar"></div>
+            <a href="/articles/know-your-rhythm" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-17" id="rd-acc-17-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-17" hidden>
             <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
               <div class="rd-card-tags">
                 <span class="rd-tag rd-tag-level">All levels</span>
                 <span class="rd-tag">5 modules · ~9 min</span>
@@ -1189,11 +1344,20 @@
               <p class="rd-card-desc-text">Why guilt makes tanks worse — and what ARA says about your actual relationship with the system you tend.</p>
               <span class="rd-card-cta">Read →</span>
             </div>
-          </a>
-
-          <a href="/articles/reading-the-five-rhythms" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-            <div class="rd-card-bar"></div>
+            <a href="/articles/caring-without-guilt" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-18" id="rd-acc-18-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-18" hidden>
             <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
               <div class="rd-card-tags">
                 <span class="rd-tag rd-tag-level">All levels</span>
                 <span class="rd-tag">5 modules · ~10 min</span>
@@ -1202,11 +1366,20 @@
               <p class="rd-card-desc-text">Water, Biological, Environmental, Livestock, and Keeper — the five ecological rhythms in every tank, and how to read each one before misalignment becomes visible.</p>
               <span class="rd-card-cta">Read →</span>
             </div>
-          </a>
-
-          <a href="/articles/aquarium-maintenance-routine" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-            <div class="rd-card-bar"></div>
+            <a href="/articles/reading-the-five-rhythms" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-19" id="rd-acc-19-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-19" hidden>
             <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
               <div class="rd-card-tags">
                 <span class="rd-tag rd-tag-level">All levels</span>
                 <span class="rd-tag">4 modules · ~7 min</span>
@@ -1215,11 +1388,20 @@
               <p class="rd-card-desc-text">Generic maintenance schedules fail because they ignore keeper rhythm. This guide helps you find the pattern that matches how you actually tend a tank — not how you imagine you will.</p>
               <span class="rd-card-cta">Read →</span>
             </div>
-          </a>
-
-          <a href="/articles/when-hobby-stops-feeling-good" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-            <div class="rd-card-bar"></div>
+            <a href="/articles/aquarium-maintenance-routine" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-20" id="rd-acc-20-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-20" hidden>
             <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
               <div class="rd-card-tags">
                 <span class="rd-tag rd-tag-level">All levels</span>
                 <span class="rd-tag">4 modules · ~8 min</span>
@@ -1228,11 +1410,20 @@
               <p class="rd-card-desc-text">The weight of maintenance, the grief of losses, the guilt of not doing enough. Three honest paths: redesign, simplify, or leave with dignity — none of them failure.</p>
               <span class="rd-card-cta">Read →</span>
             </div>
-          </a>
-
-          <a href="/articles/four-principles-of-ara" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-            <div class="rd-card-bar"></div>
+            <a href="/articles/when-hobby-stops-feeling-good" class="rd-card-go bf">Open article →</a>
+          </div>
+        </div>
+        <div class="rd-card rd-card--acc" data-rd-card>
+          <button type="button" class="rd-card-hit" aria-expanded="false" aria-controls="rd-acc-21" id="rd-acc-21-btn">
+            <span class="rd-card-bar" aria-hidden="true"></span>
+            <span class="rd-card-hit-row">
+              <span class="rd-card-hit-text"></span>
+              <span class="rd-card-chevron" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="rd-card-panel" id="rd-acc-21" hidden>
             <div class="rd-card-inner">
+            <div class="rd-card-bar"></div>
               <div class="rd-card-tags">
                 <span class="rd-tag rd-tag-level">All levels</span>
                 <span class="rd-tag">4 modules · ~9 min</span>
@@ -1241,49 +1432,13 @@
               <p class="rd-card-desc-text">Timing before Technique. Capacity before Ambition. Rhythm before Intensity. Observation before Correction. How the four principles work together as a complete way of reading a living system.</p>
               <span class="rd-card-cta">Read →</span>
             </div>
-          </a>
+            <a href="/articles/four-principles-of-ara" class="rd-card-go bf">Open article →</a>
+          </div>
         </div>
+</div>
 
       </div>
 
-      <!-- DIVIDER -->
-      <div style="height:1px;background:linear-gradient(to right,transparent,rgba(139,189,210,.1),transparent);margin:3.5rem 0"></div>
-
-      <!-- CATEGORY 3: Try It Yourself -->
-      <div class="rd-cat">
-        <div class="rd-cat-header">
-          <span class="rd-cat-label">Hands-on labs</span>
-          <p class="rd-cat-desc">Simulators and planners when you learn best by trying ideas safely on screen.</p>
-        </div>
-        <div class="rd-cards">
-          <a href="/articles/tank-simulator" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-            <div class="rd-card-bar"></div>
-            <div class="rd-card-inner">
-              <div class="rd-card-tags">
-                <span class="rd-tag rd-tag-level">All levels</span>
-                <span class="rd-tag rd-tag-int">Interactive simulator</span>
-              </div>
-              <h2 class="rd-card-title">Tank Cycle Simulator<br><em>Watch the biology happen.</em></h2>
-              <p class="rd-card-desc-text">Choose fishless or fish-in cycling, manage your equipment, and watch how ammonia, nitrite, and nitrate respond to your decisions — in real time.</p>
-              <span class="rd-card-cta">Try the simulator →</span>
-            </div>
-          </a>
-
-          <a href="/articles/tank-builder" class="rd-card" onmouseover="this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-            <div class="rd-card-bar"></div>
-            <div class="rd-card-inner">
-              <div class="rd-card-tags">
-                <span class="rd-tag rd-tag-level">Beginner</span>
-                <span class="rd-tag rd-tag-int">Interactive lab</span>
-              </div>
-              <h2 class="rd-card-title">Tank Builder<br><em>Build your first system.</em></h2>
-              <p class="rd-card-desc-text">An interactive lab for setting up your first aquarium. Add equipment, explore how each piece affects the system, and understand what your tank actually needs — before you buy anything.</p>
-              <span class="rd-card-cta">Enter the lab →</span>
-            </div>
-          </a>
-
-        </div>
-      </div>  <!-- /rd-cat Try It Yourself -->
 
     </div>
   </section>
@@ -1296,6 +1451,7 @@
         <div style="display:flex;gap:1rem;flex-wrap:wrap">
           <a href="/ara" data-page="ara" style="font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:rgba(124,168,156,.78);border:1px solid rgba(124,168,156,.35);padding:.55rem 1.2rem;border-radius:2px;transition:color .25s,border-color .25s" onmouseover="this.style.color='rgba(124,168,156,.95)';this.style.borderColor='rgba(124,168,156,.55)'" onmouseout="this.style.color='rgba(124,168,156,.78)';this.style.borderColor='rgba(124,168,156,.35)'">Explore the framework →</a>
           <a href="/companion" data-page="companion" style="font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:rgba(255,255,255,.50);border:1px solid rgba(255,255,255,.12);padding:.55rem 1.2rem;border-radius:2px;transition:color .25s,border-color .25s" onmouseover="this.style.color='rgba(124,168,156,.92)';this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.color='rgba(255,255,255,.50)';this.style.borderColor='rgba(255,255,255,.12)'">Meet Rhyssa →</a>
+          <a href="/tools" data-page="tools" style="font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:rgba(255,255,255,.42);border:1px solid rgba(255,255,255,.1);padding:.55rem 1.2rem;border-radius:2px;transition:color .25s,border-color .25s" onmouseover="this.style.color='rgba(124,168,156,.9)';this.style.borderColor='rgba(124,168,156,.35)'" onmouseout="this.style.color='rgba(255,255,255,.42)';this.style.borderColor='rgba(255,255,255,.1)'">Labs &amp; tools →</a>
         </div>
       </div>
     </div>
