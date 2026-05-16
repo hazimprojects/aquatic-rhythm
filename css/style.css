@@ -101,9 +101,10 @@ nav:not(.bnav){position:fixed;top:0;left:0;right:0;z-index:800;height:68px;displ
 /* ── PAGE SYSTEM ── */
 .page{display:none}
 .page.active{display:block;animation:pgin .85s var(--ease) forwards}
-@keyframes pgin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+/* End with transform:none so no ancestor transform (containing block) breaks sticky/fixed inside pages */
+@keyframes pgin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .sr{opacity:0;transform:translateY(18px);transition:opacity 1.05s var(--ease),transform 1.05s var(--ease)}
-.sr.in{opacity:1;transform:translateY(0)}
+.sr.in{opacity:1;transform:none}
 .d1{transition-delay:.08s}.d2{transition-delay:.18s}.d3{transition-delay:.3s}.d4{transition-delay:.44s}.d5{transition-delay:.58s}
 
 /* ── SHARED UTILITIES ── */
@@ -618,6 +619,10 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:flex;align-items:center;j
   .ara-mod-nav-t{font-size:.54rem}
   .ara-mod-nav-s{font-size:.58rem}
   .ara-mod-outro-nav .btn{width:100%;text-align:center}
+  /* Keep intro copy clear of the fixed bottom nav (PWA / narrow screens) */
+  #pg-ara .araph--mod{
+    padding-bottom:calc(clamp(2.25rem,5vh,3rem) + 56px + env(safe-area-inset-bottom));
+  }
 }
 
 .seo-links{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
