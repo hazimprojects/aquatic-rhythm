@@ -95,7 +95,7 @@
   };
 
   var descMap = {
-    'home':      'Plain-language ecology for home aquariums: read water, plants, fish, and bacteria together. Guides, ARA, tools, and optional help from Rhyssa.',
+    'home':      'Aquatic Rhythm — calm ecology guides for home aquariums. ARA (Aquatic Rhythm Alignment) is the reasoning behind Reading, tools, Rhyssa, and your private journal.',
     'ara':       'ARA is a framework for closed-loop aquariums — phase, ecological tolerance, keeper rhythm, and timing before big moves.',
     'companion': 'Rhyssa is an AI aquarium companion shaped by ARA. She helps you interpret what your ecosystem is doing — without rushing to a single fix.',
     'about':     'Why Aquatic Rhythm exists — from uneven advice to a calmer, ecology-first way of reading small tanks.',
