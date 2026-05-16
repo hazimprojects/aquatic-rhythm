@@ -91,11 +91,11 @@
     'terms':     'Terms of Use — Aquatic Rhythm',
     'reading':   'Reading — Aquarium Ecology Guides',
     'tools':     'Labs & Tools — Aquatic Rhythm',
-    'journal':   'Journal — Aquatic Rhythm'
+    'journal':   'Keeper\'s Log — Aquatic Rhythm'
   };
 
   var descMap = {
-    'home':      'Aquatic Rhythm — calm ecology guides for home aquariums. ARA (Aquatic Rhythm Alignment) is the reasoning behind Reading, tools, Rhyssa, and your private journal.',
+    'home':      'Aquatic Rhythm — calm ecology guides for home aquariums. ARA (Aquatic Rhythm Alignment) is the reasoning behind Reading, tools, Rhyssa, and your private keeper\'s log.',
     'ara':       'Explore Aquatic Rhythm Alignment (ARA) as a self-paced module on this site — rhythms, phases, keeper care, four guiding questions, and practical next steps without leaving the framework page.',
     'companion': 'Rhyssa on ChatGPT — start in one tap. She can explain ARA and how she thinks in the chat itself; this page stays short.',
     'about':     'Why Aquatic Rhythm exists — from uneven advice to a calmer, ecology-first way of reading small tanks.',
@@ -103,7 +103,7 @@
     'terms':     'Terms of Use for Aquatic Rhythm and Rhyssa. Written plainly, without unnecessary complexity.',
     'reading':   'Short aquarium ecology guides — modular, mobile-friendly, grounded in ARA. Expand a title for details; simulators live under Labs & tools.',
     'tools':     'Interactive aquarium simulators and planners. Try decisions on screen before you make them in the tank.',
-    'journal':   'A keeper journal for your aquarium. Observe, reflect, and track your ARA rhythm — stored privately on your device.'
+    'journal':   'A keeper\'s log for your aquarium. Observe, reflect, and track your ARA rhythm — stored privately on your device.'
   };
 
   function updateMeta(id) {
@@ -504,11 +504,35 @@
     var INH_CATS = { fish:'🐟', plant:'🌿', invertebrate:'🦐', coral:'🪸', other:'◈' };
     var INH_CAT_LABELS = { fish:'Fish', plant:'Plant', invertebrate:'Invertebrate', coral:'Coral', other:'Other' };
 
+    function migrateData(d) {
+      if (d.profile && !d.tanks) {
+        var tank = {
+          id: 'tank_' + Date.now(),
+          profile: d.profile,
+          entries: d.entries || [],
+          inhabitants: d.inhabitants || []
+        };
+        d.tanks = [tank];
+        d.activeTankId = tank.id;
+        delete d.profile; delete d.entries; delete d.inhabitants;
+      }
+      if (!d.tanks) d.tanks = [];
+      return d;
+    }
+
     function loadData() {
-      try { return JSON.parse(localStorage.getItem(JN_KEY)) || {}; } catch (e) { return {}; }
+      try { return migrateData(JSON.parse(localStorage.getItem(JN_KEY)) || {}); } catch (e) { return migrateData({}); }
     }
     function saveData(d) {
       try { localStorage.setItem(JN_KEY, JSON.stringify(d)); } catch (e) {}
+    }
+
+    function getActiveTank(d) {
+      if (!d.tanks || !d.tanks.length) return null;
+      for (var i = 0; i < d.tanks.length; i++) {
+        if (d.tanks[i].id === d.activeTankId) return d.tanks[i];
+      }
+      return d.tanks[0];
     }
 
     function assessPhaseFromParams(params) {
@@ -747,6 +771,50 @@
       return result;
     }
 
+    /* ── Tank type SVG icon ── */
+    function tankTypeIcon(type, shape) {
+      var c = {
+        freshwater: 'rgba(61,214,232,.6)',
+        planted:    'rgba(100,200,82,.7)',
+        marine:     'rgba(61,130,232,.7)',
+        brackish:   'rgba(150,180,100,.65)',
+        coldwater:  'rgba(160,210,240,.65)',
+        paludarium: 'rgba(120,200,120,.65)'
+      }[type] || 'rgba(61,214,232,.5)';
+      if (type === 'planted') {
+        return '<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="5" width="16" height="11" rx="1.2" stroke="' + c + '" stroke-width="1.2" fill="none"/><line x1="7" y1="16" x2="5" y2="10" stroke="' + c + '" stroke-width="1" stroke-linecap="round"/><line x1="10" y1="16" x2="10" y2="8" stroke="' + c + '" stroke-width="1" stroke-linecap="round"/><line x1="13" y1="16" x2="15" y2="10" stroke="' + c + '" stroke-width="1" stroke-linecap="round"/></svg>';
+      }
+      if (type === 'marine') {
+        return '<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="5" width="16" height="11" rx="1.2" stroke="' + c + '" stroke-width="1.2" fill="none"/><path d="M5 14 Q7 11 9 14 Q11 11 13 14" stroke="' + c + '" stroke-width="1" fill="none" stroke-linecap="round"/></svg>';
+      }
+      if (type === 'paludarium') {
+        return '<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="5" width="16" height="11" rx="1.2" stroke="' + c + '" stroke-width="1.2" fill="none"/><line x1="2" y1="12" x2="18" y2="12" stroke="' + c + '" stroke-width=".8" opacity=".5"/><line x1="8" y1="12" x2="7" y2="7" stroke="' + c + '" stroke-width="1" stroke-linecap="round"/><line x1="11" y1="12" x2="12" y2="6" stroke="' + c + '" stroke-width="1" stroke-linecap="round"/></svg>';
+      }
+      if (shape === 'sphere') {
+        return '<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" stroke="' + c + '" stroke-width="1.2" fill="none"/><path d="M4 10 Q10 7.5 16 10" stroke="' + c + '" stroke-width=".8" fill="none" opacity=".5"/></svg>';
+      }
+      if (shape === 'cube') {
+        return '<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="3" width="13" height="13" stroke="' + c + '" stroke-width="1.2" fill="none"/><line x1="3" y1="11" x2="16" y2="11" stroke="' + c + '" stroke-width=".8" opacity=".4"/></svg>';
+      }
+      return '<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="5" width="16" height="11" rx="1.2" stroke="' + c + '" stroke-width="1.2" fill="none"/><line x1="2" y1="12" x2="18" y2="12" stroke="' + c + '" stroke-width=".7" opacity=".4"/></svg>';
+    }
+
+    /* ── Tank selector renderer ── */
+    function renderTankSelector(d) {
+      var sel = document.getElementById('jn-tank-selector');
+      if (!sel) return;
+      if (!d.tanks || d.tanks.length <= 1) { sel.style.display = 'none'; return; }
+      sel.style.display = '';
+      sel.innerHTML = d.tanks.map(function (t) {
+        var active = t.id === d.activeTankId;
+        var icon = tankTypeIcon((t.profile || {}).type, (t.profile || {}).shape);
+        return '<button class="jn-tank-tab' + (active ? ' active' : '') + '" data-tank-id="' + t.id + '">'
+          + icon + '<span>' + ((t.profile || {}).name || 'Tank') + '</span>'
+          + '</button>';
+      }).join('')
+      + '<button class="jn-tank-tab jn-tank-add" id="jn-add-tank" title="Add tank">+</button>';
+    }
+
     /* ── P1: Entry list with pagination ── */
     function renderEntryList(entries, page) {
       var entryList = document.getElementById('jn-entry-list');
@@ -908,13 +976,15 @@
     /* ── P5: Data export ── */
     function exportJournal() {
       var d    = loadData();
-      var json = JSON.stringify(d, null, 2);
+      var tank = getActiveTank(d);
+      var json = JSON.stringify(tank || d, null, 2);
       var blob = new Blob([json], { type: 'application/json' });
       var url  = URL.createObjectURL(blob);
       var a    = document.createElement('a');
-      var name = (d.profile && d.profile.name ? d.profile.name.replace(/[^a-z0-9]/gi, '-') : 'aquatic-rhythm');
+      var pName = tank && tank.profile && tank.profile.name;
+      var name = (pName ? pName.replace(/[^a-z0-9]/gi, '-') : 'aquatic-rhythm');
       a.href     = url;
-      a.download = name + '-journal-' + new Date().toISOString().slice(0, 10) + '.json';
+      a.download = name + '-log-' + new Date().toISOString().slice(0, 10) + '.json';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -976,7 +1046,8 @@
 
     function updateInhabitantStatus(id, status, note) {
       var d = loadData();
-      var inhs = d.inhabitants || [];
+      var tank = getActiveTank(d);
+      var inhs = tank ? (tank.inhabitants || []) : [];
       for (var i = 0; i < inhs.length; i++) {
         if (inhs[i].id === id) {
           var inh = inhs[i];
@@ -993,7 +1064,9 @@
 
     function renderDashboard() {
       var d = loadData();
-      if (!d.profile) {
+      renderTankSelector(d);
+      var tank = getActiveTank(d);
+      if (!tank) {
         document.getElementById('jn-empty') && (document.getElementById('jn-empty').style.display = '');
         document.getElementById('jn-dashboard') && (document.getElementById('jn-dashboard').style.display = 'none');
         return;
@@ -1001,13 +1074,13 @@
       document.getElementById('jn-empty') && (document.getElementById('jn-empty').style.display = 'none');
       document.getElementById('jn-dashboard') && (document.getElementById('jn-dashboard').style.display = '');
 
-      var p = d.profile;
+      var p = tank.profile;
       var nameEl = document.getElementById('jn-tank-name');
       var infoEl = document.getElementById('jn-tank-info');
       if (nameEl) nameEl.textContent = p.name || 'My Tank';
       if (infoEl) infoEl.textContent = [(p.volume ? p.volume + ' ' + (p.unit || 'L') : ''), p.type, tankAge(p.setupDate)].filter(Boolean).join(' · ');
 
-      var entries = d.entries || [];
+      var entries = tank.entries || [];
       var latest = entries.length ? entries[entries.length - 1] : null;
 
       var phase = null, fromParams = false;
@@ -1059,7 +1132,7 @@
       }
 
       renderParamCharts(entries);
-      renderInhabitants(d);
+      renderInhabitants(tank);
 
       var noEntriesEl = document.getElementById('jn-no-entries');
       var hasEntriesEl = document.getElementById('jn-has-entries');
@@ -1113,7 +1186,7 @@
       ['jn-param-ph','jn-param-nh3','jn-param-no2','jn-param-no3','jn-param-temp'].forEach(function (id) {
         var el = document.getElementById(id); if (el) el.value = '';
       });
-      var promptText = buildContextPrompt(loadData());
+      var promptText = buildContextPrompt(getActiveTank(loadData()) || {});
       var promptEl = document.getElementById('jn-context-prompt');
       if (promptEl) {
         promptEl.textContent = promptText;
@@ -1124,13 +1197,19 @@
 
     document.addEventListener('click', function (e) {
       var target = e.target;
-      if (target.id === 'mt-setup-open' || target.id === 'jn-setup-open') { openModal('mt-modal-setup'); return; }
+      if (target.id === 'mt-setup-open' || target.id === 'jn-setup-open') {
+        if (formSetup) formSetup.dataset.editingId = '';
+        var delBtnNew = document.getElementById('mt-setup-delete');
+        if (delBtnNew) delBtnNew.style.display = 'none';
+        openModal('mt-modal-setup'); return;
+      }
       if (target.id === 'jn-entry-open' || target.id === 'jn-entry-open-2' || target.id === 'jn-entry-open-main') {
         openEntryModal(); return;
       }
       if (target.id === 'jn-tank-edit') {
         var d = loadData();
-        var p = d.profile || {};
+        var tank = getActiveTank(d);
+        var p = tank ? (tank.profile || {}) : {};
         resetSetupModal();
         var inp = function (id, val) { var el = document.getElementById(id); if (el) el.value = val || ''; };
         inp('mt-inp-name', p.name);
@@ -1139,12 +1218,63 @@
         var typeEl = document.getElementById('mt-inp-type');
         if (typeEl && p.type) typeEl.value = p.type;
         if (p.volume) updatePreview(p.volume, p.unit || 'L', p.shape || 'rect', null);
+        if (formSetup) formSetup.dataset.editingId = tank ? tank.id : '';
+        var delBtn = document.getElementById('mt-setup-delete');
+        if (delBtn) delBtn.style.display = (tank && d.tanks.length > 1) ? '' : 'none';
         openModal('mt-modal-setup');
         return;
       }
-      if (target.id === 'jn-reset-tank') {
-        if (confirm('Delete all journal data? This cannot be undone.')) {
+      if (target.id === 'mt-setup-delete') {
+        var d = loadData();
+        var editId = formSetup ? formSetup.dataset.editingId : '';
+        if (!editId) return;
+        var tankDel = null;
+        for (var ti = 0; ti < d.tanks.length; ti++) { if (d.tanks[ti].id === editId) { tankDel = d.tanks[ti]; break; } }
+        if (!tankDel) return;
+        var tName = (tankDel.profile && tankDel.profile.name) || 'this tank';
+        if (!confirm('Delete ' + tName + ' and all its data? This cannot be undone.')) return;
+        d.tanks = d.tanks.filter(function (t) { return t.id !== editId; });
+        if (d.tanks.length) {
+          d.activeTankId = d.tanks[0].id;
+          saveData(d);
+        } else {
           saveData({});
+        }
+        closeAllModals();
+        renderDashboard();
+        return;
+      }
+      if (target.id === 'jn-add-tank') {
+        resetSetupModal();
+        if (formSetup) formSetup.dataset.editingId = '';
+        var delBtn2 = document.getElementById('mt-setup-delete');
+        if (delBtn2) delBtn2.style.display = 'none';
+        openModal('mt-modal-setup');
+        return;
+      }
+      var tankTab = target.closest('.jn-tank-tab[data-tank-id]');
+      if (tankTab && tankTab.dataset.tankId) {
+        var d = loadData();
+        d.activeTankId = tankTab.dataset.tankId;
+        saveData(d);
+        renderDashboard();
+        return;
+      }
+      if (target.id === 'jn-reset-tank') {
+        var d = loadData();
+        var tank = getActiveTank(d);
+        if (!tank) return;
+        var isLast = d.tanks.length <= 1;
+        var msg = isLast
+          ? 'Delete all log data? This cannot be undone.'
+          : 'Delete this tank and all its entries? This cannot be undone.';
+        if (confirm(msg)) {
+          if (isLast) { saveData({}); }
+          else {
+            d.tanks = d.tanks.filter(function (t) { return t.id !== tank.id; });
+            d.activeTankId = d.tanks[0].id;
+            saveData(d);
+          }
           renderDashboard();
         }
         return;
@@ -1171,7 +1301,7 @@
 
       if (target.id === 'jn-load-more') {
         jnHistoryPage += 1;
-        renderEntryList((loadData().entries || []), jnHistoryPage);
+        renderEntryList((getActiveTank(loadData()) || {}).entries || [], jnHistoryPage);
         return;
       }
 
@@ -1210,7 +1340,8 @@
         var inhId  = inhStatusBtn.dataset.inhId;
         var action = inhStatusBtn.dataset.action;
         var d2 = loadData();
-        var inhs2 = d2.inhabitants || [];
+        var tank2 = getActiveTank(d2);
+        var inhs2 = tank2 ? (tank2.inhabitants || []) : [];
         var inh2 = null;
         for (var ii = 0; ii < inhs2.length; ii++) { if (inhs2[ii].id === inhId) { inh2 = inhs2[ii]; break; } }
         if (!inh2) return;
@@ -1229,7 +1360,7 @@
         e.preventDefault();
         var g = function (id) { var el = document.getElementById(id); return el ? el.value : ''; };
         var d = loadData();
-        d.profile = {
+        var newProfile = {
           name:      g('mt-inp-name') || 'My Tank',
           volume:    g('mt-inp-volume'),
           unit:      g('mt-inp-unit') || 'L',
@@ -1237,6 +1368,16 @@
           type:      g('mt-inp-type') || 'freshwater',
           setupDate: g('mt-inp-date')
         };
+        var editingId = formSetup.dataset.editingId;
+        if (editingId) {
+          for (var ti = 0; ti < d.tanks.length; ti++) {
+            if (d.tanks[ti].id === editingId) { d.tanks[ti].profile = newProfile; break; }
+          }
+        } else {
+          var newTank = { id: 'tank_' + Date.now(), profile: newProfile, entries: [], inhabitants: [] };
+          d.tanks.push(newTank);
+          d.activeTankId = newTank.id;
+        }
         saveData(d);
         resetSetupModal();
         closeAllModals();
@@ -1249,7 +1390,9 @@
       formEntry.addEventListener('submit', function (e) {
         e.preventDefault();
         var d = loadData();
-        if (!d.entries) d.entries = [];
+        var tank = getActiveTank(d);
+        if (!tank) return;
+        if (!tank.entries) tank.entries = [];
         var g = function (id) { var el = document.getElementById(id); return el ? el.value : ''; };
         var activeState = document.querySelector('.jn-state-chip.active');
         var care = Array.prototype.slice.call(document.querySelectorAll('.jn-care-chip.active')).map(function (c) { return c.dataset.care; });
@@ -1263,11 +1406,11 @@
         if (ph || nh3 || no2 || no3 || temp) {
           entry.params = { ph: ph, nh3: nh3, no2: no2, no3: no3, temp: temp };
         }
-        d.entries.push(entry);
+        tank.entries.push(entry);
         saveData(d);
         closeAllModals();
         renderDashboard();
-        checkStreakMilestone(d.entries);
+        checkStreakMilestone(tank.entries);
       });
     }
 
@@ -1276,7 +1419,9 @@
       formInhabitant.addEventListener('submit', function (e) {
         e.preventDefault();
         var d = loadData();
-        if (!d.inhabitants) d.inhabitants = [];
+        var tank = getActiveTank(d);
+        if (!tank) return;
+        if (!tank.inhabitants) tank.inhabitants = [];
         var g = function (id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; };
         var activeCat = document.querySelector('.jn-inh-cat-chip.active');
         var inh = {
@@ -1291,7 +1436,7 @@
           removedDate: null,
           removedNote: null
         };
-        d.inhabitants.push(inh);
+        tank.inhabitants.push(inh);
         saveData(d);
         closeModal('mt-modal-inhabitant');
         renderDashboard();
