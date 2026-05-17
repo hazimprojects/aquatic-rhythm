@@ -1206,12 +1206,12 @@ function getAffiliateRegion(){
   var tz='';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';}catch(e){}
   if(tz==='Asia/Kuala_Lumpur'||tz==='Asia/Kuching')_affRegion='MY';
   else if(tz==='Asia/Jakarta'||tz==='Asia/Makassar'||tz==='Asia/Jayapura'||tz==='Asia/Pontianak')_affRegion='ID';
-  else if(tz==='Asia/Singapore')_affRegion='SG';
+  else if(tz==='Asia/Singapore')_affRegion='AMAZON';
   else if(/^Asia\//.test(tz))_affRegion='LAZADA';
   else _affRegion='AMAZON';
   return _affRegion;
 }
-var _affPlatLabel={MY:'Shopee Malaysia',ID:'Shopee Indonesia',SG:'Shopee Singapore',LAZADA:'Lazada',AMAZON:'Amazon'};
+var _affPlatLabel={MY:'Shopee Malaysia',ID:'Shopee Indonesia',SG:'Shopee Singapore',LAZADA:'Lazada',AMAZON:'Amazon'};  // SG→AMAZON via geo
 
 function buildAffiliateBuyBox(links){
   if(!links)return null;
