@@ -195,7 +195,7 @@ function errorResponse(message, status, origin) {
     status,
     headers: {
       'Content-Type':                'application/json',
-      'Access-Control-Allow-Origin': origin || ALLOWED_ORIGIN,
+      'Access-Control-Allow-Origin': origin || DEFAULT_ORIGIN,
     },
   });
 }
