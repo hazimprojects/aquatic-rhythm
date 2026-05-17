@@ -1807,117 +1807,128 @@
     renderDashboard();
   })();
 
-  /* ── RHYSSA CHAT WIDGET ── */
+  /* ── RHYSSA COMPANION PAGE ── */
   (function () {
     var WORKER_URL  = 'https://aquatic-rhythm-rhyssa.hazim-project.workers.dev/chat';
-    var messages    = [];
-    var isStreaming = false;
+    var STORE_KEY   = 'rh_conversations';
+    var isStreaming  = false;
+    var isTouch      = window.matchMedia('(hover:none) and (pointer:coarse)').matches;
+    var abortCtrl    = null;
 
-    var trigger  = document.getElementById('rh-trigger');
-    var chat     = document.getElementById('rh-chat');
-    var thread   = document.getElementById('rh-chat-thread');
-    var form     = document.getElementById('rh-chat-form');
-    var inp      = document.getElementById('rh-chat-inp');
-    var sendBtn  = document.getElementById('rh-chat-send');
-    var closeBtn = document.getElementById('rh-chat-cls');
+    /* ── DOM refs ── */
+    var page     = document.getElementById('pg-companion');
+    var thread   = document.getElementById('rh-page-thread');
+    var form     = document.getElementById('rh-page-form');
+    var inp      = document.getElementById('rh-page-inp');
+    var sendBtn  = document.getElementById('rh-page-send');
+    var welcome  = document.getElementById('rh-welcome');
+    var convTitle = document.getElementById('rh-conv-title');
+    var newBtn   = document.getElementById('rh-new-btn');
+    var histBtn  = document.getElementById('rh-hist-btn');
+    var histPanel = document.getElementById('rh-hist-panel');
+    var histList  = document.getElementById('rh-hist-list');
+    var histCls  = document.getElementById('rh-hist-cls');
 
-    if (!trigger || !chat) return;
+    if (!page || !thread) return;
 
-    function openChat() {
-      chat.classList.add('open');
-      chat.removeAttribute('aria-hidden');
-      trigger.setAttribute('aria-expanded', 'true');
-      trigger.classList.add('active');
-      if (inp) setTimeout(function () { inp.focus(); }, 50);
+    /* ── Storage helpers ── */
+    function getStore() {
+      try { return JSON.parse(localStorage.getItem(STORE_KEY) || 'null') || { convs: [], activeId: null }; }
+      catch (e) { return { convs: [], activeId: null }; }
+    }
+    function saveStore(s) {
+      try { localStorage.setItem(STORE_KEY, JSON.stringify(s)); } catch (e) {}
+    }
+    function uid() { return 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+    function autoTitle(text) {
+      var t = text.trim().split(/\s+/).slice(0, 8).join(' ');
+      return t.length > 55 ? t.slice(0, 55) + '…' : t;
+    }
+    function fmtDate(ts) {
+      var d = new Date(ts), now = new Date();
+      if (d.toDateString() === now.toDateString()) return 'Today';
+      var y = d.getFullYear() === now.getFullYear() ? '' : ' ' + d.getFullYear();
+      return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) + y;
     }
 
-    function closeChat() {
-      chat.classList.remove('open');
-      chat.setAttribute('aria-hidden', 'true');
-      trigger.setAttribute('aria-expanded', 'false');
-      trigger.classList.remove('active');
+    /* ── Active conversation ── */
+    function activeConv() {
+      var s = getStore();
+      return s.convs.find(function (c) { return c.id === s.activeId; }) || null;
     }
 
-    trigger.addEventListener('click', function () {
-      chat.classList.contains('open') ? closeChat() : openChat();
-    });
+    function createConv() {
+      var s = getStore();
+      var conv = { id: uid(), title: 'New conversation', messages: [], createdAt: Date.now(), updatedAt: Date.now() };
+      s.convs.unshift(conv);
+      s.activeId = conv.id;
+      saveStore(s);
+      return conv;
+    }
 
-    if (closeBtn) closeBtn.addEventListener('click', closeChat);
+    function ensureConv() {
+      var s = getStore();
+      if (!s.activeId || !s.convs.find(function (c) { return c.id === s.activeId; })) {
+        return createConv();
+      }
+      return activeConv();
+    }
 
-    /* data-rh-open: any button/link that should open the widget */
-    document.addEventListener('click', function (e) {
-      var opener = e.target.closest('[data-rh-open]');
-      if (opener) { e.preventDefault(); openChat(); return; }
-
-      /* data-rh-start: open widget and pre-fill textarea with starter text */
-      var starter = e.target.closest('[data-rh-start]');
-      if (starter) {
-        e.preventDefault();
-        var text = starter.dataset.rhStart || '';
-        openChat();
-        if (inp && text) {
-          setTimeout(function () {
-            inp.value = text;
-            inp.style.height = 'auto';
-            inp.style.height = Math.min(inp.scrollHeight, 90) + 'px';
-            inp.focus();
-          }, 60);
-        }
+    /* ── Render history panel ── */
+    function renderHistory() {
+      if (!histList) return;
+      var s = getStore();
+      if (!s.convs.length) {
+        histList.innerHTML = '<p class="rh-hist-empty">No conversations yet.</p>';
         return;
       }
-    });
-
-    document.addEventListener('click', function (e) {
-      if (!chat.classList.contains('open')) return;
-      if (chat.contains(e.target) || trigger.contains(e.target)) return;
-      if (e.target.closest('[data-rh-open]') || e.target.closest('[data-rh-start]')) return;
-      closeChat();
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && chat.classList.contains('open')) closeChat();
-    });
-
-    if (inp) {
-      inp.addEventListener('input', function () {
-        inp.style.height = 'auto';
-        inp.style.height = Math.min(inp.scrollHeight, 90) + 'px';
-      });
-      inp.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' && !e.shiftKey) {
-          e.preventDefault();
-          submitMessage();
-        }
+      histList.innerHTML = '';
+      s.convs.forEach(function (c) {
+        var btn = document.createElement('button');
+        btn.className = 'rh-hist-item' + (c.id === s.activeId ? ' active' : '');
+        btn.innerHTML = '<span class="rh-hist-title">' + (c.title || 'Untitled') + '</span>'
+                      + '<span class="rh-hist-date">' + fmtDate(c.updatedAt) + '</span>';
+        btn.addEventListener('click', function () {
+          switchConv(c.id);
+          closeHist();
+        });
+        histList.appendChild(btn);
       });
     }
 
-    if (form) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        submitMessage();
-      });
-    }
+    /* ── Render thread ── */
+    function renderThread() {
+      if (!thread) return;
+      var conv = activeConv();
+      var msgs = conv ? conv.messages : [];
 
-    function getTankContext() {
-      try {
-        var data  = JSON.parse(localStorage.getItem('ar_journal') || '{}');
-        var tanks = data.tanks || [];
-        if (!tanks.length) return null;
-        var active = tanks.find(function (t) { return t.id === data.activeTankId; }) || tanks[0];
-        if (!active || !active.profile) return null;
-        var p = active.profile;
-        return {
-          volume:   p.volume   || null,
-          unit:     p.unit     || 'L',
-          type:     p.type     || null,
-          maturity: p.maturity || null,
-        };
-      } catch (e) {
-        return null;
+      /* Remove all bubbles except welcome */
+      Array.from(thread.children).forEach(function (el) {
+        if (el.id !== 'rh-welcome') el.remove();
+      });
+
+      if (msgs.length === 0) {
+        if (welcome) welcome.style.display = '';
+        if (convTitle) convTitle.textContent = 'Aquarium Companion';
+        return;
       }
+      if (welcome) welcome.style.display = 'none';
+      if (convTitle) convTitle.textContent = conv.title || 'Aquarium Companion';
+
+      msgs.forEach(function (m) { appendBubble(m.role, m.content); });
+      thread.scrollTop = thread.scrollHeight;
     }
 
-    function addBubble(role, text) {
+    function switchConv(id) {
+      var s = getStore();
+      s.activeId = id;
+      saveStore(s);
+      renderThread();
+      renderHistory();
+    }
+
+    /* ── DOM helpers ── */
+    function appendBubble(role, text) {
       var wrap = document.createElement('div');
       wrap.className = 'rh-bubble ' + (role === 'assistant' ? 'rh-bubble-rh' : 'rh-bubble-you');
       var who = document.createElement('span');
@@ -1928,91 +1939,191 @@
       wrap.appendChild(who);
       wrap.appendChild(p);
       thread.appendChild(wrap);
-      thread.scrollTop = thread.scrollHeight;
       return p;
     }
 
-    function addTypingIndicator() {
+    function showTyping() {
       var d = document.createElement('div');
-      d.className = 'rh-typing';
-      d.id = 'rh-typing';
+      d.className = 'rh-typing'; d.id = 'rh-typing-ind';
       d.innerHTML = '<span></span><span></span><span></span>';
       thread.appendChild(d);
       thread.scrollTop = thread.scrollHeight;
     }
+    function hideTyping() { var t = document.getElementById('rh-typing-ind'); if (t) t.remove(); }
 
-    function removeTypingIndicator() {
-      var t = document.getElementById('rh-typing');
-      if (t) t.remove();
+    function getTankContext() {
+      try {
+        var data = JSON.parse(localStorage.getItem('ar_journal') || '{}');
+        var tanks = data.tanks || [];
+        if (!tanks.length) return null;
+        var active = tanks.find(function (t) { return t.id === data.activeTankId; }) || tanks[0];
+        if (!active || !active.profile) return null;
+        var p = active.profile;
+        return { volume: p.volume || null, unit: p.unit || 'L', type: p.type || null, maturity: p.maturity || null };
+      } catch (e) { return null; }
     }
 
-    function submitMessage() {
-      if (isStreaming) return;
-      var text = inp ? inp.value.trim() : '';
-      if (!text) return;
+    /* ── Send message ── */
+    function sendMsg(text) {
+      if (isStreaming || !text.trim()) return;
 
-      inp.value = '';
-      inp.style.height = 'auto';
+      var conv = ensureConv();
+      var isFirst = conv.messages.length === 0;
+
+      /* User bubble */
+      if (welcome) welcome.style.display = 'none';
+      var userBubble = appendBubble('user', text);  // eslint-disable-line no-unused-vars
+      thread.scrollTop = thread.scrollHeight;
+
+      /* Save user message */
+      var s = getStore();
+      var c = s.convs.find(function (x) { return x.id === s.activeId; });
+      if (!c) return;
+      c.messages.push({ role: 'user', content: text });
+      if (isFirst) { c.title = autoTitle(text); if (convTitle) convTitle.textContent = c.title; }
+      c.updatedAt = Date.now();
+      saveStore(s);
+
+      /* Typing + fetch */
+      showTyping();
       sendBtn.disabled = true;
       isStreaming = true;
 
-      messages.push({ role: 'user', content: text });
-      addBubble('user', text);
-      addTypingIndicator();
+      var msgHistory = c.messages.slice();
 
       fetch(WORKER_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: messages, tankContext: getTankContext() }),
+        body: JSON.stringify({ messages: msgHistory, tankContext: getTankContext() }),
       })
       .then(function (res) {
-        removeTypingIndicator();
-        if (!res.ok || !res.body) throw new Error('Request failed');
+        hideTyping();
+        if (!res.ok || !res.body) throw new Error('bad response');
 
-        var p           = addBubble('assistant', '');
+        var p = appendBubble('assistant', '');
         var responseText = '';
-        var reader      = res.body.getReader();
-        var decoder     = new TextDecoder();
-        var buffer      = '';
+        var reader = res.body.getReader();
+        var decoder = new TextDecoder();
+        var buf = '';
 
         function read() {
           return reader.read().then(function (chunk) {
             if (chunk.done) {
-              messages.push({ role: 'assistant', content: responseText });
+              /* Persist assistant message */
+              var s2 = getStore();
+              var c2 = s2.convs.find(function (x) { return x.id === s2.activeId; });
+              if (c2) { c2.messages.push({ role: 'assistant', content: responseText }); c2.updatedAt = Date.now(); saveStore(s2); }
               sendBtn.disabled = false;
               isStreaming = false;
               if (inp) inp.focus();
               return;
             }
-            buffer += decoder.decode(chunk.value, { stream: true });
-            var lines = buffer.split('\n');
-            buffer = lines.pop();
+            buf += decoder.decode(chunk.value, { stream: true });
+            var lines = buf.split('\n'); buf = lines.pop();
             lines.forEach(function (line) {
               if (!line.startsWith('data: ')) return;
-              var data = line.slice(6).trim();
-              if (data === '[DONE]') return;
+              var d = line.slice(6).trim();
+              if (d === '[DONE]') return;
               try {
-                var parsed = JSON.parse(data);
-                var delta  = (parsed.delta && parsed.delta.text) ? parsed.delta.text : '';
-                if (delta) {
-                  responseText += delta;
-                  p.textContent = responseText;
-                  thread.scrollTop = thread.scrollHeight;
-                }
-              } catch (e) {}
+                var parsed = JSON.parse(d);
+                var delta = (parsed.delta && parsed.delta.text) ? parsed.delta.text : '';
+                if (delta) { responseText += delta; p.textContent = responseText; thread.scrollTop = thread.scrollHeight; }
+              } catch (e2) {}
             });
             return read();
           });
         }
-
         return read();
       })
       .catch(function () {
-        removeTypingIndicator();
-        addBubble('assistant', 'Something went wrong — please try again in a moment.');
+        hideTyping();
+        appendBubble('assistant', 'Something went wrong — please try again in a moment.');
         sendBtn.disabled = false;
         isStreaming = false;
       });
+    }
+
+    /* ── History panel open/close ── */
+    function openHist() {
+      if (!histPanel) return;
+      renderHistory();
+      histPanel.classList.add('open');
+      histPanel.removeAttribute('aria-hidden');
+    }
+    function closeHist() {
+      if (!histPanel) return;
+      histPanel.classList.remove('open');
+      histPanel.setAttribute('aria-hidden', 'true');
+    }
+
+    /* ── Wire up events ── */
+    if (histBtn) histBtn.addEventListener('click', openHist);
+    if (histCls) histCls.addEventListener('click', closeHist);
+    if (histPanel) {
+      histPanel.addEventListener('click', function (e) { if (e.target === histPanel) closeHist(); });
+    }
+
+    if (newBtn) newBtn.addEventListener('click', function () {
+      createConv();
+      renderThread();
+      renderHistory();
+      if (inp) { inp.value = ''; inp.style.height = 'auto'; inp.focus(); }
+    });
+
+    /* Input grow */
+    if (inp) {
+      inp.addEventListener('input', function () {
+        inp.style.height = 'auto';
+        inp.style.height = Math.min(inp.scrollHeight, 120) + 'px';
+      });
+      /* Desktop: Enter sends; mobile: button only */
+      if (!isTouch) {
+        inp.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); doSubmit(); }
+        });
+      }
+    }
+
+    if (form) form.addEventListener('submit', function (e) { e.preventDefault(); doSubmit(); });
+
+    function doSubmit() {
+      var text = inp ? inp.value.trim() : '';
+      if (!text) return;
+      inp.value = ''; inp.style.height = 'auto';
+      sendMsg(text);
+    }
+
+    /* data-rh-send: starter chips send directly */
+    thread.addEventListener('click', function (e) {
+      var chip = e.target.closest('[data-rh-send]');
+      if (!chip) return;
+      e.preventDefault();
+      sendMsg(chip.dataset.rhSend);
+    });
+
+    /* Mobile keyboard: scroll to bottom when viewport resizes */
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', function () {
+        thread.scrollTop = thread.scrollHeight;
+      });
+    }
+
+    /* SPA lifecycle: re-render when companion page becomes active */
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (m) {
+        if (m.attributeName === 'class' && page.classList.contains('active')) {
+          renderThread();
+          renderHistory();
+          setTimeout(function () { if (inp) inp.focus(); }, 120);
+        }
+      });
+    });
+    observer.observe(page, { attributes: true, attributeFilter: ['class'] });
+
+    /* Initial render if companion is the starting page */
+    if (page.classList.contains('active')) {
+      renderThread();
+      renderHistory();
     }
   })();
 
