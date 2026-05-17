@@ -1807,4 +1807,189 @@
     renderDashboard();
   })();
 
+  /* ── RHYSSA CHAT WIDGET ── */
+  (function () {
+    var WORKER_URL  = 'https://api.aquaticrhythm.com/chat';
+    var messages    = [];
+    var isStreaming = false;
+
+    var trigger  = document.getElementById('rh-trigger');
+    var chat     = document.getElementById('rh-chat');
+    var thread   = document.getElementById('rh-chat-thread');
+    var form     = document.getElementById('rh-chat-form');
+    var inp      = document.getElementById('rh-chat-inp');
+    var sendBtn  = document.getElementById('rh-chat-send');
+    var closeBtn = document.getElementById('rh-chat-cls');
+
+    if (!trigger || !chat) return;
+
+    function openChat() {
+      chat.classList.add('open');
+      chat.removeAttribute('aria-hidden');
+      trigger.setAttribute('aria-expanded', 'true');
+      trigger.classList.add('active');
+      if (inp) setTimeout(function () { inp.focus(); }, 50);
+    }
+
+    function closeChat() {
+      chat.classList.remove('open');
+      chat.setAttribute('aria-hidden', 'true');
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.classList.remove('active');
+    }
+
+    trigger.addEventListener('click', function () {
+      chat.classList.contains('open') ? closeChat() : openChat();
+    });
+
+    if (closeBtn) closeBtn.addEventListener('click', closeChat);
+
+    document.addEventListener('click', function (e) {
+      if (!chat.classList.contains('open')) return;
+      if (chat.contains(e.target) || trigger.contains(e.target)) return;
+      closeChat();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && chat.classList.contains('open')) closeChat();
+    });
+
+    if (inp) {
+      inp.addEventListener('input', function () {
+        inp.style.height = 'auto';
+        inp.style.height = Math.min(inp.scrollHeight, 90) + 'px';
+      });
+      inp.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          submitMessage();
+        }
+      });
+    }
+
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        submitMessage();
+      });
+    }
+
+    function getTankContext() {
+      try {
+        var data  = JSON.parse(localStorage.getItem('ar_journal') || '{}');
+        var tanks = data.tanks || [];
+        if (!tanks.length) return null;
+        var active = tanks.find(function (t) { return t.id === data.activeTankId; }) || tanks[0];
+        if (!active || !active.profile) return null;
+        var p = active.profile;
+        return {
+          volume:   p.volume   || null,
+          unit:     p.unit     || 'L',
+          type:     p.type     || null,
+          maturity: p.maturity || null,
+        };
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function addBubble(role, text) {
+      var wrap = document.createElement('div');
+      wrap.className = 'rh-bubble ' + (role === 'assistant' ? 'rh-bubble-rh' : 'rh-bubble-you');
+      var who = document.createElement('span');
+      who.className = 'rh-bubble-who';
+      who.textContent = role === 'assistant' ? 'Rhyssa' : 'You';
+      var p = document.createElement('p');
+      if (text) p.textContent = text;
+      wrap.appendChild(who);
+      wrap.appendChild(p);
+      thread.appendChild(wrap);
+      thread.scrollTop = thread.scrollHeight;
+      return p;
+    }
+
+    function addTypingIndicator() {
+      var d = document.createElement('div');
+      d.className = 'rh-typing';
+      d.id = 'rh-typing';
+      d.innerHTML = '<span></span><span></span><span></span>';
+      thread.appendChild(d);
+      thread.scrollTop = thread.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+      var t = document.getElementById('rh-typing');
+      if (t) t.remove();
+    }
+
+    function submitMessage() {
+      if (isStreaming) return;
+      var text = inp ? inp.value.trim() : '';
+      if (!text) return;
+
+      inp.value = '';
+      inp.style.height = 'auto';
+      sendBtn.disabled = true;
+      isStreaming = true;
+
+      messages.push({ role: 'user', content: text });
+      addBubble('user', text);
+      addTypingIndicator();
+
+      fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: messages, tankContext: getTankContext() }),
+      })
+      .then(function (res) {
+        removeTypingIndicator();
+        if (!res.ok || !res.body) throw new Error('Request failed');
+
+        var p           = addBubble('assistant', '');
+        var responseText = '';
+        var reader      = res.body.getReader();
+        var decoder     = new TextDecoder();
+        var buffer      = '';
+
+        function read() {
+          return reader.read().then(function (chunk) {
+            if (chunk.done) {
+              messages.push({ role: 'assistant', content: responseText });
+              sendBtn.disabled = false;
+              isStreaming = false;
+              if (inp) inp.focus();
+              return;
+            }
+            buffer += decoder.decode(chunk.value, { stream: true });
+            var lines = buffer.split('\n');
+            buffer = lines.pop();
+            lines.forEach(function (line) {
+              if (!line.startsWith('data: ')) return;
+              var data = line.slice(6).trim();
+              if (data === '[DONE]') return;
+              try {
+                var parsed = JSON.parse(data);
+                var delta  = (parsed.delta && parsed.delta.text) ? parsed.delta.text : '';
+                if (delta) {
+                  responseText += delta;
+                  p.textContent = responseText;
+                  thread.scrollTop = thread.scrollHeight;
+                }
+              } catch (e) {}
+            });
+            return read();
+          });
+        }
+
+        return read();
+      })
+      .catch(function () {
+        removeTypingIndicator();
+        addBubble('assistant', 'Something went wrong — please try again in a moment.');
+        sendBtn.disabled = false;
+        isStreaming = false;
+      });
+    }
+  })();
+
 })();
