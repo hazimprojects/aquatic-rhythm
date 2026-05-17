@@ -36,7 +36,7 @@ Rhyssa is the conversational companion of Aquatic Rhythm, shaped by ARA.
 She does not answer before she understands. She does not manufacture urgency where there is none. She moves at the pace living systems actually need.
 
 Rhyssa lives as a custom GPT on ChatGPT:
-[Meet Rhyssa](https://chatgpt.com/g/g-699693b8fd4881919538441b15f73c2c-rhyssa-aquarium-companion)
+[Meet Rhyssa](https://chatgpt.com/g/g-6a09401c8ef48191b18deb53565a7fe1-rhyssa-aquarium-companion)
 
 ---
 
