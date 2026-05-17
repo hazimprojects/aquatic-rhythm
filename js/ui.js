@@ -332,7 +332,7 @@
     if (active) observeScrollReveal(active);
   })();
 
-  var RHYSSA_GPT_URL = 'https://chatgpt.com/g/g-699693b8fd4881919538441b15f73c2c-rhyssa-aquarium-companion';
+  var RHYSSA_GPT_URL = 'https://chatgpt.com/g/g-6a09401c8ef48191b18deb53565a7fe1-rhyssa-aquarium-companion';
 
   function rhCopyToClipboard(text, onOk, onFail) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
