@@ -71,6 +71,11 @@ self.addEventListener('fetch', function (event) {
 
   var url = new URL(event.request.url);
 
+  /* Rhyssa chat API — always network-only, never cache */
+  if (url.hostname === 'api.aquaticrhythm.com') {
+    return;
+  }
+
   /* Analytics / tag manager — always network-only */
   if (url.hostname.indexOf('google') !== -1 || url.hostname.indexOf('googletagmanager') !== -1) {
     return;
