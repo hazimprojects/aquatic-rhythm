@@ -1609,37 +1609,33 @@
       var bodyEl = document.getElementById('jn-inh-body');
       if (!bodyEl) return;
       if (!inhs.length) {
-        bodyEl.innerHTML = '<p class="jn-entry-empty">No residents recorded yet.</p>';
+        bodyEl.innerHTML = '<p class=”jn-entry-empty” style=”font-size:.75rem;margin:.1rem 0”>No residents yet.</p>';
         return;
       }
-      var grouped = {};
-      inhs.forEach(function (i) {
-        var cat = i.category || 'other';
-        if (!grouped[cat]) grouped[cat] = [];
-        grouped[cat].push(i);
-      });
       var order = ['fish', 'plant', 'invertebrate', 'coral', 'other'];
-      bodyEl.innerHTML = '<div class=”tl-inh-chips”>'
-        + order.filter(function (cat) { return grouped[cat]; }).map(function (cat) {
-          return grouped[cat].map(function (i) {
-            var icon  = INH_CATS[cat] || '◈';
-            var label = escHtml(i.commonName || i.species || INH_CAT_LABELS[cat] || cat);
-            var count = i.count > 1 ? '<span class=”tl-inh-chip-count”>×' + i.count + '</span>' : '';
-            return '<div class=”tl-inh-chip” tabindex=”0” data-inh-id=”' + i.id + '”>'
-              + '<span class=”tl-inh-chip-icon”>' + icon + '</span>'
-              + '<span>' + label + '</span>' + count
-              + '<div class=”tl-inh-chip-actions”>'
-              + '<button class=”tl-inh-chip-btn jn-inh-edit-btn”'
-              + ' data-inh-id=”' + i.id + '”>edit</button>'
-              + '<button class=”tl-inh-chip-btn jn-inh-status-btn”'
-              + ' data-inh-id=”' + i.id + '” data-action=”rehomed”>rehomed</button>'
-              + '<button class=”tl-inh-chip-btn jn-inh-status-btn”'
-              + ' data-inh-id=”' + i.id + '” data-action=”passed”>passed</button>'
-              + '</div>'
-              + '</div>';
-          }).join('');
-        }).join('')
-        + '</div>';
+      var rows = [];
+      order.forEach(function (cat) {
+        inhs.filter(function (i) { return (i.category || 'other') === cat; }).forEach(function (i) {
+          var icon  = INH_CATS[cat] || '◈';
+          var label = escHtml(i.commonName || i.species || INH_CAT_LABELS[cat] || cat);
+          var sciHtml = i.species ? '<span class=”tl-inh-row-sci”>' + escHtml(i.species) + '</span>' : '';
+          var countHtml = i.count > 1 ? '<span class=”tl-inh-row-count”>×' + i.count + '</span>' : '';
+          rows.push(
+            '<div class=”tl-inh-row” data-inh-id=”' + escHtml(i.id) + '”>'
+            + '<span class=”tl-inh-row-icon”>' + icon + '</span>'
+            + '<div class=”tl-inh-row-info”>'
+            + '<span class=”tl-inh-row-name”>' + label + '</span>' + countHtml + sciHtml
+            + '</div>'
+            + '<div class=”tl-inh-row-acts”>'
+            + '<button class=”tl-inh-act-btn jn-inh-edit-btn” data-inh-id=”' + escHtml(i.id) + '” aria-label=”Edit”>Edit</button>'
+            + '<button class=”tl-inh-act-btn tl-inh-act-rehomed jn-inh-status-btn” data-inh-id=”' + escHtml(i.id) + '” data-action=”rehomed” aria-label=”Rehomed”>Rehomed</button>'
+            + '<button class=”tl-inh-act-btn tl-inh-act-passed jn-inh-status-btn” data-inh-id=”' + escHtml(i.id) + '” data-action=”passed” aria-label=”Passed”>Passed</button>'
+            + '</div>'
+            + '</div>'
+          );
+        });
+      });
+      bodyEl.innerHTML = '<div class=”tl-inh-rows”>' + rows.join('') + '</div>';
     }
 
     function showInhabitantToast(inh, action) {
@@ -1702,12 +1698,18 @@
       var entries = tank.entries || [];
       var latest = entries.length ? entries[entries.length - 1] : null;
 
+      var activeInhCount = (tank.inhabitants || []).filter(function (i) { return i.status === 'active'; }).length;
+      var hasSetupDate = !!p.setupDate;
+      var hasResidents = activeInhCount > 0;
+      var hasParamEntry = entries.some(function (e) { return e.params && (e.params.nh3 || e.params.no2 || e.params.no3); });
+      var sufficientForPhase = hasParamEntry || (entries.length >= 3 && (hasSetupDate || hasResidents));
+
       var phase = null, fromParams = false;
-      if (latest && latest.params) {
+      if (sufficientForPhase && latest && latest.params) {
         phase = assessPhaseFromParams(latest.params);
         if (phase) fromParams = true;
       }
-      if (!phase && latest) phase = assessPhaseFromState(latest.keeperState, p.setupDate);
+      if (sufficientForPhase && !phase && latest) phase = assessPhaseFromState(latest.keeperState, p.setupDate);
       var info = (phase && phaseInfo[phase]) ? phaseInfo[phase] : null;
 
       /* Phase pill in identity hero */
@@ -1717,15 +1719,7 @@
         else { pillEl.style.display = 'none'; }
       }
 
-      /* Snapshot strip */
-      var activeInhCount = (tank.inhabitants || []).filter(function (i) { return i.status === 'active'; }).length;
-      var streak = calcStreak(entries);
-      var ageDays = p.setupDate ? Math.floor((new Date() - new Date(p.setupDate)) / 86400000) : null;
-      var el;
-      el = document.getElementById('jn-snap-entries');   if (el) el.textContent = entries.length;
-      el = document.getElementById('jn-snap-residents');  if (el) el.textContent = activeInhCount;
-      el = document.getElementById('jn-snap-streak');     if (el) el.textContent = streak > 0 ? streak + '' : '—';
-      el = document.getElementById('jn-snap-age');        if (el) el.textContent = ageDays !== null ? ageDays : '—';
+      /* (snapshot strip removed) */
 
       /* Phase name, note, next, src */
       var phaseNameEl = document.getElementById('jn-phase-name');
@@ -1746,7 +1740,14 @@
           phaseNameEl.style.display = 'none';
           phaseNameEl.style.color = '';
           if (phaseJourneyEl) phaseJourneyEl.style.display = '';
-          if (phaseNoteEl) phaseNoteEl.textContent = 'Write your first entry to get an ARA phase reading.';
+          var noPhaseMsg = !entries.length
+            ? 'Write your first entry to begin ARA phase tracking.'
+            : !hasResidents && !hasSetupDate
+              ? 'Add at least one resident and your tank setup date to get a reading.'
+              : !sufficientForPhase
+                ? 'Write a few more entries — or log water parameters — for an accurate ARA phase reading.'
+                : 'Write your first entry to get an ARA phase reading.';
+          if (phaseNoteEl) phaseNoteEl.textContent = noPhaseMsg;
           if (phaseNextEl) phaseNextEl.style.display = 'none';
           if (phaseSrcEl) phaseSrcEl.style.display = 'none';
         }
@@ -1862,11 +1863,8 @@
       var emptyEl = document.getElementById('jn-setup-empty');
       if (eqList) eqList.innerHTML = '';
       var hasEq = setup && setup.equipment && Object.keys(setup.equipment).length;
-      if (!hasEq) {
-        if (emptyEl) emptyEl.removeAttribute('hidden');
-        return;
-      }
-      if (emptyEl) emptyEl.setAttribute('hidden', '');
+      if (emptyEl) emptyEl.style.display = hasEq ? 'none' : 'flex';
+      if (!hasEq) return;
       if (hasEq && eqList) {
         var AR_EQ = window.AR_EQ;
         var CAT_ORDER = ['filtration', 'environment', 'substrate', 'cooling', 'additions', 'sterilization', 'circulation'];
@@ -1958,28 +1956,39 @@
             sel.dataset.eq = k;
             var defaultOpt = document.createElement('option');
             defaultOpt.value = '';
-            defaultOpt.textContent = 'Select brand…';
+            defaultOpt.textContent = 'Brand / model…';
             sel.appendChild(defaultOpt);
             var brandExamples = (eq.brands && eq.brands.examples) ? eq.brands.examples : [];
+            var savedBrand = _gearBrandState[k] || '';
+            var savedNote = _gearCustomNotes[k] || '';
+            var brandInList = savedBrand && brandExamples.indexOf(savedBrand) !== -1;
             brandExamples.forEach(function (b) {
               var opt = document.createElement('option');
               opt.value = b;
               opt.textContent = b;
-              if (_gearBrandState[k] === b) opt.selected = true;
+              if (brandInList && savedBrand === b) opt.selected = true;
               sel.appendChild(opt);
             });
+            var customOpt = document.createElement('option');
+            customOpt.value = '__custom__';
+            customOpt.textContent = '✎ Enter own brand / model…';
+            if (!brandInList && (savedBrand || savedNote)) customOpt.selected = true;
+            sel.appendChild(customOpt);
+
             var note = document.createElement('input');
             note.type = 'text';
-            note.className = 'jn-setup-eq-note' + (tog.checked ? ' visible' : '');
+            var noteVisible = tog.checked && (sel.value === '__custom__' || (!brandInList && (savedBrand || savedNote)));
+            note.className = 'jn-setup-eq-note' + (noteVisible ? ' visible' : '');
             note.dataset.eq = k;
-            note.placeholder = 'Custom brand / model…';
+            note.placeholder = 'e.g. Eheim 2213, Fluval 307…';
             note.maxLength = 80;
-            note.value = _gearCustomNotes[k] || '';
+            note.value = savedNote || (!brandInList ? savedBrand : '');
+
             tog.addEventListener('change', function () {
               if (tog.checked) {
                 _gearEqState[k] = true;
                 sel.classList.add('visible');
-                note.classList.add('visible');
+                if (sel.value === '__custom__') note.classList.add('visible');
                 row.classList.add('active');
               } else {
                 delete _gearEqState[k];
@@ -1991,8 +2000,15 @@
               }
             });
             sel.addEventListener('change', function () {
-              if (sel.value) _gearBrandState[k] = sel.value;
-              else delete _gearBrandState[k];
+              if (sel.value === '__custom__') {
+                note.classList.add('visible');
+                delete _gearBrandState[k];
+                setTimeout(function () { note.focus(); }, 50);
+              } else {
+                note.classList.remove('visible');
+                if (sel.value) _gearBrandState[k] = sel.value;
+                else delete _gearBrandState[k];
+              }
             });
             row.appendChild(tog);
             row.appendChild(lbl);
@@ -2016,7 +2032,7 @@
       });
       var brands = {};
       document.querySelectorAll('.jn-setup-brand-select').forEach(function (sel) {
-        if (sel.dataset.eq && sel.value) brands[sel.dataset.eq] = sel.value;
+        if (sel.dataset.eq && sel.value && sel.value !== '__custom__') brands[sel.dataset.eq] = sel.value;
       });
       var customNotes = {};
       document.querySelectorAll('.jn-setup-eq-note').forEach(function (inp) {
@@ -2462,14 +2478,7 @@
         return;
       }
 
-      var inhChip = target.closest('.tl-inh-chip');
-      if (inhChip && !target.closest('.jn-inh-status-btn') && !target.closest('.jn-inh-edit-btn')) {
-        document.querySelectorAll('.tl-inh-chip').forEach(function (c) {
-          if (c !== inhChip) c.classList.remove('expanded');
-        });
-        inhChip.classList.toggle('expanded');
-        return;
-      }
+      /* tl-inh-row no longer needs expand/collapse — actions are always visible */
 
       var inhStatusBtn = target.closest('.jn-inh-status-btn');
       if (inhStatusBtn) {

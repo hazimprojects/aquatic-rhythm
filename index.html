@@ -1512,25 +1512,30 @@
         <!-- 2b. ALERT STRIP (proactive alerts) -->
         <div id="jn-alert-strip" class="jn-alert-strip" style="display:none"></div>
 
-        <!-- 2d. WRITE ENTRY CTA -->
-        <div class="tl-write-cta" id="jn-write-cta">
-          <button class="btn bf tl-write-cta-btn" id="jn-entry-open-main">Write today's entry</button>
+        <!-- MY SETUP + TANK FAMILY — side by side below tank name -->
+        <div class="jn-overview-pair">
+          <div id="jn-setup-card" class="tl-card jn-setup-card">
+            <div class="tl-card-header">
+              <span class="tl-card-eyebrow">My Setup</span>
+              <button id="jn-setup-edit-btn" class="jn-setup-edit-btn" aria-label="Edit setup">Edit</button>
+            </div>
+            <div id="jn-setup-eq-list" class="jn-setup-eq-list"></div>
+            <div id="jn-setup-empty" class="jn-setup-empty" style="display:none">
+              <span>No setup recorded yet.</span>
+              <button id="jn-setup-start-btn" class="jn-setup-start-btn">Record →</button>
+            </div>
+          </div>
+
+          <div class="tl-card" id="jn-inhabitants">
+            <div class="tl-card-header">
+              <span class="tl-card-eyebrow">Tank Family</span>
+              <button class="mt-text-btn" id="jn-inh-add">+ Add</button>
+            </div>
+            <div id="jn-inh-body"><p class="jn-entry-empty">No residents yet.</p></div>
+          </div>
         </div>
 
-        <!-- 2c. MY SETUP CARD -->
-        <div id="jn-setup-card" class="tl-card jn-setup-card" hidden>
-          <div class="tl-card-header">
-            <span class="tl-card-eyebrow">My Setup</span>
-            <button id="jn-setup-edit-btn" class="jn-setup-edit-btn" aria-label="Edit setup">Edit</button>
-          </div>
-          <div id="jn-setup-eq-list" class="jn-setup-eq-list"></div>
-          <div id="jn-setup-empty" class="jn-setup-empty" hidden>
-            <span>No setup recorded yet.</span>
-            <button id="jn-setup-start-btn" class="jn-setup-start-btn">Record your equipment →</button>
-          </div>
-        </div>
-
-        <!-- 3. ARA PHASE CARD -->
+        <!-- ARA PHASE CARD — below overview pair -->
         <div class="tl-card tl-phase-card" id="jn-phase-card">
           <div class="tl-card-eyebrow">ARA Phase</div>
           <div class="jn-phase-name" id="jn-phase-name" style="display:none">—</div>
@@ -1549,7 +1554,7 @@
           <button class="rh-inline-btn" id="jn-phase-rh-btn" data-rh-msg="" style="display:none;margin-top:.8rem"><svg width="10" height="10" viewBox="0 0 22 22" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7.5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="11" cy="11" r="3.5" stroke="currentColor" stroke-width="1.6" fill="none" opacity=".55"/><circle cx="11" cy="11" r="1.4" fill="currentColor" opacity=".8"/></svg>Ask Rhyssa about this phase</button>
         </div>
 
-        <!-- 3b. RHYSSA WEEKLY INSIGHT CARD -->
+        <!-- RHYSSA WEEKLY INSIGHT CARD -->
         <div class="tl-card tl-rhyssa-insight-card" id="jn-weekly-insight-card" style="display:none">
           <div class="tl-card-header">
             <span class="tl-card-eyebrow">Rhyssa's Read</span>
@@ -1559,8 +1564,7 @@
           <button class="rh-inline-btn" data-rh-msg=""><svg width="10" height="10" viewBox="0 0 22 22" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7.5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="11" cy="11" r="3.5" stroke="currentColor" stroke-width="1.6" fill="none" opacity=".55"/><circle cx="11" cy="11" r="1.4" fill="currentColor" opacity=".8"/></svg>Discuss with Rhyssa →</button>
         </div>
 
-
-        <!-- 5. PARAMETER SPARKLINES (conditional) -->
+        <!-- PARAMETER SPARKLINES (conditional) -->
         <div class="tl-card" id="jn-param-charts" style="display:none">
           <div class="tl-card-header">
             <span class="tl-card-eyebrow">Parameter Trends</span>
@@ -1568,18 +1572,15 @@
           <div id="jn-param-charts-body"></div>
         </div>
 
-        <!-- 6. TANK FAMILY (chips) -->
-        <div class="tl-card" id="jn-inhabitants">
-          <div class="tl-card-header">
-            <span class="tl-card-eyebrow">Tank Family</span>
-            <button class="mt-text-btn" id="jn-inh-add">+ Add</button>
-          </div>
-          <div id="jn-inh-body"><p class="jn-entry-empty">No residents recorded yet.</p></div>
+        <!-- WRITE ENTRY CTA CARD — below tank family -->
+        <div class="tl-card jn-entry-cta-card" id="jn-entry-cta-card">
+          <p class="jn-entry-cta-prompt" id="jn-entry-cta-prompt">What did you notice today?</p>
+          <button class="btn bf jn-entry-cta-btn" id="jn-entry-open-main">Write today's entry</button>
         </div>
 
-        <!-- 7. ENTRIES TIMELINE -->
+        <!-- ENTRIES TIMELINE -->
         <div id="jn-no-entries" class="tl-empty-state" style="display:none">
-          <p class="tl-empty-text">No entries yet.<br>What did you notice today?</p>
+          <p class="tl-empty-text">No entries yet.</p>
         </div>
 
         <div id="jn-has-entries" style="display:none">
