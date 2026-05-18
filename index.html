@@ -1927,7 +1927,20 @@
         <input class="mt-input" id="jn-inh-date" type="date">
       </div>
 
+      <!-- Status (edit mode only) -->
+      <div id="jn-inh-status-row" class="jn-form-section" style="display:none">
+        <div class="mt-label" style="margin-bottom:.55rem">Status</div>
+        <div class="jn-inh-status-chips">
+          <button type="button" class="jn-inh-status-chip active" data-status="active">Active</button>
+          <button type="button" class="jn-inh-status-chip" data-status="rehomed">Rehomed</button>
+          <button type="button" class="jn-inh-status-chip" data-status="passed">Passed</button>
+        </div>
+      </div>
+
       <button type="submit" class="btn bf" style="width:100%;margin-top:1.2rem">Add to tank</button>
+
+      <!-- Delete (edit mode only) -->
+      <button type="button" id="jn-inh-delete-btn" class="jn-inh-delete-btn" style="display:none">Remove resident</button>
     </form>
   </div>
 </div>

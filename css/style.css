@@ -908,6 +908,15 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:flex;align-items:center;j
 .jn-inh-row:hover .jn-inh-actions,.jn-inh-row:focus-within .jn-inh-actions{opacity:1}
 .jn-inh-status-btn{background:none;border:1px solid rgba(255,255,255,.1);border-radius:5px;color:rgba(255,255,255,.3);font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;padding:.22rem .5rem;cursor:pointer;font-family:var(--sans);transition:all .2s;-webkit-tap-highlight-color:transparent;white-space:nowrap}
 .jn-inh-status-btn:hover{border-color:rgba(200,80,80,.4);color:rgba(200,80,80,.7)}
+/* Resident status chips (in edit modal) */
+.jn-inh-status-chips{display:flex;flex-wrap:wrap;gap:.4rem}
+.jn-inh-status-chip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;color:rgba(235,240,236,.5);font-size:.74rem;padding:.38rem .85rem;cursor:pointer;font-family:var(--sans);transition:all .2s;-webkit-tap-highlight-color:transparent}
+.jn-inh-status-chip[data-status="active"].active{background:rgba(61,214,232,.12);border-color:rgba(61,214,232,.45);color:rgba(61,214,232,.92)}
+.jn-inh-status-chip[data-status="rehomed"].active{background:rgba(255,200,80,.1);border-color:rgba(255,200,80,.4);color:rgba(255,200,80,.9)}
+.jn-inh-status-chip[data-status="passed"].active{background:rgba(180,80,80,.1);border-color:rgba(180,80,80,.35);color:rgba(220,100,100,.85)}
+/* Delete button */
+.jn-inh-delete-btn{display:block;width:100%;margin-top:.65rem;padding:.52rem 1rem;background:none;border:1px solid rgba(200,80,80,.22);border-radius:10px;color:rgba(200,80,80,.6);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:all .18s;-webkit-tap-highlight-color:transparent}
+.jn-inh-delete-btn:hover{background:rgba(200,80,80,.07);border-color:rgba(200,80,80,.4);color:rgba(220,100,100,.85)}
 
 /* ── Keeper's Log overview ── */
 .jn-tank-cards{display:flex;flex-direction:column;gap:.85rem}

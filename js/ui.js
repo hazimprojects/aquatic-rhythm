@@ -1610,11 +1610,15 @@
     function renderInhabitants(data) {
       var card = document.getElementById('jn-inhabitants');
       if (!card) return;
-      var inhs = (data.inhabitants || []).filter(function (i) { return i.status === 'active'; });
+      var all = data.inhabitants || [];
       var bodyEl = document.getElementById('jn-inh-body');
       if (!bodyEl) return;
       bodyEl.innerHTML = '';
-      if (!inhs.length) {
+
+      var active = all.filter(function (i) { return i.status === 'active'; });
+      var past   = all.filter(function (i) { return i.status !== 'active'; });
+
+      if (!all.length) {
         var ep = document.createElement('p');
         ep.className = 'jn-entry-empty';
         ep.style.cssText = 'font-size:.75rem;margin:.1rem 0';
@@ -1622,71 +1626,82 @@
         bodyEl.appendChild(ep);
         return;
       }
+
+      var editBtnCSS = 'background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:6px;color:rgba(255,255,255,.45);font-size:.55rem;letter-spacing:.04em;text-transform:uppercase;padding:.2rem .55rem;cursor:pointer;white-space:nowrap;line-height:1.2;font-family:inherit';
+
+      function makeRow(inh, dimmed) {
+        var cat = inh.category || 'other';
+        var row = document.createElement('div');
+        row.className = 'tl-inh-row';
+        row.setAttribute('data-inh-id', inh.id);
+        row.style.cssText = 'display:flex;align-items:center;gap:.4rem;padding:.42rem 0;border-bottom:1px solid rgba(255,255,255,.05)' + (dimmed ? ';opacity:.5' : '');
+
+        var iconSp = document.createElement('span');
+        iconSp.textContent = INH_CATS[cat] || '◈';
+        iconSp.style.cssText = 'font-size:.85rem;line-height:1.2;flex-shrink:0';
+        row.appendChild(iconSp);
+
+        var infoDiv = document.createElement('div');
+        infoDiv.style.cssText = 'flex:1;min-width:0';
+
+        var nameLine = document.createElement('div');
+        nameLine.style.cssText = 'display:flex;align-items:baseline;gap:.3rem;flex-wrap:wrap';
+
+        var nameSp = document.createElement('span');
+        nameSp.textContent = inh.commonName || inh.species || INH_CAT_LABELS[cat] || cat;
+        nameSp.style.cssText = 'font-size:.75rem;color:rgba(235,240,236,.82);line-height:1.3';
+        nameLine.appendChild(nameSp);
+
+        if (inh.count > 1) {
+          var cntSp = document.createElement('span');
+          cntSp.textContent = '×' + inh.count;
+          cntSp.style.cssText = 'font-size:.6rem;color:rgba(255,255,255,.35);font-family:monospace';
+          nameLine.appendChild(cntSp);
+        }
+
+        /* Status pill for past residents */
+        if (inh.status === 'rehomed' || inh.status === 'passed') {
+          var pill = document.createElement('span');
+          pill.textContent = inh.status === 'rehomed' ? 'Rehomed' : 'Passed';
+          var pillColor = inh.status === 'rehomed'
+            ? 'color:rgba(255,200,80,.8);background:rgba(255,200,80,.08);border:1px solid rgba(255,200,80,.2)'
+            : 'color:rgba(180,80,80,.7);background:rgba(180,80,80,.07);border:1px solid rgba(180,80,80,.18)';
+          pill.style.cssText = pillColor + ';font-size:.5rem;letter-spacing:.06em;text-transform:uppercase;padding:.1rem .38rem;border-radius:20px;font-family:inherit;line-height:1.5';
+          nameLine.appendChild(pill);
+        }
+        infoDiv.appendChild(nameLine);
+
+        if (inh.species) {
+          var sciSp = document.createElement('span');
+          sciSp.textContent = inh.species;
+          sciSp.style.cssText = 'display:block;font-size:.58rem;color:rgba(255,255,255,.25);font-style:italic;line-height:1.3;margin-top:.05rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap';
+          infoDiv.appendChild(sciSp);
+        }
+        row.appendChild(infoDiv);
+
+        var editBtn = document.createElement('button');
+        editBtn.className = 'jn-inh-edit-btn';
+        editBtn.setAttribute('data-inh-id', inh.id);
+        editBtn.setAttribute('aria-label', 'Edit');
+        editBtn.textContent = 'Edit';
+        editBtn.style.cssText = editBtnCSS;
+        row.appendChild(editBtn);
+
+        return row;
+      }
+
       var container = document.createElement('div');
-      container.className = 'tl-inh-rows';
-      container.style.cssText = 'display:flex;flex-direction:column;gap:.35rem';
-      var btnBaseCSS = 'background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:6px;color:rgba(255,255,255,.52);font-size:.55rem;letter-spacing:.04em;text-transform:uppercase;padding:.18rem .42rem;cursor:pointer;white-space:nowrap;line-height:1.2;display:block;width:100%;text-align:center;font-family:inherit';
-      var order = ['fish', 'plant', 'invertebrate', 'coral', 'other'];
-      order.forEach(function (cat) {
-        inhs.filter(function (i) { return (i.category || 'other') === cat; }).forEach(function (inh) {
-          var row = document.createElement('div');
-          row.className = 'tl-inh-row';
-          row.setAttribute('data-inh-id', inh.id);
-          row.style.cssText = 'display:flex;align-items:flex-start;gap:.4rem;padding:.42rem 0;border-bottom:1px solid rgba(255,255,255,.05)';
+      container.style.cssText = 'display:flex;flex-direction:column;gap:.1rem';
+      active.forEach(function (inh) { container.appendChild(makeRow(inh, false)); });
 
-          var iconSp = document.createElement('span');
-          iconSp.className = 'tl-inh-row-icon';
-          iconSp.textContent = INH_CATS[cat] || '◈';
-          iconSp.style.cssText = 'font-size:.85rem;line-height:1.2;flex-shrink:0;margin-top:.05rem';
-          row.appendChild(iconSp);
+      if (past.length) {
+        var sep = document.createElement('p');
+        sep.style.cssText = 'font-size:.5rem;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.2);margin:.55rem 0 .2rem;font-family:inherit';
+        sep.textContent = 'Past residents';
+        container.appendChild(sep);
+        past.forEach(function (inh) { container.appendChild(makeRow(inh, true)); });
+      }
 
-          var infoDiv = document.createElement('div');
-          infoDiv.className = 'tl-inh-row-info';
-          infoDiv.style.cssText = 'flex:1;min-width:0';
-
-          var nameSp = document.createElement('span');
-          nameSp.className = 'tl-inh-row-name';
-          nameSp.textContent = inh.commonName || inh.species || INH_CAT_LABELS[cat] || cat;
-          nameSp.style.cssText = 'display:block;font-size:.75rem;color:rgba(235,240,236,.82);line-height:1.3';
-          if (inh.count > 1) {
-            var countSp = document.createElement('span');
-            countSp.className = 'tl-inh-row-count';
-            countSp.textContent = ' ×' + inh.count;
-            countSp.style.cssText = 'font-size:.6rem;color:rgba(255,255,255,.38);font-family:monospace';
-            nameSp.appendChild(countSp);
-          }
-          infoDiv.appendChild(nameSp);
-
-          if (inh.species) {
-            var sciSp = document.createElement('span');
-            sciSp.className = 'tl-inh-row-sci';
-            sciSp.textContent = inh.species;
-            sciSp.style.cssText = 'display:block;font-size:.58rem;color:rgba(255,255,255,.28);font-style:italic;line-height:1.3;margin-top:.05rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap';
-            infoDiv.appendChild(sciSp);
-          }
-          row.appendChild(infoDiv);
-
-          var actsDiv = document.createElement('div');
-          actsDiv.className = 'tl-inh-row-acts';
-          actsDiv.style.cssText = 'display:flex;flex-direction:column;gap:.22rem;flex-shrink:0';
-          [
-            { cls: 'jn-inh-edit-btn',                             lbl: 'Edit',    extra: '' },
-            { cls: 'jn-inh-status-btn tl-inh-act-rehomed', act: 'rehomed', lbl: 'Rehomed', extra: 'color:rgba(255,200,80,.7);border-color:rgba(255,200,80,.22);background:rgba(255,200,80,.06)' },
-            { cls: 'jn-inh-status-btn tl-inh-act-passed',  act: 'passed',  lbl: 'Passed',  extra: 'color:rgba(200,80,80,.7);border-color:rgba(200,80,80,.22);background:rgba(200,80,80,.06)' }
-          ].forEach(function (b) {
-            var btn = document.createElement('button');
-            btn.className = 'tl-inh-act-btn ' + b.cls;
-            btn.setAttribute('data-inh-id', inh.id);
-            if (b.act) btn.setAttribute('data-action', b.act);
-            btn.setAttribute('aria-label', b.lbl);
-            btn.textContent = b.lbl;
-            btn.style.cssText = (b.extra ? b.extra + ';' : '') + btnBaseCSS;
-            actsDiv.appendChild(btn);
-          });
-          row.appendChild(actsDiv);
-          container.appendChild(row);
-        });
-      });
       bodyEl.appendChild(container);
     }
 
@@ -2215,6 +2230,11 @@
       g('jn-inh-common'); g('jn-inh-species'); g('jn-inh-name');
       var countEl = document.getElementById('jn-inh-count'); if (countEl) countEl.value = '1';
       var dateEl = document.getElementById('jn-inh-date'); if (dateEl) dateEl.value = todayStr();
+      var statusRow = document.getElementById('jn-inh-status-row');
+      var deleteBtn = document.getElementById('jn-inh-delete-btn');
+      if (statusRow) statusRow.style.display = 'none';
+      if (deleteBtn) deleteBtn.style.display = 'none';
+
       if (inhId) {
         var d = loadData(); var tank = getActiveTank(d);
         var inh = null;
@@ -2229,6 +2249,12 @@
           s('jn-inh-common', inh.commonName); s('jn-inh-species', inh.species); s('jn-inh-name', inh.name);
           var cEl = document.getElementById('jn-inh-count'); if (cEl) cEl.value = inh.count || 1;
           var dEl = document.getElementById('jn-inh-date'); if (dEl) dEl.value = inh.addedDate || todayStr();
+          /* Show status chips, pre-select current */
+          if (statusRow) statusRow.style.display = '';
+          document.querySelectorAll('.jn-inh-status-chip').forEach(function (c) {
+            c.classList.toggle('active', c.dataset.status === (inh.status || 'active'));
+          });
+          if (deleteBtn) deleteBtn.style.display = '';
           var submitBtn = document.querySelector('#mt-modal-inhabitant [type="submit"]');
           if (submitBtn) submitBtn.textContent = 'Save changes';
           openModal('mt-modal-inhabitant');
@@ -2552,21 +2578,30 @@
 
       /* tl-inh-row no longer needs expand/collapse — actions are always visible */
 
-      var inhStatusBtn = target.closest('.jn-inh-status-btn');
-      if (inhStatusBtn) {
-        var inhId  = inhStatusBtn.dataset.inhId;
-        var action = inhStatusBtn.dataset.action;
-        var d2 = loadData();
-        var tank2 = getActiveTank(d2);
-        var inhs2 = tank2 ? (tank2.inhabitants || []) : [];
-        var inh2 = null;
-        for (var ii = 0; ii < inhs2.length; ii++) { if (inhs2[ii].id === inhId) { inh2 = inhs2[ii]; break; } }
-        if (!inh2) return;
-        var name2 = inh2.name || inh2.commonName || INH_CAT_LABELS[inh2.category] || 'this resident';
-        var confirmMsg = action === 'passed'
-          ? 'Mark ' + name2 + ' as passed away?'
-          : 'Mark ' + name2 + ' as rehomed?';
-        if (confirm(confirmMsg)) updateInhabitantStatus(inhId, action, '');
+      /* Status chip toggle inside resident modal */
+      var statusChip = target.closest('.jn-inh-status-chip');
+      if (statusChip && statusChip.closest('#mt-modal-inhabitant')) {
+        document.querySelectorAll('.jn-inh-status-chip').forEach(function (c) { c.classList.remove('active'); });
+        statusChip.classList.add('active');
+        return;
+      }
+
+      /* Delete resident button */
+      if (target.id === 'jn-inh-delete-btn') {
+        var delEditingEl = document.getElementById('jn-inh-editing-id');
+        var delId = delEditingEl ? delEditingEl.value : '';
+        if (!delId) return;
+        var d3 = loadData();
+        var tank3 = getActiveTank(d3);
+        if (!tank3 || !tank3.inhabitants) return;
+        var delInh = tank3.inhabitants.find(function (i) { return i.id === delId; });
+        var delName = delInh ? (delInh.commonName || delInh.species || 'this resident') : 'this resident';
+        if (!confirm('Remove ' + delName + ' from the log entirely?')) return;
+        tank3.inhabitants = tank3.inhabitants.filter(function (i) { return i.id !== delId; });
+        saveData(d3);
+        closeModal('mt-modal-inhabitant');
+        renderDashboard();
+        showJnToast(delName + ' removed from the log.', 'passed');
         return;
       }
     });
@@ -2671,6 +2706,8 @@
         var activeCat = document.querySelector('.jn-inh-cat-chip.active');
         var editingId = g('jn-inh-editing-id');
         if (editingId) {
+          var activeStatusChip = document.querySelector('.jn-inh-status-chip.active');
+          var newStatus = activeStatusChip ? activeStatusChip.dataset.status : 'active';
           for (var ii = 0; ii < tank.inhabitants.length; ii++) {
             if (tank.inhabitants[ii].id === editingId) {
               tank.inhabitants[ii].category  = activeCat ? activeCat.dataset.cat : tank.inhabitants[ii].category;
@@ -2679,6 +2716,13 @@
               tank.inhabitants[ii].name       = g('jn-inh-name');
               tank.inhabitants[ii].count      = parseInt(g('jn-inh-count'), 10) || tank.inhabitants[ii].count;
               tank.inhabitants[ii].addedDate  = g('jn-inh-date') || tank.inhabitants[ii].addedDate;
+              var prevStatus = tank.inhabitants[ii].status;
+              tank.inhabitants[ii].status = newStatus;
+              if (newStatus !== 'active' && prevStatus === 'active') {
+                tank.inhabitants[ii].removedDate = todayStr();
+              } else if (newStatus === 'active') {
+                tank.inhabitants[ii].removedDate = null;
+              }
               break;
             }
           }
