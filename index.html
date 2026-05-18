@@ -61,6 +61,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/kofi-sheet.css">
 </head>
 <body>
 <div id="cd" aria-hidden="true"></div><div id="cr" aria-hidden="true"></div>
@@ -1261,6 +1262,7 @@
           <a href="/companion" data-page="companion" style="font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:rgba(255,255,255,.50);border:1px solid rgba(255,255,255,.12);padding:.55rem 1.2rem;border-radius:2px;transition:color .25s,border-color .25s" onmouseover="this.style.color='rgba(124,168,156,.92)';this.style.borderColor='rgba(124,168,156,.38)'" onmouseout="this.style.color='rgba(255,255,255,.50)';this.style.borderColor='rgba(255,255,255,.12)'">Meet Rhyssa →</a>
           <a href="/tools" data-page="tools" style="font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:rgba(255,255,255,.42);border:1px solid rgba(255,255,255,.1);padding:.55rem 1.2rem;border-radius:2px;transition:color .25s,border-color .25s" onmouseover="this.style.color='rgba(124,168,156,.9)';this.style.borderColor='rgba(124,168,156,.35)'" onmouseout="this.style.color='rgba(255,255,255,.42)';this.style.borderColor='rgba(255,255,255,.1)'">Labs &amp; tools →</a>
         </div>
+        <p class="rd-kofi-note sr">If these guides help your rhythm, optional tips help fund new reading and tools — everything here stays free. <a href="https://ko-fi.com/aquaticrhythm" data-kofi-open rel="noopener noreferrer">Support on Ko-fi</a></p>
       </div>
     </div>
   </section>
@@ -1375,6 +1377,17 @@
       <div style="margin-top:4rem;padding:2rem 2.4rem;background:rgba(12,26,20,.6);border:1px solid rgba(139,189,210,.08);border-radius:4px">
         <p style="font-family:var(--serif);font-style:italic;font-size:.94rem;color:rgba(255,255,255,.38);line-height:1.9">All tools grow from ARA — Aquatic Rhythm Alignment. They simulate and plan, but they do not replace observation.</p>
         <a href="/ara" data-page="ara" style="display:inline-block;margin-top:1rem;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(124,168,156,.65);text-decoration:none;border-bottom:1px solid rgba(124,168,156,.2)">Read the ARA framework →</a>
+        <div class="tools-kofi-hint sr">
+          <p>Labs take steady time to build. If a tool here helped you avoid a costly mistake, optional tips help keep them maintained.</p>
+          <a href="https://ko-fi.com/aquaticrhythm" class="ar-kofi-chip" data-kofi-open rel="noopener noreferrer" aria-label="Support Aquatic Rhythm on Ko-fi">
+            <svg class="ar-kofi-ico" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <path d="M5.5 9.2h8.2V14.2a3.4 3.4 0 1 1-6.8 0V9.2z" stroke="rgba(61,214,232,.58)" stroke-width="1.15" fill="none" stroke-linejoin="round"/>
+              <path d="M5.5 9.2H4.1a1.75 1.75 0 0 0 0 3.5h1.4" stroke="rgba(100,200,82,.42)" stroke-width="1.05" fill="none" stroke-linecap="round"/>
+              <path d="M11 4.8c-.65-.35-1.4.05-1.55.75-.35-.55-1.35-.45-1.7.1-.45.85.2 1.75 2.05 3.5l1.2 1.15 1.2-1.15c1.85-1.75 2.5-2.65 2.05-3.5-.35-.55-1.35-.65-1.7-.1-.15-.7-.9-1.1-1.55-.75z" fill="rgba(61,214,232,.2)" stroke="rgba(61,214,232,.4)" stroke-width=".55" stroke-linejoin="round"/>
+            </svg>
+            <span class="ar-kofi-chip-lbl">Ko-fi</span>
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -1798,6 +1811,7 @@
 <script src="js/ecosystem.js" defer></script>
 <script src="js/fauna.js" defer></script>
 <script src="js/ui.js" defer></script>
+<script src="js/kofi-sheet.js" defer></script>
 <script src="js/rhyssa-fab-ext.js" defer></script>
 <script>
 /* ── SERVICE WORKER ── */
@@ -1898,6 +1912,16 @@ if ('serviceWorker' in navigator) {
       <p class="rh-sheet-welcome-txt">Tell me what you see — water, behaviour, anything that changed — and we can read it together before we fix anything.</p>
 
       <p class="rh-sheet-also">Same Rhyssa — also on <a href="https://chatgpt.com/g/g-6a09401c8ef48191b18deb53565a7fe1-rhyssa-aquarium-companion" target="_blank" rel="noopener">ChatGPT ↗</a> if you prefer.</p>
+      <div class="rh-kofi-row">
+        <a href="https://ko-fi.com/aquaticrhythm" class="ar-kofi-chip" data-kofi-open rel="noopener noreferrer" aria-label="Support Aquatic Rhythm on Ko-fi">
+          <svg class="ar-kofi-ico" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <path d="M5.5 9.2h8.2V14.2a3.4 3.4 0 1 1-6.8 0V9.2z" stroke="rgba(61,214,232,.58)" stroke-width="1.15" fill="none" stroke-linejoin="round"/>
+            <path d="M5.5 9.2H4.1a1.75 1.75 0 0 0 0 3.5h1.4" stroke="rgba(100,200,82,.42)" stroke-width="1.05" fill="none" stroke-linecap="round"/>
+            <path d="M11 4.8c-.65-.35-1.4.05-1.55.75-.35-.55-1.35-.45-1.7.1-.45.85.2 1.75 2.05 3.5l1.2 1.15 1.2-1.15c1.85-1.75 2.5-2.65 2.05-3.5-.35-.55-1.35-.65-1.7-.1-.15-.7-.9-1.1-1.55-.75z" fill="rgba(61,214,232,.2)" stroke="rgba(61,214,232,.4)" stroke-width=".55" stroke-linejoin="round"/>
+          </svg>
+          <span class="ar-kofi-chip-lbl">Ko-fi</span>
+        </a>
+      </div>
     </div>
   </div>
   <div class="rh-sheet-foot">

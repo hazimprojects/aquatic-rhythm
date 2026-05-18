@@ -37,6 +37,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="/css/kofi-sheet.css">
 <style>
 
 
@@ -703,6 +704,36 @@ body.eq-dd-open{overflow:hidden}
   border-bottom-color:rgba(220,100,60,.2);
   background:rgba(10,4,2,.96);
 }
+/* Ko-fi hint — ecosystem / results strip (same embed as main site) */
+.tb-kofi-hint{
+  display:none;
+  flex-shrink:0;
+  align-items:center;
+  justify-content:space-between;
+  gap:.55rem;
+  flex-wrap:wrap;
+  padding:.42rem .65rem .48rem;
+  border-bottom:1px solid rgba(61,214,232,.08);
+  background:rgba(6,18,14,.55);
+  font-size:.68rem;line-height:1.45;color:rgba(235,240,236,.42);
+  font-family:var(--sans);
+}
+#eco-zone.active .tb-kofi-hint{display:flex}
+.tb-kofi-hint-txt{flex:1;min-width:0}
+.tb-kofi-hint-link{
+  flex-shrink:0;
+  font-size:.48rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  font-weight:600;
+  color:rgba(61,214,232,.68);
+  text-decoration:none;
+  border:1px solid rgba(61,214,232,.2);
+  padding:.3rem .52rem;
+  border-radius:999px;
+  transition:color .2s,border-color .2s,background .2s;
+}
+.tb-kofi-hint-link:hover{color:rgba(61,214,232,.95);border-color:rgba(61,214,232,.45);background:rgba(61,214,232,.06)}
 #eco-zone{
   flex:1;min-height:0;
   overflow-y:auto;overflow-x:hidden;
@@ -1019,6 +1050,10 @@ body.eq-dd-open{overflow:hidden}
   <div id="eco-summary" style="display:none"></div>
   <!-- Compatibility -->
     <div id="compat-strip">Compatibility notes will appear as you select species.</div>
+  <div class="tb-kofi-hint" id="tb-kofi-hint">
+    <span class="tb-kofi-hint-txt">Planning here is free — tips help maintain labs like this.</span>
+    <a href="https://ko-fi.com/aquaticrhythm" class="tb-kofi-hint-link" data-kofi-open rel="noopener noreferrer" aria-label="Support on Ko-fi">Ko-fi</a>
+  </div>
   <div class="eco-inner">
     <!-- Search -->
     <div class="ph2-search-wrap">
@@ -3571,6 +3606,25 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
+<!-- Ko-fi embed (same panel as aquaticrhythm.com) -->
+<div id="kofi-backdrop" class="kofi-backdrop" aria-hidden="true"></div>
+<div id="kofi-sheet" class="kofi-sheet" role="dialog" aria-modal="true" aria-labelledby="kofi-sheet-title-tb" aria-hidden="true">
+  <div class="kofi-sheet-bar" aria-hidden="true"></div>
+  <div class="kofi-sheet-head">
+    <div class="kofi-sheet-head-text">
+      <span id="kofi-sheet-title-tb" class="kofi-sheet-title">Support</span>
+      <span class="kofi-sheet-sub">Optional tips — handled on Ko-fi</span>
+    </div>
+    <div class="kofi-sheet-head-actions">
+      <a href="https://ko-fi.com/aquaticrhythm" target="_blank" rel="noopener noreferrer" class="kofi-sheet-linkout">Open separately ↗</a>
+      <button type="button" class="kofi-sheet-close" id="kofi-sheet-close" aria-label="Close support panel">✕</button>
+    </div>
+  </div>
+  <div class="kofi-sheet-body">
+    <iframe id="kofi-embed-iframe" class="kofi-sheet-frame" title="Support Aquatic Rhythm on Ko-fi"></iframe>
+  </div>
+</div>
+<script src="/js/kofi-sheet.js" defer></script>
 <script src="/js/rhyssa-fab-ext.js" defer></script>
 </body>
 </html>
