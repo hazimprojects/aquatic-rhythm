@@ -2555,19 +2555,41 @@
         if (p.setupDate) ageWeeks = Math.floor((new Date() - new Date(p.setupDate)) / (86400000 * 7));
         var entries = active.entries || [];
         var latest = entries.length ? entries[entries.length - 1] : null;
-        var phase = null;
-        if (latest) {
-          var ph = assessPhaseFromParams(latest.params) || assessPhaseFromState(latest.keeperState, p.setupDate);
-          phase = (ph && phaseInfo[ph]) ? phaseInfo[ph].label : null;
+
+        /* Phase/label lookups — replicated inline; journal IIFE vars are not in scope here */
+        var _phaseLabels  = { establish: 'Establishing', stabilise: 'Stabilising', optimise: 'Optimising', sustain: 'Sustaining' };
+        var _stateLabels  = { 'consistent': 'Consistent', 'catching-up': 'Catching up', 'occasional': 'Occasional', 'just-starting': 'Just starting' };
+        var _careLabels   = { 'water_change': 'Water change', 'filter': 'Filter', 'feeding': 'Feeding', 'top_up': 'Topping up', 'treatment': 'Treatment', 'dosing': 'Dosing', 'media': 'Media change', 'trimming': 'Trimming', 'nothing': 'Just observed' };
+
+        function _phaseFromParams(params) {
+          if (!params) return null;
+          var nh3 = parseFloat(params.nh3), no2 = parseFloat(params.no2), no3 = parseFloat(params.no3);
+          if (isNaN(nh3) && isNaN(no2)) return null;
+          nh3 = isNaN(nh3) ? 0 : nh3; no2 = isNaN(no2) ? 0 : no2; no3 = isNaN(no3) ? 999 : no3;
+          if (nh3 > 0.5 || no2 > 0.25) return 'establish';
+          if (nh3 > 0 || no2 > 0 || no3 > 20) return 'stabilise';
+          if (no3 > 10) return 'optimise';
+          return 'sustain';
         }
+        function _phaseFromState(keeperState, setupDate) {
+          var aw = setupDate ? (new Date() - new Date(setupDate)) / (86400000 * 7) : 999;
+          if (keeperState === 'just-starting' || aw < 4) return 'establish';
+          if (keeperState === 'catching-up') return 'stabilise';
+          if (keeperState === 'consistent' && aw > 8) return 'sustain';
+          return 'optimise';
+        }
+
+        var phaseKey = latest ? (_phaseFromParams(latest.params) || _phaseFromState(latest.keeperState, p.setupDate)) : null;
+        var phase    = phaseKey ? (_phaseLabels[phaseKey] || phaseKey) : null;
+
         var residents = (active.inhabitants || [])
           .filter(function (i) { return i.status === 'active'; })
           .map(function (i) { return (i.count > 1 ? i.count + '× ' : '') + (i.commonName || i.species || 'Unknown'); });
         var recentEntries = entries.slice(-3).map(function (e) {
           return {
             date: e.date || '',
-            state: keeperStateLabels[e.keeperState] || e.keeperState || '',
-            care: (e.care || []).map(function (c) { return careLabels[c] || c; }),
+            state: _stateLabels[e.keeperState] || e.keeperState || '',
+            care: (e.care || []).map(function (c) { return _careLabels[c] || c; }),
             obs: (e.observation || '').slice(0, 200),
             params: e.params || null
           };
@@ -2744,6 +2766,12 @@
           if (d === '[DONE]') return;
           try {
             var parsed = JSON.parse(d);
+            /* Anthropic may emit an error event inside the stream */
+            if (parsed.type === 'error') {
+              console.error('[Rhyssa] API stream error', parsed.error);
+              responseText = responseText || '—';
+              return;
+            }
             var delta = (parsed.delta && parsed.delta.text) ? parsed.delta.text : '';
             if (delta) {
               responseText += delta;
@@ -2759,6 +2787,11 @@
               buf += decoder.decode(chunk.value || new Uint8Array(0), { stream: false });
               buf.split('\n').forEach(feedSseLine);
               buf = '';
+              /* Guard: if the stream closed with no text at all, show a fallback */
+              if (!responseText) {
+                responseText = 'Something went wrong — please try again in a moment.';
+                p.innerHTML = mdToHTML(responseText);
+              }
               var s2 = getThread();
               s2.messages.push({ role: 'assistant', content: responseText, ts: replyTs });
               saveThread(s2);
