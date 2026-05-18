@@ -908,6 +908,25 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:flex;align-items:center;j
 .jn-inh-row:hover .jn-inh-actions,.jn-inh-row:focus-within .jn-inh-actions{opacity:1}
 .jn-inh-status-btn{background:none;border:1px solid rgba(255,255,255,.1);border-radius:5px;color:rgba(255,255,255,.3);font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;padding:.22rem .5rem;cursor:pointer;font-family:var(--sans);transition:all .2s;-webkit-tap-highlight-color:transparent;white-space:nowrap}
 .jn-inh-status-btn:hover{border-color:rgba(200,80,80,.4);color:rgba(200,80,80,.7)}
+/* Resident chip in main card (matches setup chips, teal tint) */
+.jn-fam-chip{font-size:.64rem;font-family:var(--sans);color:rgba(61,214,232,.82);background:rgba(61,214,232,.06);border:1px solid rgba(61,214,232,.18);border-radius:20px;padding:.18rem .5rem;line-height:1.4;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.jn-fam-chip.jn-fam-chip--past{opacity:.45;color:rgba(255,255,255,.5);background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12)}
+/* Management modal list */
+.jn-inh-list-body{display:flex;flex-direction:column;gap:.1rem;margin-bottom:.1rem}
+.jn-fam-list-row{display:flex;align-items:center;gap:.5rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.jn-fam-list-row:last-child{border-bottom:none}
+.jn-fam-list-info{flex:1;min-width:0}
+.jn-fam-list-name{font-size:.76rem;color:rgba(235,240,236,.82);line-height:1.3}
+.jn-fam-list-sci{font-size:.58rem;color:rgba(255,255,255,.28);font-style:italic;line-height:1.3;margin-top:.05rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.jn-fam-list-actions{display:flex;gap:.3rem;flex-shrink:0}
+.jn-fam-list-edit{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:6px;color:rgba(255,255,255,.45);font-size:.55rem;letter-spacing:.04em;text-transform:uppercase;padding:.2rem .55rem;cursor:pointer;font-family:inherit;line-height:1.2}
+.jn-fam-list-del{background:none;border:1px solid rgba(200,80,80,.18);border-radius:6px;color:rgba(200,80,80,.5);font-size:.7rem;padding:.2rem .45rem;cursor:pointer;line-height:1.2}
+.jn-inh-list-add-btn{display:block;width:100%;margin-top:.85rem;padding:.55rem;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.14);border-radius:10px;color:rgba(255,255,255,.38);font-size:.72rem;font-family:var(--sans);cursor:pointer;text-align:center;transition:background .15s,border-color .15s;letter-spacing:.02em}
+.jn-inh-list-add-btn:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.6)}
+/* Form view header (back button + title + close) */
+.jn-inh-form-hdr{justify-content:space-between}
+.jn-inh-back-btn{background:none;border:none;color:rgba(61,214,232,.65);font-size:.7rem;font-family:var(--sans);cursor:pointer;padding:0;letter-spacing:.02em;flex-shrink:0;white-space:nowrap}
+.jn-inh-form-hdr .mt-modal-title{flex:1;margin:0 .5rem}
 /* Resident status chips (in edit modal) */
 .jn-inh-status-chips{display:flex;flex-wrap:wrap;gap:.4rem}
 .jn-inh-status-chip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;color:rgba(235,240,236,.5);font-size:.74rem;padding:.38rem .85rem;cursor:pointer;font-family:var(--sans);transition:all .2s;-webkit-tap-highlight-color:transparent}
