@@ -977,18 +977,29 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:flex;align-items:center;j
 .tl-streak-badge{display:inline-flex;align-items:center;gap:.3rem;font-size:.58rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(100,200,82,.85);background:rgba(100,200,82,.09);border:1px solid rgba(100,200,82,.18);border-radius:100px;padding:.2rem .6rem;flex-shrink:0}
 .tl-streak-badge::before{content:'↑';font-size:.5rem;opacity:.6}
 
-/* TANK FAMILY: chip grid */
-.tl-inh-chips{display:flex;flex-wrap:wrap;gap:.4rem}
-.tl-inh-chip{display:inline-flex;align-items:center;gap:.35rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:100px;padding:.36rem .75rem .36rem .55rem;font-size:.78rem;color:rgba(235,240,236,.68);font-family:var(--sans);cursor:pointer;transition:background .2s,border-color .2s,color .2s;-webkit-tap-highlight-color:transparent}
-.tl-inh-chip:hover,.tl-inh-chip.expanded{background:rgba(61,214,232,.08);border-color:rgba(61,214,232,.28);color:rgba(235,240,236,.9)}
-.tl-inh-chip-icon{font-size:.9rem;line-height:1;flex-shrink:0}
-.tl-inh-chip-count{font-size:.6rem;color:rgba(255,255,255,.38);font-family:monospace}
-.tl-inh-chip-actions{display:none;align-items:center;gap:.3rem;margin-left:.3rem;padding-left:.4rem;border-left:1px solid rgba(255,255,255,.12)}
-.tl-inh-chip.expanded .tl-inh-chip-actions{display:inline-flex}
-.tl-inh-chip-btn{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.13);border-radius:100px;color:rgba(255,255,255,.48);font-size:.6rem;letter-spacing:.05em;text-transform:uppercase;padding:.22rem .6rem;cursor:pointer;font-family:var(--sans);transition:all .15s;white-space:nowrap;line-height:1}
-.tl-inh-chip-btn:hover{border-color:rgba(200,80,80,.4);color:rgba(200,80,80,.75);background:rgba(200,80,80,.06)}
-.tl-inh-chip-btn.jn-inh-edit-btn{color:rgba(61,214,232,.62);border-color:rgba(61,214,232,.22);background:rgba(61,214,232,.06)}
-.tl-inh-chip-btn.jn-inh-edit-btn:hover{color:rgba(61,214,232,.92);border-color:rgba(61,214,232,.45);background:rgba(61,214,232,.1)}
+/* OVERVIEW PAIR: My Setup + Tank Family side by side */
+.jn-overview-pair{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:1rem}
+.jn-overview-pair>.tl-card,.jn-overview-pair>.jn-setup-card{margin-bottom:0}
+.jn-overview-pair .tl-card-eyebrow{font-size:.44rem}
+.jn-overview-pair .tl-card-header{margin-bottom:.55rem}
+.jn-overview-pair .tl-card{padding:1rem .95rem}
+
+/* TANK FAMILY: row list */
+.tl-inh-rows{display:flex;flex-direction:column;gap:.35rem}
+.tl-inh-row{display:flex;align-items:flex-start;gap:.4rem;padding:.42rem 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.tl-inh-row:last-child{border-bottom:none;padding-bottom:0}
+.tl-inh-row-icon{font-size:.85rem;line-height:1.2;flex-shrink:0;margin-top:.05rem}
+.tl-inh-row-info{flex:1;min-width:0}
+.tl-inh-row-name{display:block;font-size:.75rem;color:rgba(235,240,236,.82);font-family:var(--sans);line-height:1.3}
+.tl-inh-row-count{font-size:.6rem;color:rgba(255,255,255,.38);margin-left:.25rem;font-family:monospace}
+.tl-inh-row-sci{display:block;font-size:.58rem;color:rgba(255,255,255,.28);font-style:italic;line-height:1.3;margin-top:.05rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tl-inh-row-acts{display:flex;flex-direction:column;gap:.22rem;flex-shrink:0}
+.tl-inh-act-btn{-webkit-appearance:none;appearance:none;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:6px;color:rgba(255,255,255,.52);font-size:.55rem;letter-spacing:.04em;text-transform:uppercase;padding:.18rem .42rem;cursor:pointer;font-family:var(--sans);transition:all .15s;white-space:nowrap;line-height:1.2;display:block;width:100%;text-align:center}
+.tl-inh-act-btn:hover{background:rgba(61,214,232,.08);border-color:rgba(61,214,232,.3);color:rgba(61,214,232,.85)}
+.tl-inh-act-rehomed{color:rgba(255,200,80,.6);border-color:rgba(255,200,80,.18);background:rgba(255,200,80,.04)}
+.tl-inh-act-rehomed:hover{background:rgba(255,200,80,.12);border-color:rgba(255,200,80,.4);color:rgba(255,200,80,.9)}
+.tl-inh-act-passed{color:rgba(200,80,80,.6);border-color:rgba(200,80,80,.18);background:rgba(200,80,80,.04)}
+.tl-inh-act-passed:hover{background:rgba(200,80,80,.1);border-color:rgba(200,80,80,.35);color:rgba(200,80,80,.9)}
 
 /* ENTRIES TIMELINE */
 .tl-timeline{list-style:none;margin:0;padding:0;position:relative}
@@ -1294,14 +1305,14 @@ body[data-active-page="companion"] #rh-backdrop{display:none!important}
 .jn-setup-card .tl-card-header{margin-bottom:.7rem}
 .jn-setup-edit-btn{background:none;border:1px solid rgba(157,191,154,.28);color:rgba(157,191,154,.7);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .62rem;border-radius:20px;cursor:pointer;font-family:var(--sans);transition:border-color .15s,color .15s}
 .jn-setup-edit-btn:hover{border-color:rgba(157,191,154,.58);color:rgba(157,191,154,1)}
-.jn-setup-eq-list{display:flex;flex-wrap:wrap;gap:.38rem;margin-bottom:.5rem}
+.jn-setup-eq-list{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.4rem}
 .jn-setup-eq-list:empty{display:none}
-.jn-setup-eq-chip{font-size:.72rem;font-family:var(--sans);color:rgba(157,191,154,.88);background:rgba(157,191,154,.07);border:1px solid rgba(157,191,154,.22);border-radius:20px;padding:.22rem .65rem;line-height:1.4}
+.jn-setup-eq-chip{font-size:.64rem;font-family:var(--sans);color:rgba(157,191,154,.88);background:rgba(157,191,154,.07);border:1px solid rgba(157,191,154,.22);border-radius:20px;padding:.18rem .5rem;line-height:1.4;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .jn-setup-stock-list{display:flex;flex-wrap:wrap;gap:.38rem}
 .jn-setup-stock-list:empty{display:none}
 .jn-setup-stock-chip{font-size:.72rem;font-family:var(--sans);color:rgba(180,120,200,.88);background:rgba(180,120,200,.07);border:1px solid rgba(180,120,200,.22);border-radius:20px;padding:.22rem .65rem;line-height:1.4}
-.jn-setup-empty{display:flex;flex-direction:column;align-items:flex-start;gap:.55rem;padding:.2rem 0}
-.jn-setup-empty>span{font-size:.8rem;color:rgba(235,240,236,.3);font-family:var(--sans)}
+.jn-setup-empty{flex-direction:column;align-items:flex-start;gap:.45rem;padding:.1rem 0}
+.jn-setup-empty>span{font-size:.72rem;color:rgba(235,240,236,.3);font-family:var(--sans)}
 .jn-setup-start-btn{background:none;border:1px solid rgba(157,191,154,.3);color:rgba(157,191,154,.7);font-size:.72rem;font-family:var(--sans);padding:.3rem .8rem;border-radius:20px;cursor:pointer;transition:border-color .15s,color .15s}
 .jn-setup-start-btn:hover{border-color:rgba(157,191,154,.6);color:rgba(157,191,154,1)}
 
@@ -1338,6 +1349,12 @@ body[data-active-page="companion"] #rh-backdrop{display:none!important}
 /* ── Write entry CTA (inline) ── */
 .tl-write-cta{margin:.15rem 0 .2rem}
 .tl-write-cta-btn{width:100%;text-align:center;border-radius:14px}
+/* ENTRY CTA CARD */
+.jn-entry-cta-card{text-align:center;padding:1.4rem 1.45rem}
+.jn-entry-cta-prompt{font-size:.82rem;color:rgba(235,240,236,.45);font-family:var(--serif);font-style:italic;font-weight:300;margin:0 0 .9rem;line-height:1.55}
+.jn-entry-cta-btn{width:100%;border-radius:14px;font-size:.78rem;letter-spacing:.08em}
+/* THEMED SELECT for equipment gear modal */
+.jn-setup-brand-select{-webkit-appearance:none;appearance:none;background:rgba(10,24,20,.92) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='rgba(157%2C191%2C154%2C.55)' stroke-width='1.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right .65rem center;padding-right:2rem!important;border:1px solid rgba(157,191,154,.22);color:rgba(235,240,236,.82);font-size:.74rem;font-family:var(--sans);padding:.32rem .7rem;border-radius:8px;cursor:pointer;transition:border-color .15s}
 
 /* ── Equipment modal: category headers ── */
 .jn-eq-cat-header{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(157,191,154,.55);padding:.7rem 0 .3rem;font-family:var(--sans);border-bottom:1px solid rgba(157,191,154,.1);margin-bottom:.2rem}
