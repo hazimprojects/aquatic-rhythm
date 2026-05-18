@@ -56,10 +56,12 @@ async function handleChat(request, env, origin) {
 
   const rawMessages = Array.isArray(body.messages) ? body.messages : [];
   const messages    = rawMessages.slice(-MAX_HISTORY);
-  const tankContext = body.tankContext || null;
 
   for (const m of messages) {
-    if (typeof m.role !== 'string' || typeof m.content !== 'string') {
+    if (m.role !== 'user' && m.role !== 'assistant') {
+      return errorResponse('Bad message format', 400, origin);
+    }
+    if (typeof m.content !== 'string') {
       return errorResponse('Bad message format', 400, origin);
     }
     if (m.content.length > MAX_MSG_CHARS) {
@@ -67,6 +69,9 @@ async function handleChat(request, env, origin) {
     }
   }
 
+  /* Sanitize tankContext — strip unexpected fields and cap string lengths
+     to prevent prompt injection via crafted context payloads.            */
+  const tankContext = sanitizeTankContext(body.tankContext);
   const systemPrompt = buildSystemPrompt(tankContext);
 
   let upstream;
@@ -102,6 +107,41 @@ async function handleChat(request, env, origin) {
       'Access-Control-Allow-Origin': origin,
     },
   });
+}
+
+function sanitizeTankContext(raw) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+  const str  = (v, max) => (typeof v === 'string') ? v.slice(0, max) : null;
+  const num  = (v)      => { const n = parseFloat(v); return isNaN(n) ? null : n; };
+  const safeParams = (p) => {
+    if (!p || typeof p !== 'object') return null;
+    return {
+      ph:   num(p.ph),   nh3: num(p.nh3), no2: num(p.no2),
+      no3:  num(p.no3),  temp: num(p.temp),
+      gh:   num(p.gh),   kh:  num(p.kh),  sg:  num(p.sg),
+    };
+  };
+  return {
+    volume:   num(raw.volume),
+    unit:     str(raw.unit, 5),
+    type:     str(raw.type, 30),
+    ageWeeks: num(raw.ageWeeks),
+    phase:    str(raw.phase, 40),
+    residents: Array.isArray(raw.residents)
+      ? raw.residents.slice(0, 20).map(r => str(r, 60)).filter(Boolean)
+      : null,
+    recentEntries: Array.isArray(raw.recentEntries)
+      ? raw.recentEntries.slice(0, 3).map(e => ({
+          date:   str(e.date,  12),
+          state:  str(e.state, 30),
+          care:   Array.isArray(e.care)
+            ? e.care.slice(0, 10).map(c => str(c, 30)).filter(Boolean)
+            : [],
+          obs:    str(e.obs, 200),
+          params: safeParams(e.params),
+        }))
+      : null,
+  };
 }
 
 function buildSystemPrompt(tankContext) {
