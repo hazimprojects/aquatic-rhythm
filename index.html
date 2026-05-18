@@ -50,6 +50,7 @@
 <meta name="twitter:description" content="Aquatic Rhythm is for keepers who care deeply and don't always have the time to show it. Ecology-first guides, ARA framework, and Rhyssa as companion.">
 <meta name="twitter:image" content="https://aquaticrhythm.com/og-image.png">
 <meta name="twitter:image:alt" content="Aquatic Rhythm — ecological guides for home aquariums">
+<script>if(localStorage.getItem('ar_analytics_opt')==='1'){window['ga-disable-G-8MDN065WNW']=true}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MDN065WNW"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -119,6 +120,12 @@
       </svg>
     </button>
   </div>
+  <button class="ar-settings-btn" id="ar-settings-btn" aria-label="Settings" aria-expanded="false" title="Settings">
+    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+      <path d="M6.8 2.2h3.4l.48 1.6a5 5 0 011.3.76l1.65-.5 1.7 2.94-1.18 1.14c.04.3.07.6.07.86s-.03.57-.07.86l1.18 1.14-1.7 2.94-1.65-.5a5 5 0 01-1.3.76L10.2 14.8H6.8l-.48-1.6a5 5 0 01-1.3-.76l-1.65.5-1.7-2.94 1.18-1.14A5 5 0 012.78 8.5c0-.26.03-.56.07-.86L1.67 6.5l1.7-2.94 1.65.5a5 5 0 011.3-.76L6.8 2.2z" stroke="currentColor" stroke-width="1.15" stroke-linejoin="round" fill="none"/>
+      <circle cx="8.5" cy="8.5" r="2.1" stroke="currentColor" stroke-width="1.15" fill="none"/>
+    </svg>
+  </button>
   <button class="nbg" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
 </nav>
 
@@ -2119,5 +2126,177 @@ if ('serviceWorker' in navigator) {
     <p class="rh-sheet-note">AI can be wrong — for fish emergencies, consult a specialist</p>
   </div>
 </div>
+
+<!-- ── SETTINGS PANEL ── -->
+<div class="ar-settings-backdrop" id="ar-settings-backdrop" aria-hidden="true"></div>
+<aside class="ar-settings-panel" id="ar-settings-panel" role="dialog" aria-modal="true" aria-label="Settings" aria-hidden="true">
+  <div class="ar-stg-head">
+    <div class="ar-stg-head-left">
+      <svg class="ar-stg-head-icon" width="15" height="15" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+        <path d="M6.8 2.2h3.4l.48 1.6a5 5 0 011.3.76l1.65-.5 1.7 2.94-1.18 1.14c.04.3.07.6.07.86s-.03.57-.07.86l1.18 1.14-1.7 2.94-1.65-.5a5 5 0 01-1.3.76L10.2 14.8H6.8l-.48-1.6a5 5 0 01-1.3-.76l-1.65.5-1.7-2.94 1.18-1.14A5 5 0 012.78 8.5c0-.26.03-.56.07-.86L1.67 6.5l1.7-2.94 1.65.5a5 5 0 011.3-.76L6.8 2.2z" stroke="currentColor" stroke-width="1.15" stroke-linejoin="round" fill="none"/>
+        <circle cx="8.5" cy="8.5" r="2.1" stroke="currentColor" stroke-width="1.15" fill="none"/>
+      </svg>
+      <span class="ar-stg-title">Settings</span>
+    </div>
+    <button class="ar-stg-close" id="ar-settings-close" aria-label="Close settings">✕</button>
+  </div>
+  <div class="ar-stg-body">
+
+    <!-- ── Ecosystem ── -->
+    <div class="ar-stg-section">
+      <span class="ar-stg-label">Ecosystem</span>
+      <div class="ar-stg-row">
+        <div class="ar-stg-row-info">
+          <span class="ar-stg-row-label">Fauna</span>
+          <span class="ar-stg-row-sub">Fish &amp; animals</span>
+        </div>
+        <input class="ar-stg-toggle" type="checkbox" id="stg-fauna" role="switch" aria-label="Show fauna">
+      </div>
+      <div class="ar-stg-row">
+        <div class="ar-stg-row-info">
+          <span class="ar-stg-row-label">Flora</span>
+          <span class="ar-stg-row-sub">Plants &amp; driftwood</span>
+        </div>
+        <input class="ar-stg-toggle" type="checkbox" id="stg-flora" role="switch" aria-label="Show flora">
+      </div>
+      <div class="ar-stg-row">
+        <div class="ar-stg-row-info">
+          <span class="ar-stg-row-label">Reduce Motion</span>
+          <span class="ar-stg-row-sub">Pauses background animations</span>
+        </div>
+        <input class="ar-stg-toggle" type="checkbox" id="stg-motion" role="switch" aria-label="Reduce motion">
+      </div>
+    </div>
+
+    <div class="ar-stg-divider"></div>
+
+    <!-- ── Units ── -->
+    <div class="ar-stg-section">
+      <span class="ar-stg-label">Units</span>
+      <div class="ar-stg-row">
+        <div class="ar-stg-row-info">
+          <span class="ar-stg-row-label">Temperature</span>
+        </div>
+        <div class="ar-stg-seg" role="group" aria-label="Temperature unit">
+          <button class="ar-stg-seg-btn" data-unit-temp="C">°C</button>
+          <button class="ar-stg-seg-btn" data-unit-temp="F">°F</button>
+        </div>
+      </div>
+      <div class="ar-stg-row">
+        <div class="ar-stg-row-info">
+          <span class="ar-stg-row-label">Volume</span>
+        </div>
+        <div class="ar-stg-seg" role="group" aria-label="Volume unit">
+          <button class="ar-stg-seg-btn" data-unit-vol="L">Litres</button>
+          <button class="ar-stg-seg-btn" data-unit-vol="gal">US Gal</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ar-stg-divider"></div>
+
+    <!-- ── Keeper's Log ── -->
+    <div class="ar-stg-section">
+      <span class="ar-stg-label">Keeper's Log</span>
+      <div class="ar-stg-row">
+        <div class="ar-stg-row-info">
+          <span class="ar-stg-row-label">Entry Order</span>
+          <span class="ar-stg-row-sub">Newest or oldest first</span>
+        </div>
+        <div class="ar-stg-seg" role="group" aria-label="Entry sort order">
+          <button class="ar-stg-seg-btn" data-sort="desc">Newest</button>
+          <button class="ar-stg-seg-btn" data-sort="asc">Oldest</button>
+        </div>
+      </div>
+      <div class="ar-stg-row">
+        <div class="ar-stg-row-info">
+          <span class="ar-stg-row-label">Water Change Alert</span>
+          <span class="ar-stg-row-sub">Warn after this many days</span>
+        </div>
+        <input class="ar-stg-num-input" type="number" id="stg-wc-days" min="3" max="60" value="14" aria-label="Days before water change alert">
+      </div>
+    </div>
+
+    <div class="ar-stg-divider"></div>
+
+    <!-- ── Privacy ── -->
+    <div class="ar-stg-section">
+      <span class="ar-stg-label">Privacy</span>
+      <div class="ar-stg-row">
+        <div class="ar-stg-row-info">
+          <span class="ar-stg-row-label">Usage Analytics</span>
+          <span class="ar-stg-row-sub">Helps improve the app</span>
+        </div>
+        <input class="ar-stg-toggle" type="checkbox" id="stg-analytics" role="switch" aria-label="Enable usage analytics">
+      </div>
+    </div>
+
+    <div class="ar-stg-divider"></div>
+
+    <!-- ── Data ── -->
+    <div class="ar-stg-section">
+      <span class="ar-stg-label">Data</span>
+    </div>
+    <div class="ar-stg-actions">
+      <button class="ar-stg-action-btn" id="stg-export">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M8 2v7M5 6.5l3 3 3-3M2 11v1a2 2 0 002 2h8a2 2 0 002-2v-1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Export Journal
+        <span style="margin-left:auto;font-size:.62rem;color:rgba(255,255,255,.22)">JSON</span>
+      </button>
+      <label class="ar-stg-action-btn" for="stg-import-file" style="cursor:pointer">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M8 9V2M5 4.5l3-3 3 3M2 11v1a2 2 0 002 2h8a2 2 0 002-2v-1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Import Journal
+        <span style="margin-left:auto;font-size:.62rem;color:rgba(255,255,255,.22)">JSON</span>
+      </label>
+      <input type="file" id="stg-import-file" class="ar-stg-import-input" accept=".json,application/json" aria-label="Import journal JSON file">
+      <button class="ar-stg-action-btn" id="stg-clear-rhyssa">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M11.5 4.5L4.5 11.5M4.5 4.5l7 7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        Clear Rhyssa Chat
+      </button>
+      <button class="ar-stg-action-btn ar-danger" id="stg-reset-all">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M2 4h12M5 4V3a1 1 0 011-1h4a1 1 0 011 1v1M6.5 7v5M9.5 7v5M3 4l.9 8.5A1 1 0 004.9 13.5h6.2a1 1 0 00.99-.88L13 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Reset All Data
+      </button>
+    </div>
+
+    <div class="ar-stg-divider"></div>
+
+    <!-- ── App ── -->
+    <div class="ar-stg-section">
+      <span class="ar-stg-label">App</span>
+    </div>
+    <div class="ar-stg-actions" id="stg-pwa-row" style="display:none">
+      <button class="ar-stg-pwa-btn" id="stg-install-pwa">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <rect x="1" y="1" width="14" height="14" rx="3" stroke="currentColor" stroke-width="1.2" fill="none"/>
+          <path d="M8 5v4M6 7.5l2 2 2-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Install App
+        <span style="margin-left:auto;font-size:.62rem;opacity:.45">Add to home screen</span>
+      </button>
+    </div>
+    <div class="ar-stg-about">
+      <div class="ar-stg-about-links">
+        <a href="/privacy" data-page="privacy" class="ar-stg-about-link">Privacy</a>
+        <span class="ar-stg-dot">·</span>
+        <a href="/terms" data-page="terms" class="ar-stg-about-link">Terms</a>
+        <span class="ar-stg-dot">·</span>
+        <a href="/about" data-page="about" class="ar-stg-about-link">About</a>
+        <span class="ar-stg-dot">·</span>
+        <a href="https://ko-fi.com/aquaticrhythm" class="ar-stg-about-link" data-kofi-open rel="noopener noreferrer">Support</a>
+      </div>
+      <span class="ar-stg-version">Aquatic Rhythm · aquaticrhythm.com</span>
+    </div>
+
+  </div>
+</aside>
 </body>
                                                                                                                                                                                                                                                                                                                                                        </html>
