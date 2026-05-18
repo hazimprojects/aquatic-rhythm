@@ -541,6 +541,12 @@
     var INH_CATS = { fish:'🐟', plant:'🌿', invertebrate:'🦐', coral:'🪸', other:'◈' };
     var INH_CAT_LABELS = { fish:'Fish', plant:'Plant', invertebrate:'Invertebrate', coral:'Coral', other:'Other' };
 
+    function escHtml(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
     function migrateData(d) {
       if (d.profile && !d.tanks) {
         var tank = {
@@ -936,7 +942,7 @@
         return '<button class="jn-tank-card" data-tank-id="' + t.id + '" aria-label="Open log for ' + (p.name || 'tank') + '">'
           + '<div class="jn-card-icon">' + icon + '</div>'
           + '<div class="jn-card-body">'
-          + '<h3 class="jn-card-name">' + (p.name || 'My Tank') + '</h3>'
+          + '<h3 class="jn-card-name">' + (escHtml(p.name) || 'My Tank') + '</h3>'
           + '<p class="jn-card-meta">' + meta + '</p>'
           + (phData ? '<span class="jn-card-phase" style="color:' + phData.color + '">' + phData.label + '</span>'
                     : '<span class="jn-card-phase jn-card-phase--empty">' + (entries.length ? '—' : 'No entries yet') + '</span>')
@@ -1002,16 +1008,16 @@
           + '<div class="' + nodeClass + '" aria-hidden="true"></div>'
           + '<div class="tl-entry-content">'
           + '<div class="tl-entry-meta">'
-          + '<span class="tl-entry-date">' + (e.date || '') + '</span>'
+          + '<span class="tl-entry-date">' + escHtml(e.date) + '</span>'
           + (stateLabel ? '<span class="tl-entry-state-tag">' + stateLabel + '</span>' : '')
           + '<div class="tl-entry-actions">'
           + (e.id ? '<button class="tl-entry-edit-btn" data-entry-id="' + e.id + '" aria-label="Edit entry">Edit</button>' : '')
           + '<button class="rh-inline-btn tl-entry-rh-btn" data-rh-msg="' + rhMsg + '" aria-label="Discuss with Rhyssa"><svg width="10" height="10" viewBox="0 0 22 22" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7.5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="11" cy="11" r="3.5" stroke="currentColor" stroke-width="1.6" fill="none" opacity=".55"/><circle cx="11" cy="11" r="1.4" fill="currentColor" opacity=".8"/></svg>Rhyssa</button>'
           + '</div>'
           + '</div>'
-          + (e.observation ? '<p class="tl-entry-obs">' + e.observation + '</p>' : '')
+          + (e.observation ? '<p class="tl-entry-obs">' + escHtml(e.observation) + '</p>' : '')
           + (careStr ? '<span class="tl-entry-care">' + careStr + '</span>' : '')
-          + (e.treatmentNote ? '<span class="tl-entry-treatment">' + e.treatmentNote + '</span>' : '')
+          + (e.treatmentNote ? '<span class="tl-entry-treatment">' + escHtml(e.treatmentNote) + '</span>' : '')
           + (paramsStr ? '<span class="tl-entry-params">' + paramsStr + '</span>' : '')
           + '</div>'
           + '</li>';
@@ -1525,7 +1531,7 @@
         + order.filter(function (cat) { return grouped[cat]; }).map(function (cat) {
           return grouped[cat].map(function (i) {
             var icon  = INH_CATS[cat] || '◈';
-            var label = i.commonName || i.species || INH_CAT_LABELS[cat] || cat;
+            var label = escHtml(i.commonName || i.species || INH_CAT_LABELS[cat] || cat);
             var count = i.count > 1 ? '<span class=”tl-inh-chip-count”>×' + i.count + '</span>' : '';
             return '<div class=”tl-inh-chip” tabindex=”0” data-inh-id=”' + i.id + '”>'
               + '<span class=”tl-inh-chip-icon”>' + icon + '</span>'
