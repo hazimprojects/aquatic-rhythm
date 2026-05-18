@@ -536,6 +536,8 @@
     var jnHistoryPage = 1;
     var JN_PAGE_SIZE  = 10;
     var STREAK_MILESTONES = [4, 8, 12, 26, 52];
+    var jnFilter = { query: '', days: 0, care: [], state: [] };
+    var jnFilteredEntries = [];
     var INH_CATS = { fish:'🐟', plant:'🌿', invertebrate:'🦐', coral:'🪸', other:'◈' };
     var INH_CAT_LABELS = { fish:'Fish', plant:'Plant', invertebrate:'Invertebrate', coral:'Coral', other:'Other' };
 
@@ -1151,6 +1153,102 @@
       return lines.join(' ');
     }
 
+    /* ── P4b: Entry filter & search ── */
+    function applyFilters(entries, filter) {
+      return (entries || []).filter(function (e) {
+        if (filter.query) {
+          var q = filter.query.toLowerCase();
+          var inObs  = (e.observation || '').toLowerCase().indexOf(q) !== -1;
+          var inCare = (e.care || []).some(function (c) { return (careLabels[c] || c).toLowerCase().indexOf(q) !== -1; });
+          var inNote = (e.treatmentNote || '').toLowerCase().indexOf(q) !== -1;
+          if (!inObs && !inCare && !inNote) return false;
+        }
+        if (filter.days > 0 && e.date) {
+          if (Math.floor((new Date() - new Date(e.date)) / 86400000) > filter.days) return false;
+        }
+        if (filter.care.length > 0) {
+          if (!filter.care.some(function (c) { return (e.care || []).indexOf(c) !== -1; })) return false;
+        }
+        if (filter.state.length > 0) {
+          if (filter.state.indexOf(e.keeperState) === -1) return false;
+        }
+        return true;
+      });
+    }
+
+    function countActiveFilters() {
+      var n = 0;
+      if (jnFilter.query) n++;
+      if (jnFilter.days > 0) n++;
+      n += jnFilter.care.length + jnFilter.state.length;
+      return n;
+    }
+
+    function updateFilterUI() {
+      var n = countActiveFilters();
+      var badge = document.getElementById('jn-filter-badge');
+      if (badge) { badge.textContent = n; badge.style.display = n > 0 ? '' : 'none'; }
+      var clearBtn = document.getElementById('jn-filter-clear');
+      if (clearBtn) clearBtn.style.display = n > 0 ? '' : 'none';
+    }
+
+    function applyAndRender() {
+      var tank = getActiveTank(loadData());
+      var entries = tank ? (tank.entries || []) : [];
+      jnFilteredEntries = applyFilters(entries, jnFilter);
+      jnHistoryPage = 1;
+      renderEntryList(jnFilteredEntries, 1);
+      var noRes = document.getElementById('jn-filter-no-results');
+      if (noRes) noRes.style.display = (jnFilteredEntries.length === 0 && entries.length > 0) ? '' : 'none';
+      updateFilterUI();
+    }
+
+    var searchDebounce = null;
+    function setupFilterBar(entries) {
+      var bar = document.getElementById('jn-filter-bar');
+      if (!bar) return;
+      bar.style.display = (entries.length >= 10) ? '' : 'none';
+
+      /* Populate care chips once */
+      var careChipsEl = document.getElementById('jn-filter-care-chips');
+      if (careChipsEl && !careChipsEl._built) {
+        careChipsEl._built = true;
+        var careKeys = ['water_change','filter','feeding','top_up','treatment','dosing','media','trimming'];
+        careChipsEl.innerHTML = careKeys.map(function (k) {
+          return '<button type="button" class="jn-filter-chip" data-filter-care="' + k + '">' + (careLabels[k] || k) + '</button>';
+        }).join('');
+      }
+
+      /* Sync chip active states to current jnFilter */
+      bar.querySelectorAll('[data-filter-days]').forEach(function (el) {
+        el.classList.toggle('active', parseInt(el.dataset.filterDays, 10) === jnFilter.days);
+      });
+      bar.querySelectorAll('[data-filter-state]').forEach(function (el) {
+        el.classList.toggle('active', jnFilter.state.indexOf(el.dataset.filterState) !== -1);
+      });
+      bar.querySelectorAll('[data-filter-care]').forEach(function (el) {
+        el.classList.toggle('active', jnFilter.care.indexOf(el.dataset.filterCare) !== -1);
+      });
+
+      /* Wire search input (once) */
+      var searchEl = document.getElementById('jn-entry-search');
+      if (searchEl && !searchEl._wired) {
+        searchEl._wired = true;
+        searchEl.value = jnFilter.query;
+        searchEl.addEventListener('input', function () {
+          clearTimeout(searchDebounce);
+          searchDebounce = setTimeout(function () {
+            jnFilter.query = searchEl.value.trim();
+            applyAndRender();
+          }, 280);
+        });
+        searchEl.addEventListener('search', function () {
+          jnFilter.query = searchEl.value.trim();
+          applyAndRender();
+        });
+      }
+    }
+
     /* ── P5: Data export ── */
     function exportParamsCSV() {
       var d = loadData();
@@ -1601,8 +1699,10 @@
       if (noEntriesEl) noEntriesEl.style.display = entries.length ? 'none' : '';
       if (hasEntriesEl) hasEntriesEl.style.display = entries.length ? '' : 'none';
 
+      setupFilterBar(entries);
+      jnFilteredEntries = applyFilters(entries, jnFilter);
       jnHistoryPage = 1;
-      renderEntryList(entries, jnHistoryPage);
+      renderEntryList(jnFilteredEntries, jnHistoryPage);
 
       /* Rhyssa weekly insight (async, non-blocking) */
       if (entries.length >= 2) fetchWeeklyInsight(tank);
@@ -1774,6 +1874,9 @@
       var tankCard = target.closest('.jn-tank-card[data-tank-id]');
       if (tankCard && tankCard.dataset.tankId) {
         var d = loadData();
+        if (d.activeTankId !== tankCard.dataset.tankId) {
+          jnFilter = { query: '', days: 0, care: [], state: [] };
+        }
         d.activeTankId = tankCard.dataset.tankId;
         saveData(d);
         window.go('tank-log', true);
@@ -1896,7 +1999,7 @@
 
       if (target.id === 'jn-load-more') {
         jnHistoryPage += 1;
-        renderEntryList((getActiveTank(loadData()) || {}).entries || [], jnHistoryPage);
+        renderEntryList(jnFilteredEntries, jnHistoryPage);
         return;
       }
 
@@ -1918,6 +2021,59 @@
 
       if (target.id === 'jn-export') { exportJournal(); return; }
       if (target.id === 'jn-export-csv') { exportParamsCSV(); return; }
+
+      /* Filter bar toggle */
+      if (target.id === 'jn-filter-toggle') {
+        var opts = document.getElementById('jn-filter-options');
+        if (opts) {
+          var open = opts.style.display === 'none' || !opts.style.display;
+          opts.style.display = open ? '' : 'none';
+          target.setAttribute('aria-expanded', open ? 'true' : 'false');
+        }
+        return;
+      }
+
+      /* Date period chips */
+      var dayChip = target.closest('[data-filter-days]');
+      if (dayChip) {
+        jnFilter.days = parseInt(dayChip.dataset.filterDays, 10) || 0;
+        document.querySelectorAll('[data-filter-days]').forEach(function (c) { c.classList.toggle('active', parseInt(c.dataset.filterDays, 10) === jnFilter.days); });
+        applyAndRender();
+        return;
+      }
+
+      /* State filter chips (multi-select) */
+      var stateFilterChip = target.closest('[data-filter-state]');
+      if (stateFilterChip) {
+        var sv = stateFilterChip.dataset.filterState;
+        var si = jnFilter.state.indexOf(sv);
+        if (si === -1) jnFilter.state.push(sv); else jnFilter.state.splice(si, 1);
+        stateFilterChip.classList.toggle('active', jnFilter.state.indexOf(sv) !== -1);
+        applyAndRender();
+        return;
+      }
+
+      /* Care filter chips (multi-select) */
+      var careFilterChip = target.closest('[data-filter-care]');
+      if (careFilterChip) {
+        var cv = careFilterChip.dataset.filterCare;
+        var ci = jnFilter.care.indexOf(cv);
+        if (ci === -1) jnFilter.care.push(cv); else jnFilter.care.splice(ci, 1);
+        careFilterChip.classList.toggle('active', jnFilter.care.indexOf(cv) !== -1);
+        applyAndRender();
+        return;
+      }
+
+      /* Clear all filters */
+      if (target.id === 'jn-filter-clear') {
+        jnFilter = { query: '', days: 0, care: [], state: [] };
+        var searchEl2 = document.getElementById('jn-entry-search');
+        if (searchEl2) searchEl2.value = '';
+        document.querySelectorAll('[data-filter-days]').forEach(function (c) { c.classList.toggle('active', parseInt(c.dataset.filterDays, 10) === 0); });
+        document.querySelectorAll('[data-filter-state],[data-filter-care]').forEach(function (c) { c.classList.remove('active'); });
+        applyAndRender();
+        return;
+      }
 
       /* Entry edit button */
       var entryEditBtn = target.closest('.tl-entry-edit-btn');
