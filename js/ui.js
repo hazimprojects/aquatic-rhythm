@@ -1614,28 +1614,39 @@
       }
       var order = ['fish', 'plant', 'invertebrate', 'coral', 'other'];
       var rows = [];
+      var rowStyle = 'display:flex;align-items:flex-start;gap:.4rem;padding:.42rem 0;border-bottom:1px solid rgba(255,255,255,.05)';
+      var iconStyle = 'font-size:.85rem;line-height:1.2;flex-shrink:0;margin-top:.05rem';
+      var infoStyle = 'flex:1;min-width:0';
+      var nameStyle = 'display:block;font-size:.75rem;color:rgba(235,240,236,.82);line-height:1.3';
+      var countStyle = 'font-size:.6rem;color:rgba(255,255,255,.38);margin-left:.25rem;font-family:monospace';
+      var sciStyle = 'display:block;font-size:.58rem;color:rgba(255,255,255,.28);font-style:italic;line-height:1.3;margin-top:.05rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap';
+      var actsStyle = 'display:flex;flex-direction:column;gap:.22rem;flex-shrink:0';
+      var btnBase = 'appearance:none;-webkit-appearance:none;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:6px;color:rgba(255,255,255,.52);font-size:.55rem;letter-spacing:.04em;text-transform:uppercase;padding:.18rem .42rem;cursor:pointer;white-space:nowrap;line-height:1.2;display:block;width:100%;text-align:center;font-family:inherit';
+      var btnRehomed = btnBase + ';color:rgba(255,200,80,.7);border-color:rgba(255,200,80,.22);background:rgba(255,200,80,.06)';
+      var btnPassed = btnBase + ';color:rgba(200,80,80,.7);border-color:rgba(200,80,80,.22);background:rgba(200,80,80,.06)';
       order.forEach(function (cat) {
         inhs.filter(function (i) { return (i.category || 'other') === cat; }).forEach(function (i) {
           var icon  = INH_CATS[cat] || '◈';
           var label = escHtml(i.commonName || i.species || INH_CAT_LABELS[cat] || cat);
-          var sciHtml = i.species ? '<span class=”tl-inh-row-sci”>' + escHtml(i.species) + '</span>' : '';
-          var countHtml = i.count > 1 ? '<span class=”tl-inh-row-count”>×' + i.count + '</span>' : '';
+          var sciHtml = i.species ? '<span class=”tl-inh-row-sci” style=”' + sciStyle + '”>' + escHtml(i.species) + '</span>' : '';
+          var countHtml = i.count > 1 ? '<span class=”tl-inh-row-count” style=”' + countStyle + '”>×' + i.count + '</span>' : '';
+          var iid = escHtml(i.id);
           rows.push(
-            '<div class=”tl-inh-row” data-inh-id=”' + escHtml(i.id) + '”>'
-            + '<span class=”tl-inh-row-icon”>' + icon + '</span>'
-            + '<div class=”tl-inh-row-info”>'
-            + '<span class=”tl-inh-row-name”>' + label + '</span>' + countHtml + sciHtml
+            '<div class=”tl-inh-row” data-inh-id=”' + iid + '” style=”' + rowStyle + '”>'
+            + '<span class=”tl-inh-row-icon” style=”' + iconStyle + '”>' + icon + '</span>'
+            + '<div class=”tl-inh-row-info” style=”' + infoStyle + '”>'
+            + '<span class=”tl-inh-row-name” style=”' + nameStyle + '”>' + label + '</span>' + countHtml + sciHtml
             + '</div>'
-            + '<div class=”tl-inh-row-acts”>'
-            + '<button class=”tl-inh-act-btn jn-inh-edit-btn” data-inh-id=”' + escHtml(i.id) + '” aria-label=”Edit”>Edit</button>'
-            + '<button class=”tl-inh-act-btn tl-inh-act-rehomed jn-inh-status-btn” data-inh-id=”' + escHtml(i.id) + '” data-action=”rehomed” aria-label=”Rehomed”>Rehomed</button>'
-            + '<button class=”tl-inh-act-btn tl-inh-act-passed jn-inh-status-btn” data-inh-id=”' + escHtml(i.id) + '” data-action=”passed” aria-label=”Passed”>Passed</button>'
+            + '<div class=”tl-inh-row-acts” style=”' + actsStyle + '”>'
+            + '<button class=”tl-inh-act-btn jn-inh-edit-btn” data-inh-id=”' + iid + '” aria-label=”Edit” style=”' + btnBase + '”>Edit</button>'
+            + '<button class=”tl-inh-act-btn tl-inh-act-rehomed jn-inh-status-btn” data-inh-id=”' + iid + '” data-action=”rehomed” aria-label=”Rehomed” style=”' + btnRehomed + '”>Rehomed</button>'
+            + '<button class=”tl-inh-act-btn tl-inh-act-passed jn-inh-status-btn” data-inh-id=”' + iid + '” data-action=”passed” aria-label=”Passed” style=”' + btnPassed + '”>Passed</button>'
             + '</div>'
             + '</div>'
           );
         });
       });
-      bodyEl.innerHTML = '<div class=”tl-inh-rows”>' + rows.join('') + '</div>';
+      bodyEl.innerHTML = '<div class=”tl-inh-rows” style=”display:flex;flex-direction:column;gap:.35rem”>' + rows.join('') + '</div>';
     }
 
     function showInhabitantToast(inh, action) {
