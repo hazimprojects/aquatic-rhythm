@@ -1479,7 +1479,16 @@
         <!-- 3. ARA PHASE CARD -->
         <div class="tl-card tl-phase-card" id="jn-phase-card">
           <div class="tl-card-eyebrow">ARA Phase</div>
-          <div class="jn-phase-name" id="jn-phase-name">—</div>
+          <div class="jn-phase-name" id="jn-phase-name" style="display:none">—</div>
+          <div class="jn-phase-journey" id="jn-phase-journey">
+            <span class="jn-phase-journey-step">Establishing</span>
+            <span class="jn-phase-journey-arrow">→</span>
+            <span class="jn-phase-journey-step">Stabilising</span>
+            <span class="jn-phase-journey-arrow">→</span>
+            <span class="jn-phase-journey-step">Optimising</span>
+            <span class="jn-phase-journey-arrow">→</span>
+            <span class="jn-phase-journey-step">Sustaining</span>
+          </div>
           <p class="mt-phase-desc" id="jn-phase-note">Write your first entry to get an ARA phase reading.</p>
           <p class="jn-phase-next" id="jn-phase-next" style="display:none"></p>
           <span class="jn-phase-src" id="jn-phase-src" style="display:none"></span>
@@ -1529,7 +1538,6 @@
         <!-- 7. ENTRIES TIMELINE -->
         <div id="jn-no-entries" class="tl-empty-state" style="display:none">
           <p class="tl-empty-text">No entries yet.<br>What did you notice today?</p>
-          <button class="btn bf" id="jn-entry-open-2">Write your first entry</button>
         </div>
 
         <div id="jn-has-entries" style="display:none">
@@ -1735,18 +1743,17 @@
 <div class="mt-modal" id="mt-modal-entry" aria-modal="true" role="dialog" aria-label="Write journal entry" aria-hidden="true">
   <div class="mt-modal-inner">
     <div class="mt-modal-header">
-      <h2 class="mt-modal-title">Today's entry</h2>
+      <div class="jn-entry-header-left">
+        <h2 class="mt-modal-title">Today's entry</h2>
+        <input class="jn-date-inline" id="jn-entry-date" type="date">
+      </div>
       <button class="mt-modal-close" data-modal-close="mt-modal-entry" aria-label="Close">✕</button>
     </div>
     <form id="jn-form-entry" autocomplete="off">
       <input type="hidden" id="jn-entry-editing-id">
-      <div class="mt-field">
-        <label class="mt-label" for="jn-entry-date">Date</label>
-        <input class="mt-input" id="jn-entry-date" type="date" required>
-      </div>
 
       <div class="jn-form-section">
-        <p class="jn-form-question">How has your care rhythm been lately?</p>
+        <p class="jn-form-question">Your rhythm lately</p>
         <div class="jn-state-chips">
           <button type="button" class="jn-state-chip" data-state="consistent">Consistent</button>
           <button type="button" class="jn-state-chip" data-state="catching-up">Catching up</button>
@@ -1758,21 +1765,22 @@
       <div class="jn-form-section">
         <label class="jn-form-question" for="jn-entry-obs">What did you notice?</label>
         <textarea class="mt-input mt-textarea" id="jn-entry-obs" placeholder="Fish are active today. Plants growing well. Water looks slightly green…" rows="3" maxlength="600"></textarea>
-        <p class="jn-context-prompt" id="jn-context-prompt" style="display:none"></p>
+        <p class="jn-context-prompt" id="jn-context-prompt"></p>
       </div>
 
       <div class="jn-form-section">
         <p class="jn-form-question">What did you do? <span style="opacity:.38">(optional)</span></p>
-        <div class="jn-care-chips">
+        <div class="jn-care-chips" id="jn-care-chips-container">
           <button type="button" class="jn-care-chip" data-care="water_change">Water change</button>
           <button type="button" class="jn-care-chip" data-care="filter">Filter</button>
           <button type="button" class="jn-care-chip" data-care="feeding">Feeding</button>
-          <button type="button" class="jn-care-chip" data-care="top_up">Topping up</button>
-          <button type="button" class="jn-care-chip" data-care="treatment">Treatment</button>
-          <button type="button" class="jn-care-chip" data-care="dosing">Dosing</button>
-          <button type="button" class="jn-care-chip" data-care="media">Media change</button>
-          <button type="button" class="jn-care-chip" data-care="trimming">Trimming</button>
-          <button type="button" class="jn-care-chip" data-care="nothing">Just observed</button>
+          <button type="button" class="jn-care-chip jn-care-secondary" data-care="top_up">Topping up</button>
+          <button type="button" class="jn-care-chip jn-care-secondary" data-care="treatment">Treatment</button>
+          <button type="button" class="jn-care-chip jn-care-secondary" data-care="dosing">Dosing</button>
+          <button type="button" class="jn-care-chip jn-care-secondary" data-care="media">Media change</button>
+          <button type="button" class="jn-care-chip jn-care-secondary" data-care="trimming">Trimming</button>
+          <button type="button" class="jn-care-chip jn-care-secondary" data-care="nothing">Just observed</button>
+          <button type="button" class="jn-care-chips-more" id="jn-care-more">+ 6 more</button>
         </div>
       </div>
 
@@ -1781,11 +1789,8 @@
         <input class="mt-input" id="jn-treatment-note" type="text" placeholder="e.g. Easy Carbo 5ml, Seachem Prime 2ml" maxlength="120">
       </div>
 
-      <div class="jn-params-toggle-row">
-        <button type="button" class="mt-text-btn" id="jn-params-toggle">+ Add water parameters (optional)</button>
-      </div>
-      <div id="jn-params-section" style="display:none">
-        <p class="jn-params-note">Use when you have a test kit handy — not required.</p>
+      <div id="jn-params-section">
+        <p class="jn-params-note">Water parameters <span style="opacity:.38">(optional)</span></p>
         <div class="mt-params-form-grid">
           <div class="mt-field">
             <label class="mt-label" for="jn-param-ph">pH</label>
@@ -1840,7 +1845,7 @@
 <div class="mt-modal" id="mt-modal-inhabitant" aria-modal="true" role="dialog" aria-label="Add tank resident" aria-hidden="true">
   <div class="mt-modal-inner">
     <div class="mt-modal-header">
-      <h2 class="mt-modal-title">Add a resident</h2>
+      <h2 class="mt-modal-title">Who joined your tank?</h2>
       <button class="mt-modal-close" data-modal-close="mt-modal-inhabitant" aria-label="Close">✕</button>
     </div>
     <form id="jn-form-inhabitant" autocomplete="off">
@@ -1873,10 +1878,11 @@
         </div>
       </div>
 
-      <div class="mt-field">
-        <label class="mt-label" for="jn-inh-species">Species <span style="opacity:.38">(optional)</span></label>
+      <div class="mt-field jn-species-row" id="jn-species-row" style="display:none">
+        <label class="mt-label" for="jn-inh-species">Scientific name</label>
         <input class="mt-input" id="jn-inh-species" type="text" placeholder="e.g. Paracheirodon innesi">
       </div>
+      <button type="button" class="jn-species-toggle" id="jn-species-toggle">+ Add scientific name</button>
 
       <div class="mt-field">
         <label class="mt-label" for="jn-inh-date">Date added</label>

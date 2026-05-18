@@ -1667,16 +1667,20 @@
       var phaseNoteEl = document.getElementById('jn-phase-note');
       var phaseNextEl = document.getElementById('jn-phase-next');
       var phaseSrcEl  = document.getElementById('jn-phase-src');
+      var phaseJourneyEl = document.getElementById('jn-phase-journey');
       if (phaseNameEl) {
         if (info) {
           phaseNameEl.textContent = info.label;
           phaseNameEl.style.color = info.color;
+          phaseNameEl.style.display = '';
+          if (phaseJourneyEl) phaseJourneyEl.style.display = 'none';
           if (phaseNoteEl) phaseNoteEl.textContent = info.note;
           if (phaseNextEl) { phaseNextEl.textContent = info.next; phaseNextEl.style.display = ''; }
           if (phaseSrcEl) { phaseSrcEl.textContent = fromParams ? 'Based on water parameters' : 'Estimated from keeper rhythm'; phaseSrcEl.style.display = ''; }
         } else {
-          phaseNameEl.textContent = '—';
+          phaseNameEl.style.display = 'none';
           phaseNameEl.style.color = '';
+          if (phaseJourneyEl) phaseJourneyEl.style.display = '';
           if (phaseNoteEl) phaseNoteEl.textContent = 'Write your first entry to get an ARA phase reading.';
           if (phaseNextEl) phaseNextEl.style.display = 'none';
           if (phaseSrcEl) phaseSrcEl.style.display = 'none';
@@ -1781,6 +1785,8 @@
 
     function openEntryModal(entryId) {
       document.querySelectorAll('.jn-state-chip,.jn-care-chip').forEach(function (c) { c.classList.remove('active'); });
+      var chipsContainer = document.getElementById('jn-care-chips-container');
+      if (chipsContainer) chipsContainer.classList.remove('expanded');
       var editingIdEl = document.getElementById('jn-entry-editing-id');
       if (editingIdEl) editingIdEl.value = '';
       var titleEl = document.querySelector('#mt-modal-entry .mt-modal-title');
@@ -1788,7 +1794,6 @@
       var treatRow = document.getElementById('jn-treatment-note-row');
       var treatEl = document.getElementById('jn-treatment-note');
       var paramsSection = document.getElementById('jn-params-section');
-      var paramsToggle = document.getElementById('jn-params-toggle');
       var allParamIds = ['jn-param-ph','jn-param-nh3','jn-param-no2','jn-param-no3','jn-param-temp','jn-param-gh','jn-param-kh','jn-param-sg'];
 
       /* Show/hide extended params based on tank type */
@@ -1802,8 +1807,6 @@
       if (khRow) khRow.style.display = isMarine ? 'none' : '';
       if (sgRow) sgRow.style.display = isMarine ? '' : 'none';
 
-      if (paramsSection) paramsSection.style.display = 'none';
-      if (paramsToggle) paramsToggle.textContent = '+ Add water parameters (optional)';
       allParamIds.forEach(function (id) { var el = document.getElementById(id); if (el) el.value = ''; });
       if (treatRow) treatRow.style.display = 'none';
       if (treatEl) treatEl.value = '';
@@ -1834,13 +1837,17 @@
             treatEl.value = entry.treatmentNote;
           }
           if (entry.params) {
-            if (paramsSection) paramsSection.style.display = '';
-            if (paramsToggle) paramsToggle.textContent = '− Hide water parameters';
             ['ph','nh3','no2','no3','temp','gh','kh','sg'].forEach(function (k) {
               var el = document.getElementById('jn-param-' + k);
               if (el && entry.params[k]) el.value = entry.params[k];
             });
           }
+          var cc = document.getElementById('jn-care-chips-container');
+          if (cc && cc.querySelector('.jn-care-secondary.active')) cc.classList.add('expanded');
+          var ptxt = buildContextPrompt(tank || {});
+          var pel = document.getElementById('jn-context-prompt');
+          if (pel) { pel.textContent = ptxt || 'What did you notice today?'; pel.style.display = ''; }
+          setupObsHint();
           openModal('mt-modal-entry');
           return;
         }
@@ -1853,9 +1860,9 @@
       if (entryDate2) entryDate2.value = todayStr();
       var obsEl2 = document.getElementById('jn-entry-obs');
       if (obsEl2) obsEl2.value = '';
-      var promptText = buildContextPrompt(tank || {});
+      var promptText = buildContextPrompt(tank || {}) || 'What did you notice today?';
       var promptEl = document.getElementById('jn-context-prompt');
-      if (promptEl) { promptEl.textContent = promptText; promptEl.style.display = promptText ? '' : 'none'; }
+      if (promptEl) { promptEl.textContent = promptText; promptEl.style.display = ''; }
       setupObsHint();
       openModal('mt-modal-entry');
     }
@@ -1885,13 +1892,21 @@
           s('jn-inh-common', inh.commonName); s('jn-inh-species', inh.species); s('jn-inh-name', inh.name);
           var cEl = document.getElementById('jn-inh-count'); if (cEl) cEl.value = inh.count || 1;
           var dEl = document.getElementById('jn-inh-date'); if (dEl) dEl.value = inh.addedDate || todayStr();
+          var speciesRowE = document.getElementById('jn-species-row');
+          var speciesTogE = document.getElementById('jn-species-toggle');
+          if (speciesRowE) speciesRowE.style.display = inh.species ? '' : 'none';
+          if (speciesTogE) speciesTogE.textContent = inh.species ? '− Hide scientific name' : '+ Add scientific name';
           var submitBtn = document.querySelector('#mt-modal-inhabitant [type="submit"]');
           if (submitBtn) submitBtn.textContent = 'Save changes';
           openModal('mt-modal-inhabitant');
           return;
         }
       }
-      if (titleEl) titleEl.textContent = 'Add to tank';
+      if (titleEl) titleEl.textContent = 'Who joined your tank?';
+      var speciesRowN = document.getElementById('jn-species-row');
+      var speciesTogN = document.getElementById('jn-species-toggle');
+      if (speciesRowN) speciesRowN.style.display = 'none';
+      if (speciesTogN) speciesTogN.textContent = '+ Add scientific name';
       var submitBtn2 = document.querySelector('#mt-modal-inhabitant [type="submit"]');
       if (submitBtn2) submitBtn2.textContent = 'Add to tank';
       openModal('mt-modal-inhabitant');
@@ -2017,12 +2032,19 @@
       var careChip = target.closest('.jn-care-chip');
       if (careChip) { careChip.classList.toggle('active'); return; }
 
-      if (target.id === 'jn-params-toggle') {
-        var ps = document.getElementById('jn-params-section');
-        if (ps) {
-          var show = ps.style.display === 'none' || !ps.style.display;
-          ps.style.display = show ? '' : 'none';
-          target.textContent = show ? 'Hide parameters' : '+ Add water parameters (optional)';
+      if (target.id === 'jn-care-more') {
+        var cc2 = document.getElementById('jn-care-chips-container');
+        if (cc2) cc2.classList.add('expanded');
+        return;
+      }
+
+      if (target.id === 'jn-species-toggle') {
+        var sRow = document.getElementById('jn-species-row');
+        var sTog = document.getElementById('jn-species-toggle');
+        if (sRow && sTog) {
+          var sHidden = sRow.style.display === 'none' || !sRow.style.display;
+          sRow.style.display = sHidden ? '' : 'none';
+          sTog.textContent = sHidden ? '− Hide scientific name' : '+ Add scientific name';
         }
         return;
       }
