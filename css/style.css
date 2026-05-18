@@ -1261,3 +1261,25 @@ footer{padding:3.5rem clamp(1.5rem,5vw,4.5rem);display:flex;align-items:center;j
 .ar-kofi-ico{display:block;flex-shrink:0}
 .ar-kofi-chip-lbl{font-size:.46rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:rgba(61,214,232,.52)}
 .ar-kofi-chip:hover .ar-kofi-chip-lbl{color:rgba(61,214,232,.85)}
+
+/* ── Entry modal: date inline in header ── */
+.jn-entry-header-left{display:flex;align-items:baseline;gap:.65rem;flex:1;min-width:0}
+.jn-date-inline{background:none;border:none;border-bottom:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.38);font-size:.68rem;letter-spacing:.03em;font-family:var(--sans);padding:.06rem .1rem;cursor:pointer;outline:none;flex-shrink:0;color-scheme:dark;-webkit-appearance:none;appearance:none}
+.jn-date-inline:focus{border-bottom-color:rgba(61,214,232,.4);color:rgba(255,255,255,.65)}
+
+/* ── Care chips: show 3 primary + collapse ── */
+.jn-care-secondary{display:none}
+.jn-care-chips.expanded .jn-care-secondary{display:inline-flex}
+.jn-care-chips.expanded .jn-care-chips-more{display:none}
+.jn-care-chips-more{background:none;border:1px dashed rgba(255,255,255,.14);border-radius:20px;color:rgba(255,255,255,.28);font-size:.68rem;padding:.38rem .8rem;cursor:pointer;font-family:var(--sans);transition:all .2s;-webkit-tap-highlight-color:transparent}
+.jn-care-chips-more:hover{border-color:rgba(255,255,255,.28);color:rgba(255,255,255,.55)}
+
+/* ── ARA Phase: faded journey indicator (no entries) ── */
+.jn-phase-journey{display:flex;align-items:center;gap:.28rem;margin:.5rem 0 .65rem;flex-wrap:nowrap;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none}
+.jn-phase-journey::-webkit-scrollbar{display:none}
+.jn-phase-journey-step{font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.2);white-space:nowrap}
+.jn-phase-journey-arrow{color:rgba(255,255,255,.1);font-size:.55rem;flex-shrink:0}
+
+/* ── Inhabitant: species toggle ── */
+.jn-species-toggle{background:none;border:none;color:rgba(61,214,232,.45);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:.15rem 0;cursor:pointer;font-family:var(--sans);transition:color .15s;display:block;margin-top:.1rem}
+.jn-species-toggle:hover{color:rgba(61,214,232,.78)}
