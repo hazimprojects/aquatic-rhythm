@@ -1529,9 +1529,9 @@
         <div class="tl-card" id="jn-inhabitants">
           <div class="tl-card-header">
             <span class="tl-card-eyebrow">Tank Family</span>
-            <button class="mt-text-btn" id="jn-inh-add">+ Add</button>
+            <button class="jn-setup-edit-btn" id="jn-family-edit-btn" aria-label="Manage residents">Edit</button>
           </div>
-          <div id="jn-inh-body"><p class="jn-entry-empty">No residents yet.</p></div>
+          <div id="jn-inh-body"></div>
         </div>
 
         <!-- ARA PHASE CARD — below overview pair -->
@@ -1879,69 +1879,83 @@
 </div>
 
 <!-- ── MODAL: Add Inhabitant ── -->
-<div class="mt-modal" id="mt-modal-inhabitant" aria-modal="true" role="dialog" aria-label="Add tank resident" aria-hidden="true">
+<div class="mt-modal" id="mt-modal-inhabitant" aria-modal="true" role="dialog" aria-label="Tank Family" aria-hidden="true">
   <div class="mt-modal-inner">
-    <div class="mt-modal-header">
-      <h2 class="mt-modal-title">Who joined your tank?</h2>
-      <button class="mt-modal-close" data-modal-close="mt-modal-inhabitant" aria-label="Close">✕</button>
+
+    <!-- LIST VIEW -->
+    <div id="jn-inh-list-view">
+      <div class="mt-modal-header">
+        <h2 class="mt-modal-title">Tank Family</h2>
+        <button class="mt-modal-close" data-modal-close="mt-modal-inhabitant" aria-label="Close">✕</button>
+      </div>
+      <div id="jn-inh-list-body" class="jn-inh-list-body"></div>
+      <button type="button" id="jn-inh-list-add" class="jn-inh-list-add-btn">+ Add resident</button>
     </div>
-    <form id="jn-form-inhabitant" autocomplete="off">
-      <input type="hidden" id="jn-inh-editing-id">
 
-      <div class="jn-form-section">
-        <p class="jn-form-question">Category</p>
-        <div class="jn-inh-cat-chips">
-          <button type="button" class="jn-inh-cat-chip active" data-cat="fish">Fish</button>
-          <button type="button" class="jn-inh-cat-chip" data-cat="plant">Plant</button>
-          <button type="button" class="jn-inh-cat-chip" data-cat="invertebrate">Invertebrate</button>
-          <button type="button" class="jn-inh-cat-chip" data-cat="coral">Coral</button>
-          <button type="button" class="jn-inh-cat-chip" data-cat="other">Other</button>
+    <!-- FORM VIEW (add / edit one resident) -->
+    <div id="jn-inh-form-view" style="display:none">
+      <div class="mt-modal-header jn-inh-form-hdr">
+        <button type="button" id="jn-inh-back-btn" class="jn-inh-back-btn">← List</button>
+        <h2 class="mt-modal-title" id="jn-inh-form-title">Add resident</h2>
+        <button class="mt-modal-close" data-modal-close="mt-modal-inhabitant" aria-label="Close">✕</button>
+      </div>
+      <form id="jn-form-inhabitant" autocomplete="off">
+        <input type="hidden" id="jn-inh-editing-id">
+
+        <div class="jn-form-section">
+          <p class="jn-form-question">Category</p>
+          <div class="jn-inh-cat-chips">
+            <button type="button" class="jn-inh-cat-chip active" data-cat="fish">Fish</button>
+            <button type="button" class="jn-inh-cat-chip" data-cat="plant">Plant</button>
+            <button type="button" class="jn-inh-cat-chip" data-cat="invertebrate">Invertebrate</button>
+            <button type="button" class="jn-inh-cat-chip" data-cat="coral">Coral</button>
+            <button type="button" class="jn-inh-cat-chip" data-cat="other">Other</button>
+          </div>
         </div>
-      </div>
 
-      <div class="mt-field">
-        <label class="mt-label" for="jn-inh-common">Common name <span style="opacity:.38">(required)</span></label>
-        <div id="jn-inh-common-wrap">
-          <input class="mt-input" id="jn-inh-common" type="text" placeholder="e.g. Neon Tetra" required autocomplete="off">
+        <div class="mt-field">
+          <label class="mt-label" for="jn-inh-common">Common name <span style="opacity:.38">(required)</span></label>
+          <div id="jn-inh-common-wrap">
+            <input class="mt-input" id="jn-inh-common" type="text" placeholder="e.g. Neon Tetra" required autocomplete="off">
+          </div>
         </div>
-      </div>
 
-      <div class="mt-field-row">
-        <div class="mt-field" style="flex:1">
-          <label class="mt-label" for="jn-inh-count">Quantity</label>
-          <input class="mt-input" id="jn-inh-count" type="number" value="1" min="1" max="9999">
+        <div class="mt-field-row">
+          <div class="mt-field" style="flex:1">
+            <label class="mt-label" for="jn-inh-count">Quantity</label>
+            <input class="mt-input" id="jn-inh-count" type="number" value="1" min="1" max="9999">
+          </div>
+          <div class="mt-field" style="flex:2">
+            <label class="mt-label" for="jn-inh-name">Personal name <span style="opacity:.38">(optional)</span></label>
+            <input class="mt-input" id="jn-inh-name" type="text" placeholder="e.g. Nemo, Goldie…">
+          </div>
         </div>
-        <div class="mt-field" style="flex:2">
-          <label class="mt-label" for="jn-inh-name">Personal name <span style="opacity:.38">(optional)</span></label>
-          <input class="mt-input" id="jn-inh-name" type="text" placeholder="e.g. Nemo, Goldie…">
+
+        <div class="mt-field" id="jn-species-row">
+          <label class="mt-label" for="jn-inh-species">Scientific name <span style="opacity:.38">(auto-fills on suggestion)</span></label>
+          <input class="mt-input" id="jn-inh-species" type="text" placeholder="e.g. Paracheirodon innesi" autocomplete="off">
         </div>
-      </div>
 
-      <div class="mt-field" id="jn-species-row">
-        <label class="mt-label" for="jn-inh-species">Scientific name <span style="opacity:.38">(auto-fills on suggestion)</span></label>
-        <input class="mt-input" id="jn-inh-species" type="text" placeholder="e.g. Paracheirodon innesi" autocomplete="off">
-      </div>
-
-      <div class="mt-field">
-        <label class="mt-label" for="jn-inh-date">Date added</label>
-        <input class="mt-input" id="jn-inh-date" type="date">
-      </div>
-
-      <!-- Status (edit mode only) -->
-      <div id="jn-inh-status-row" class="jn-form-section" style="display:none">
-        <div class="mt-label" style="margin-bottom:.55rem">Status</div>
-        <div class="jn-inh-status-chips">
-          <button type="button" class="jn-inh-status-chip active" data-status="active">Active</button>
-          <button type="button" class="jn-inh-status-chip" data-status="rehomed">Rehomed</button>
-          <button type="button" class="jn-inh-status-chip" data-status="passed">Passed</button>
+        <div class="mt-field">
+          <label class="mt-label" for="jn-inh-date">Date added</label>
+          <input class="mt-input" id="jn-inh-date" type="date">
         </div>
-      </div>
 
-      <button type="submit" class="btn bf" style="width:100%;margin-top:1.2rem">Add to tank</button>
+        <!-- Status (edit mode only) -->
+        <div id="jn-inh-status-row" class="jn-form-section" style="display:none">
+          <div class="mt-label" style="margin-bottom:.55rem">Status</div>
+          <div class="jn-inh-status-chips">
+            <button type="button" class="jn-inh-status-chip active" data-status="active">Active</button>
+            <button type="button" class="jn-inh-status-chip" data-status="rehomed">Rehomed</button>
+            <button type="button" class="jn-inh-status-chip" data-status="passed">Passed</button>
+          </div>
+        </div>
 
-      <!-- Delete (edit mode only) -->
-      <button type="button" id="jn-inh-delete-btn" class="jn-inh-delete-btn" style="display:none">Remove resident</button>
-    </form>
+        <button type="submit" class="btn bf" style="width:100%;margin-top:1.2rem">Add to tank</button>
+        <button type="button" id="jn-inh-delete-btn" class="jn-inh-delete-btn" style="display:none">Remove resident</button>
+      </form>
+    </div>
+
   </div>
 </div>
 
