@@ -1973,8 +1973,11 @@
       var emptyEl = document.getElementById('jn-setup-empty');
       if (eqList) eqList.innerHTML = '';
       var hasEq = setup && setup.equipment && Object.keys(setup.equipment).length;
-      if (emptyEl) emptyEl.style.display = hasEq ? 'none' : 'flex';
-      if (!hasEq) return;
+      var hasPlants = setup && setup.plants && setup.plants.length;
+      var hasHard = setup && setup.hardscape && setup.hardscape.length;
+      var hasAny = !!(hasEq || hasPlants || hasHard);
+      if (emptyEl) emptyEl.style.display = hasAny ? 'none' : 'flex';
+      if (!hasAny) return;
       if (hasEq && eqList) {
         var AR_EQ = window.AR_EQ;
         var CAT_ORDER = ['filtration', 'environment', 'substrate', 'cooling', 'additions', 'sterilization', 'circulation'];
@@ -2001,6 +2004,30 @@
             chip.textContent = fmtEqLabel(k) + (note ? ' — ' + note : '');
             eqList.appendChild(chip);
           });
+        });
+      }
+      if (hasPlants && eqList) {
+        var phdr = document.createElement('div');
+        phdr.className = 'jn-setup-card-cat-hdr';
+        phdr.textContent = 'Plants';
+        eqList.appendChild(phdr);
+        setup.plants.forEach(function (p) {
+          var chip = document.createElement('span');
+          chip.className = 'jn-setup-eq-chip';
+          chip.textContent = p.name || p.id || 'Plant';
+          eqList.appendChild(chip);
+        });
+      }
+      if (hasHard && eqList) {
+        var hhdr = document.createElement('div');
+        hhdr.className = 'jn-setup-card-cat-hdr';
+        hhdr.textContent = 'Hardscape';
+        eqList.appendChild(hhdr);
+        setup.hardscape.forEach(function (h) {
+          var chip2 = document.createElement('span');
+          chip2.className = 'jn-setup-eq-chip';
+          chip2.textContent = h.name || h.id || 'Hardscape';
+          eqList.appendChild(chip2);
         });
       }
     }
@@ -2148,7 +2175,16 @@
       document.querySelectorAll('.jn-setup-eq-note').forEach(function (inp) {
         if (inp.dataset.eq && inp.value.trim()) customNotes[inp.dataset.eq] = inp.value.trim();
       });
-      tank.setup = { equipment: eq, brands: brands, customNotes: customNotes, savedAt: Date.now() };
+      var prev = tank.setup || {};
+      tank.setup = {
+        equipment: eq,
+        brands: brands,
+        customNotes: customNotes,
+        savedAt: Date.now(),
+        stock: prev.stock,
+        plants: prev.plants,
+        hardscape: prev.hardscape
+      };
       saveData(d);
       closeModal('mt-modal-gear');
       renderSetupCard(tank);
@@ -3179,6 +3215,8 @@
         });
         var equipment = null;
         var stockedSpecies = null;
+        var plantList = null;
+        var hardscapeList = null;
         if (active.setup) {
           var _setup = active.setup;
           if (_setup.equipment && Object.keys(_setup.equipment).length) {
@@ -3192,6 +3230,12 @@
               return (s.qty > 1 ? s.qty + '× ' : '') + s.name;
             });
           }
+          if (_setup.plants && _setup.plants.length) {
+            plantList = _setup.plants.map(function (p) { return p.name || p.id; });
+          }
+          if (_setup.hardscape && _setup.hardscape.length) {
+            hardscapeList = _setup.hardscape.map(function (h) { return h.name || h.id; });
+          }
         }
         if (!residents.length && stockedSpecies) residents = stockedSpecies;
         return {
@@ -3202,6 +3246,8 @@
           phase: phase,
           residents: residents.length ? residents : null,
           equipment: equipment,
+          plants: plantList,
+          hardscape: hardscapeList,
           recentEntries: recentEntries.length ? recentEntries : null
         };
       } catch (e) { return null; }
