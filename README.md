@@ -81,13 +81,16 @@ Current articles:
 ├── articles/
 │   ├── new-tank-syndrome.html        — guided article, 5 modules
 │   ├── cycled-tank-problems.html     — guided article, 4 modules
-│   └── tank-simulator.html           — interactive nitrogen cycle simulator
+│   ├── tank-simulator.html           — interactive nitrogen cycle simulator
+│   ├── tank-builder.html             — equipment / layout lab
+│   └── community-stress-lab.html     — tank mates ecological pressure map (MVP)
 │
 ├── css/
 │   └── style.css                     — main stylesheet
 │
 └── js/
     ├── ui.js                         — SPA routing, navigation, page transitions
+    ├── community-stress-lab.js       — Community Stress Lab rules + UI
     ├── ecosystem.js                  — background ecosystem canvas animation
     └── fauna.js                      — fauna layer for ecosystem visual
 ```

@@ -11,7 +11,7 @@
    ============================================================ */
 
 var SHELL_CACHE   = 'ar-shell-v10';
-var ARTICLE_CACHE = 'ar-articles-v9';
+var ARTICLE_CACHE = 'ar-articles-v10';
 
 var SHELL_URLS = [
   '/',
@@ -32,7 +32,8 @@ var WARM_ARTICLES = [
   '/articles/aquarium-maintenance-routine.html',
   '/articles/know-your-rhythm.html',
   '/articles/caring-without-guilt.html',
-  '/articles/betta-fish-behaviour.html'
+  '/articles/betta-fish-behaviour.html',
+  '/articles/community-stress-lab.html'
 ];
 
 /* ── INSTALL ── */
