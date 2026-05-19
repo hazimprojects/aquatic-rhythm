@@ -502,10 +502,15 @@
         var row = document.createElement('div');
         row.className = 'csl-lane csl-lane--' + lab;
         row.setAttribute('role', 'group');
+        var w = lab === 'low' ? 22 : lab === 'elevated' ? 55 : 92;
         row.innerHTML =
-          '<span class="csl-lane-name">' + laneDisplay(lane) + '</span>' +
-          '<span class="csl-lane-bar"><i style="width:' + (lab === 'low' ? 22 : lab === 'elevated' ? 55 : 92) + '%"></i></span>' +
-          '<span class="csl-lane-lbl">' + lab + '</span>';
+          '<div class="csl-lane-head">' +
+          '<span class="csl-lane-name">' + escapeHtml(laneDisplay(lane)) + '</span>' +
+          '<span class="csl-lane-lbl">' + escapeHtml(lab) + '</span>' +
+          '</div>' +
+          '<div class="csl-lane-meter">' +
+          '<div class="csl-lane-track"><span class="csl-lane-fill" style="width:' + w + '%"></span></div>' +
+          '</div>';
         lanesEl.appendChild(row);
       }
     }
