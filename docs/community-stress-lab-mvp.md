@@ -243,14 +243,18 @@ Full JSON Schema: [`data/community-stress-lab-species.schema.json`](../data/comm
 
 ## 8. Implementation checklist (repository)
 
-When building the shipped page:
+Shipped in repo (2026-05):
 
-1. Add `articles/community-stress-lab.html` (standalone article pattern like `tank-simulator.html`).
-2. Add `data/community-stress-lab-species-v1.json` (ship full pack).
-3. Wire Tools card on `index.html` (replace or sit beside “Coming soon” ARA Phase Planner if product decision made).
-4. Append `sitemap.xml` URL entry; extend `sw.js` precache list if applicable.
-5. Optional: link from `reading/index.html` and `articles/community-fish-tank.html`.
-6. Add `js` module or inline script: load JSON, run rules, render UI; **unit tests** in `scripts/` or a small test runner if the project gains one.
+1. `articles/community-stress-lab.html` — standalone lab page.
+2. `data/community-stress-lab-species-v1.json` — species pack.
+3. `js/community-stress-lab.js` — rules engine + UI binding.
+4. Tools card on `index.html`; `sitemap.xml` entry; `sw.js` warm cache + `ar-articles-v10`.
+5. Links from `reading/index.html` (fallback list + JSON-LD) and `articles/community-fish-tank.html`.
+
+Remaining / optional:
+
+- Automated **unit tests** for golden cases (§6) in `scripts/` or a test runner.
+- Deeper `FAQPage` structured data if desired.
 
 ---
 
