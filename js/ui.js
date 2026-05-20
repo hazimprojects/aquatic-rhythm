@@ -1,6 +1,6 @@
 /* ============================================================
    ui.js — cursor, nav, hybrid routing, scroll reveal,
-            water level, eco toggle, progress bar
+            reading progress bar, eco toggle
    ============================================================ */
 
 (function () {
@@ -226,7 +226,7 @@
       gtag('event', 'page_view', { page_path: path, page_title: id });
     }
 
-    setTimeout(updateWaterLevel, 100);
+    setTimeout(updateReadingProgress, 100);
   }
 
   window.go = go;
@@ -464,26 +464,23 @@
   initReadingAccordionTitles();
 
 
-  /* ── WATER LEVEL ── */
-  function updateWaterLevel() {
-    var fill   = document.getElementById('water-fill');
-    var bubble = document.getElementById('water-bubble');
-    if (!fill) return;
+  /* ── READING PROGRESS ── */
+  var _rpBar  = document.getElementById('reading-progress');
+  var _rpFill = document.getElementById('reading-progress-fill');
+  function updateReadingProgress() {
+    if (!_rpFill) return;
     var page = hasSpaPages ? document.querySelector('.page.active') : document.documentElement;
     if (!page) return;
     var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     var docH = (page.scrollHeight || document.documentElement.scrollHeight) - window.innerHeight;
-    if (docH <= 0) { fill.style.height = '100%'; return; }
+    if (docH <= 0) { _rpBar && _rpBar.classList.remove('visible'); return; }
     var pct = Math.min(100, Math.max(0, (scrollTop / docH) * 100));
-    fill.style.height = pct + '%';
-    if (bubble) {
-      if (pct > 2 && pct < 98) { bubble.style.bottom = pct + '%'; bubble.style.opacity = '1'; }
-      else { bubble.style.opacity = '0'; }
-    }
+    _rpFill.style.width = pct + '%';
+    if (_rpBar) _rpBar.classList.toggle('visible', pct > 0);
   }
 
-  window.addEventListener('scroll', updateWaterLevel, { passive: true });
-  updateWaterLevel();
+  window.addEventListener('scroll', updateReadingProgress, { passive: true });
+  updateReadingProgress();
 
   /* ── ECOSYSTEM TOGGLE ── */
   (function () {
