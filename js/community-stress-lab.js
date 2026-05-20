@@ -67,7 +67,7 @@
     return 0;
   }
 
-  function runRules(volumeL, plantCover, picks, speciesById) {
+  function runRules(volumeL, plantCover, tankTemp, picks, speciesById) {
     var findings = [];
     if (!picks.length) {
       return { findings: [], laneLevel: emptyLanes(), picks: picks };
@@ -141,7 +141,8 @@
       bioload += (sb.bioloadUnits || 0) * (p.count || 0);
     }
     var nSpecies = Object.keys(distinct).length;
-    if (bioload > volumeL * BIoload_HIGH) {
+    var plantFactor = plantCover === 'high' ? 1.35 : plantCover === 'low' ? 1.0 : 1.15;
+    if (bioload > volumeL * BIoload_HIGH * plantFactor) {
       findings.push({
         id: 'R_BIoload_HIGH',
         title: 'Bioload proxy is high for this volume',
@@ -149,7 +150,7 @@
         severity: 'high',
         lanes: ['space']
       });
-    } else if (bioload > volumeL * BIoload_COEFF) {
+    } else if (bioload > volumeL * BIoload_COEFF * plantFactor) {
       findings.push({
         id: 'R_BIoload_PROXY',
         title: 'Bioload proxy is elevated',
@@ -343,20 +344,18 @@
       }
     }
 
-    if (tInt && tInt.lo < 26) {
-      var warmSpecial = picks.some(function (x) {
-        var wx = speciesById[x.id];
-        return wx && (hasTag(wx, 'warm_specialist') || x.id === 'discus');
+    var warmSpecial = picks.some(function (x) {
+      var wx = speciesById[x.id];
+      return wx && (hasTag(wx, 'warm_specialist') || x.id === 'discus');
+    });
+    if (warmSpecial && (tankTemp || 26) < 26) {
+      findings.push({
+        id: 'R_GBR_HEAT',
+        title: 'Warm-specialist needs higher heater setting',
+        body: 'Warm-loving species like GBR or Discus need stable temperatures at or above 26 °C — raise the heater setting to avoid chronic stress.',
+        severity: 'elevated',
+        lanes: ['thermal']
       });
-      if (warmSpecial) {
-        findings.push({
-          id: 'R_GBR_HEAT',
-          title: 'Warm-specialist in a cool-overlap window',
-          body: 'Warm-loving fish need stable warm water — if the whole-group overlap sits low, heaters and room temperature need extra headroom.',
-          severity: 'elevated',
-          lanes: ['thermal']
-        });
-      }
     }
 
     var discusHere = picks.some(function (x) { return x.id === 'discus'; });
@@ -688,13 +687,16 @@
 
     var volumeEl = document.getElementById('csl-volume');
     var volumeVal = document.getElementById('csl-volume-val');
+    var tempEl = document.getElementById('csl-temp');
+    var tempVal = document.getElementById('csl-temp-val');
+    var plantsEl = document.getElementById('csl-plants');
     var searchEl = document.getElementById('csl-search');
     var addBtn = document.getElementById('csl-add');
     var chipsEl = document.getElementById('csl-chips');
     var lanesEl = document.getElementById('csl-lanes');
     var findingsEl = document.getElementById('csl-findings');
-    var checklistEl = document.getElementById('csl-checklist');
     var statusEl = document.getElementById('csl-status');
+    var plantCoverState = 'med';
 
     var speciesList = [];
     var speciesById = {};
@@ -762,83 +764,128 @@
     function refresh() {
       var vol = parseInt(volumeEl.value, 10) || 60;
       volumeVal.textContent = vol + ' L';
+      var temp = parseInt(tempEl ? tempEl.value : 26, 10) || 26;
+      if (tempVal) tempVal.textContent = temp + ' °C';
       renderChips();
-      var result = runRules(vol, 'med', picks, speciesById);
+      var result = runRules(vol, plantCoverState, temp, picks, speciesById);
       renderLanes(result.laneLevel);
       renderFindings(result.findings);
-      renderChecklist(result.findings);
       _tk.picks = picks;
       _tk.byId = speciesById;
       _tk.findings = result.findings;
     }
 
     function renderLanes(laneLevel) {
+      if (!lanesEl) return;
       lanesEl.innerHTML = '';
+      var shortName = { thermal:'Thermal', chemistry:'Chemistry', space:'Space', predation:'Predation', social:'Social', inverts:'Inverts' };
       for (var i = 0; i < LANES.length; i++) {
         var lane = LANES[i];
         var score = laneLevel[lane] || 0;
         var lab = laneLabel(score);
-        var row = document.createElement('div');
-        row.className = 'csl-lane csl-lane--' + lab;
-        row.setAttribute('role', 'group');
-        var w = lab === 'low' ? 22 : lab === 'elevated' ? 55 : 92;
-        row.innerHTML =
-          '<div class="csl-lane-head">' +
-          '<span class="csl-lane-name">' + escapeHtml(laneDisplay(lane)) + '</span>' +
-          '<span class="csl-lane-lbl">' + escapeHtml(lab) + '</span>' +
-          '</div>' +
-          '<div class="csl-lane-meter">' +
-          '<div class="csl-lane-track"><span class="csl-lane-fill" style="width:' + w + '%"></span></div>' +
-          '</div>';
-        lanesEl.appendChild(row);
+        var pill = document.createElement('div');
+        pill.className = 'csl-lane csl-lane--' + lab;
+        pill.title = (shortName[lane] || lane) + ': ' + lab;
+        pill.innerHTML = '<span class=”csl-lane-dot”></span><span class=”csl-lane-nm”>' + escapeHtml(shortName[lane] || lane) + '</span>';
+        lanesEl.appendChild(pill);
       }
-    }
-
-    function laneDisplay(key) {
-      return {
-        thermal: 'Thermal',
-        chemistry: 'Water chemistry',
-        space: 'Space / load',
-        predation: 'Predation',
-        social: 'Social tension',
-        inverts: 'Invert safety'
-      }[key] || key;
     }
 
     function renderFindings(findings) {
+      if (!findingsEl) return;
       findingsEl.innerHTML = '';
       if (!picks.length) {
-        findingsEl.innerHTML = '<li class="csl-finding csl-finding--low">Select species to generate findings.</li>';
+        findingsEl.innerHTML = '<li class=”csl-no-findings”>Add species to map overlapping pressures.</li>';
         return;
       }
       if (!findings.length) {
-        findingsEl.innerHTML = '<li class="csl-finding csl-finding--low">No major overlapping pressures flagged by this MVP model — still observe the real tank.</li>';
+        findingsEl.innerHTML = '<li class=”csl-no-findings”>No major pressures flagged — still observe your real tank.</li>';
         return;
       }
       for (var i = 0; i < findings.length; i++) {
-        var f = findings[i];
-        var li = document.createElement('li');
-        li.className = 'csl-finding csl-finding--' + f.severity;
-        li.innerHTML = '<strong>' + escapeHtml(f.title) + '</strong><p>' + escapeHtml(f.body) + '</p>';
-        findingsEl.appendChild(li);
+        (function (f) {
+          var li = document.createElement('li');
+          li.className = 'csl-finding csl-finding--' + f.severity;
+          li.setAttribute('role', 'button');
+          li.setAttribute('tabindex', '0');
+          var sub = f.body.length > 62 ? f.body.slice(0, 62) + '…' : f.body;
+          li.innerHTML =
+            '<span class=”csl-finding-dot”></span>' +
+            '<span class=”csl-finding-text”>' +
+              '<span class=”csl-finding-name”>' + escapeHtml(f.title) + '</span>' +
+              '<span class=”csl-finding-sub”>' + escapeHtml(sub) + '</span>' +
+            '</span>' +
+            '<span class=”csl-finding-arr” aria-hidden=”true”>&#x203A;</span>';
+          li.addEventListener('click', function () { openDetail(f); });
+          li.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDetail(f); }
+          });
+          findingsEl.appendChild(li);
+        })(findings[i]);
       }
     }
 
-    function renderChecklist(findings) {
-      var staticLines = [
-        'Watch feeding response and body condition for 7–10 days after any addition.',
-        'Note fin damage, hiding, or colour loss at the same time each day.',
-        'When troubleshooting, change one variable at a time so cause stays readable.'
-      ];
-      var extra = [];
-      for (var i = 0; i < findings.length; i++) {
-        if (findings[i].severity === 'high') {
-          extra.push('Priority: re-read behaviour for “' + findings[i].title + '” before adding more livestock.');
-        }
+    var ARA_DETAILS = {
+      R_THERMAL_GAP:{ara:'In ARA thinking, thermal alignment is the foundation of the Environmental rhythm. A gap here rarely resolves with compromise — one species will always exist outside its comfort envelope, suppressing immunity over months.',tips:['Research each species\' temperature needs independently','A compromise temperature often serves neither species well','Even short cold snaps can trigger illness in the weaker partner']},
+      R_THERMAL_NARROW:{ara:'ARA emphasises that stability matters as much as parameter values. A narrow overlap means any heater drift or seasonal room-temperature shift can push one species outside comfort. The E-rhythm becomes fragile.',tips:['Use a quality heater rated for ±0.5 °C accuracy','Monitor temperature at surface and substrate — they often differ','Seasonal room changes can silently narrow the window further']},
+      R_PH_GAP:{ara:'Water chemistry shapes osmotic regulation, mucus production, and breeding triggers. A pH gap signals that source water management will dominate this setup\'s difficulty from day one.',tips:['Test your tap water pH and KH before planning','Buffering systems (coral vs. peat) are hard to reverse once established','Some species tolerate wider ranges in practice — research tank reports']},
+      R_PH_NARROW:{ara:'A tight chemistry window raises the cost of every water change. Any variation in source water matters more than usual. ARA would flag this as elevated W-rhythm pressure requiring attentive keeper habits.',tips:['Use RO water to dial in pH precisely if needed','Batch-mix and age water changes before adding them','Test tap water across seasons — mains chemistry can shift quietly']},
+      R_COLDWARM_MIX:{ara:'Coldwater and tropical species represent fundamentally different ecological rhythms. Even if parameters overlap briefly, metabolic rate, immune function, and reproductive cycles diverge in ways that accumulate into chronic stress.',tips:['This combination is rarely successful long-term even if both initially survive','Goldfish produce very high bioload that stresses tropical tank biology','Consider a dedicated coldwater setup — goldfish thrive with room to grow']},
+      R_BIoload_HIGH:{ara:'High bioload density compresses every margin. ARA\'s Biological rhythm is under load: the bacterial colony must be mature, stable, and well-matched to filtration. Any disruption hits harder in a densely stocked tank.',tips:['Ensure filter media is mature before adding full stocking','Increase water change frequency or volume above your usual schedule','Monitor ammonia and nitrite after any addition or feeding change']},
+      R_BIoload_PROXY:{ara:'Elevated bioload is manageable with disciplined keeper rhythm — consistent water changes and attentive feeding. The margin for drift is smaller than in a lightly stocked tank.',tips:['Don\'t skip water changes during the first 3 months','Feed smaller amounts more frequently to reduce nutrient accumulation','Good surface agitation improves oxygen for the bacterial colony']},
+      R_SMALL_TANK:{ara:'Small volumes amplify every pressure simultaneously. Parameter swings happen faster, territory claims become more intense, and recovery time after disturbance is shorter. ARA treats volume as a buffer for all rhythms.',tips:['Fewer species at lower density is almost always more stable','Territory-holding species need visual sight-line breaks even in small tanks','Footprint matters more than height for most bottom and benthic species']},
+      R_MBUNA_COMMUNITY:{ara:'Mbuna ecology is built around constant territorial pressure, high-pH hard water, and herbivory cycles that don\'t translate to a community setup. Mixing imposes chronic stress on both mbuna and non-mbuna.',tips:['Mbuna work best in a species-specific or genus-specific Malawi setup','If mixing is attempted, a very large tank with dense rockwork is the minimum','Non-mbuna community fish rarely recover from sustained mbuna aggression']},
+      R_PREDATION:{ara:'The predation pressure here is mouth-gape based — not general aggression, but size match. ARA observes that this pressure is underestimated because fish that appear peaceful during the day may act on instinct overnight.',tips:['Watch closely at feeding time — predation instinct peaks when hunting focus is activated','Dense planting or caves give small fish visual escape routes','Small tetras with large cichlids is a well-documented high-attrition combination']},
+      R_SHRIMP_RISK:{ara:'Shrimp occupy the Biological rhythm as nutrient cyclers and the Environmental rhythm as habitat indicators. Their disappearance often signals stress before visible fish symptoms appear. ARA treats shrimp survival as a canary metric.',tips:['Dense planting (moss, java fern, stems) is the most effective shrimp refuge','Shrimp survival varies widely by individual fish personality — observe at night','Introducing shrimp first gives them time to establish before adding fish']},
+      R_FIN_NIPPER:{ara:'Fin damage creates entry points for infection and signals chronic social stress for the victim. ARA\'s Social rhythm under pressure first appears as subtle behaviour changes — less active swimming, reduced feeding.',tips:['Check fins daily for the first two weeks after introduction','Nippers in larger groups often redirect nipping within their own school','Long-finned and slow-moving fish are highest risk — bettas and veil-tails especially']},
+      R_TIGER_SCHOOL:{ara:'Tiger barb aggression is a schooling-redirect phenomenon. In small groups the school\'s energy focuses outward on tankmates. ARA\'s S-rhythm improves significantly when school size exceeds the redirection threshold.',tips:['Groups of 8–10+ usually show dramatically reduced nipping','Ensure the tank is large enough to absorb the full school comfortably','Fast-moving tankmates without long fins tolerate tiger barbs best']},
+      R_SCHOOLING:{ara:'ARA frames schooling behaviour as a security mechanism, not an optional social preference. Below minimum group size, the fish\'s nervous system registers persistent threat — visible as stress colouration and erratic swimming.',tips:['Add more individuals of the same species rather than adding new species','Schooling fish below minimum group often hide and decline slowly','Watch schooling tightness: tight schools signal stress; relaxed schools signal confidence']},
+      R_BETTA_MALE_FLOW:{ara:'Male bettas are evolved for still or slow-moving water. Fast tankmates don\'t just harass — they trigger the betta\'s territorial response continuously, creating chronic alertness that suppresses immunity over time.',tips:['Observe the betta\'s rest patterns — a stressed betta rests far less','Reduce flow to betta-compatible levels (gentle surface ripple)','Dense planting gives the betta visual territory to claim and rest in']},
+      R_BETTA_MALE_GOURAMI:{ara:'Multiple labyrinth fish share the same surface layer and the same air-breathing behaviour. This creates overlap in the most contested resource — the air space at the surface — triggering repeated displays.',tips:['Observe surface access — is one fish being persistently excluded?','Male betta with female gouramis carries far less risk than male-male pairings','A wider tank provides more independent surface territory for each fish']},
+      R_BETTA_MALE_MULTI:{ara:'Male betta territorial conflicts are not a compatibility issue — they are a biological certainty. ARA does not grade this as elevated risk; it is a near-certain harm scenario. Two males share one tank at serious cost to both.',tips:['Never house two male bettas together regardless of tank size','Visual dividers reduce injury but do not eliminate chronic stress from sight contact','Multiple females in a sorority require very specific conditions and careful monitoring']},
+      R_GBR_HEAT:{ara:'Warm specialists like German Blue Rams and Discus are adapted to stable high-temperature environments where immune function is calibrated to warmth. Chronic lower temperatures don\'t kill quickly — they create sustained vulnerability.',tips:['GBR thrives at 28–30 °C with stable parameters — check your heater setting','Discus in particular is unforgiving of temperature drops below 27 °C','Verify that all tankmates can tolerate the warmer end of the specialist\'s range']},
+      R_DISCUS_COMPLEX:{ara:'Discus husbandry is a specialised practice in ARA terms: the Environmental rhythm must be precise, the Biological rhythm mature, and keeper rhythm consistent. Adding conflicting species compounds every maintenance task.',tips:['Discus thrives best in a species-specific or Amazonian biotope setup','Cardinal tetras are a classic, well-documented companion — avoid nippers and coldwater species','Fast-moving or aggressive tankmates disrupt discus feeding and trigger hiding']},
+      R_SNAIL_LOACH:{ara:'Snail populations serve as nutrient cyclers and detritivores in ARA\'s Biological rhythm layer. Snail hunters don\'t just remove nuisance snails — they can eliminate beneficial biodiversity from the substrate layer.',tips:['Check snail populations weekly when combining loaches with intentional snails','Mystery and nerite snails are more defensible than small ramshorn or pond snails','Individual loach personalities vary — some are far more aggressive hunters than others']},
+      R_SNAIL_LOACH_CICHLID:{ara:'Aggressive cichlids interact with snails as substrate objects to displace and possibly consume. Mystery snails especially, being slow and large, become targets during cichlid territorial behaviour.',tips:['Provide caves and structures that cichlids claim rather than contested snail territory','Monitor snail shells for chips and damage','Nerites with harder, tighter shells are more resilient than mystery snails with cichlids']},
+      R_INVERT_ASSASSIN:{ara:'Assassin snails are predatory molluscs that consume soft-bodied invertebrates given access. In ARA terms, they create a hidden predation layer in the benthic zone that persists even when surface observation looks calm.',tips:['Do not combine assassin snails with shrimp in tanks under 150 L without heavy planting','Dense moss provides some refuge but is not reliable protection for dwarf shrimp','Assassin snail populations grow slowly — control is possible before numbers build']},
+      R_ZONE_BENTHIC_CROWD:{ara:'ARA treats the benthic zone as the most contested and least forgiving territory per unit area. Bottom-dwellers with overlapping substrate requirements create constant low-level conflict that rarely causes visible injury but suppresses feeding.',tips:['Provide multiple feeding sites spread across the substrate to reduce competition','Different body shapes (flat loach vs. round cory) tolerate each other better than same-type competitors','Increase tank footprint before adding a second bottom species in smaller tanks']}
+    };
+
+    function openDetail(finding) {
+      var key = finding.id;
+      if (!ARA_DETAILS[key]) {
+        if (key.indexOf('R_PREDATION_') === 0) key = 'R_PREDATION';
+        else if (key.indexOf('R_SCHOOLING_') === 0) key = 'R_SCHOOLING';
       }
-      checklistEl.innerHTML = staticLines.concat(extra).map(function (line) {
-        return '<li>' + escapeHtml(line) + '</li>';
-      }).join('');
+      var d = ARA_DETAILS[key];
+      var detailEl = document.getElementById('csl-detail');
+      var titleEl = document.getElementById('csl-detail-title');
+      var descEl = document.getElementById('csl-detail-desc');
+      var araPEl = document.getElementById('csl-detail-ara-p');
+      var badgeEl = document.getElementById('csl-detail-badge');
+      var tipsList = document.getElementById('csl-detail-tips-list');
+      var tipsWrap = document.getElementById('csl-detail-tips-wrap');
+      if (!detailEl) return;
+      badgeEl.textContent = finding.severity;
+      badgeEl.className = 'csl-detail-badge csl-detail-badge--' + finding.severity;
+      titleEl.textContent = finding.title;
+      descEl.textContent = finding.body;
+      if (d) {
+        araPEl.textContent = d.ara;
+        tipsList.innerHTML = d.tips.map(function (t) { return '<li>' + escapeHtml(t) + '</li>'; }).join('');
+        if (tipsWrap) tipsWrap.style.display = '';
+      } else {
+        araPEl.textContent = 'Observe this mix carefully in the first weeks — watch for changes in feeding and behaviour before adding more livestock.';
+        tipsList.innerHTML = '';
+        if (tipsWrap) tipsWrap.style.display = 'none';
+      }
+      detailEl.classList.add('open');
+      detailEl.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeDetail() {
+      var detailEl = document.getElementById('csl-detail');
+      if (detailEl) { detailEl.classList.remove('open'); detailEl.setAttribute('aria-hidden', 'true'); }
     }
 
     function addSpeciesById(id) {
@@ -888,6 +935,34 @@
         setTimeout(function () { wElm.style.display = 'none'; }, 420);
       });
     }
+
+    var ctxEl = document.getElementById('csl-ctx');
+    var ctxBtn = document.getElementById('csl-ctx-btn');
+    if (ctxBtn && ctxEl) {
+      ctxBtn.addEventListener('click', function () {
+        var open = ctxEl.classList.toggle('open');
+        ctxBtn.classList.toggle('active', open);
+      });
+    }
+
+    if (tempEl) tempEl.addEventListener('input', refresh);
+
+    if (plantsEl) {
+      plantsEl.addEventListener('click', function (e) {
+        var btn = e.target.closest('.csl-seg-btn');
+        if (!btn) return;
+        plantsEl.querySelectorAll('.csl-seg-btn').forEach(function (b) { b.classList.remove('csl-seg-active'); });
+        btn.classList.add('csl-seg-active');
+        plantCoverState = btn.getAttribute('data-val') || 'med';
+        refresh();
+      });
+    }
+
+    var detailClose = document.getElementById('csl-detail-close');
+    var detailBd = document.getElementById('csl-detail-bd');
+    if (detailClose) detailClose.addEventListener('click', closeDetail);
+    if (detailBd) detailBd.addEventListener('click', closeDetail);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeDetail(); });
 
     initTankCanvas();
 
