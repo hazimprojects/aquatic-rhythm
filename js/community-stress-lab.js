@@ -249,15 +249,18 @@
       }
     }
 
-    var nipper = null;
-    var longFinOrLabyrinth = false;
+    var nipperIds = [];
+    var longFinIds = [];
     for (var n = 0; n < picks.length; n++) {
       var sn = speciesById[picks[n].id];
       if (!sn) continue;
-      if (sn.finNipper) nipper = sn;
-      if (hasTag(sn, 'long_finned') || hasTag(sn, 'labyrinth')) longFinOrLabyrinth = true;
+      if (sn.finNipper) nipperIds.push(picks[n].id);
+      if (hasTag(sn, 'long_finned') || hasTag(sn, 'labyrinth')) longFinIds.push(picks[n].id);
     }
-    if (nipper && longFinOrLabyrinth) {
+    var finNipperConflict = nipperIds.some(function (nid) {
+      return longFinIds.some(function (lid) { return lid !== nid; });
+    });
+    if (finNipperConflict) {
       findings.push({
         id: 'R_FIN_NIPPER',
         title: 'Fin-nipping exposure',
